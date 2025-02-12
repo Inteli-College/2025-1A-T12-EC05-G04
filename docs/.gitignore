@@ -1,6 +1,9 @@
 # Dependencies
 /node_modules
 
+#Yarn files
+/yarn.lock
+
 # Production
 /build
 
