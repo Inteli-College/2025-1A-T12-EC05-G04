@@ -1,6 +1,6 @@
 ---
 title: Matriz de Risco
-slug: /Negocios-MatrizDeRisco
+slug: /entendimento-do-negocio/matriz-de-risco
 sidebar_position: 2
 ---
 # Matriz de Risco

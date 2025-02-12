@@ -1,9 +1,8 @@
 ---
-title: Documentação Acadêmica
+title: Documentação
 sidebar_position: 1
 slug: /
 ---
-
 
 # Documentação - Módulo 5 - Inteli
 
