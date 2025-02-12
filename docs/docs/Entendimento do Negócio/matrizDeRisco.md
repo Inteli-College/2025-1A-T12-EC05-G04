@@ -1,5 +1,6 @@
 ---
 title: Matriz de Risco
+slug: /Negocios-MatrizDeRisco
 sidebar_position: 2
 ---
 # Matriz de Risco
@@ -23,10 +24,11 @@ sidebar_position: 2
     | 3 | Falta de adesão dos usuários, com a UI/UX | Se os usuários tiverem dificuldades na utilização da interface, isso pode gerar ineficiência, aumento no número de erros operacionais e a necessidade de treinamentos excessivos para corrigir falhas, comprometendo a produtividade e a aceitação do sistema. | 1. Envolver o usuário final no desenvolvimento, coletando feedback contínuo para garantir que a interface atenda às suas necessidades e expectativas;   2. Desenvolvimento de uma interface intuitiva com design simples e funcional realizando testes de usabilidade para identificar e corrigir pontos de dificuldade;   3. Implementar um plano de treinamento prático e contínuo, com suporte técnico acessível, para facilitar a adaptação dos usuários e incentivar a adesão ao novo sistema. |
     | 4 | Falha na bipagem de medicamentos | A bipagem inadequada pode resultar em administração incorreta de medicamentos, prejudicando a eficácia do monitoramento dos remédios e o tratamento de pacientes. | 1. Implementar redundâncias no processo de bipagem para verificar automaticamente a correção das informações; 2. Testar e calibrar constantemente os leitores de código de barras ou RFID para minimizar erros de leitura; 3. Desenvolver um sistema de alerta para avisar os operadores em caso de falhas na bipagem. |
     | 5 | Falha no funcionamento do robô | O mau funcionamento do robô pode comprometer toda a automação do processo, resultando em atrasos, falhas na montagem dos kits e aumento da carga de trabalho manual para os funcionários. | 1. Criar um plano de manutenção preventiva e monitoramento contínuo do desempenho do robô; 2. Desenvolver um sistema de diagnóstico que identifique falhas e forneça sugestões de correção automaticamente; 3. Ter um plano de contingência para operação manual caso o robô apresente falhas críticas. |
-    
+
     <sub>Fonte: Material produzido pelos autores (2025).</sub>
 </div>
 
+<br />
 
 &emsp; Foram, também, listadas as três oportunidades apresentadas acimas seguidas das justificativas e de um plano de ação para aproveitá-las.
 
@@ -39,7 +41,9 @@ sidebar_position: 2
     | 4 | Melhoria na rastreabilidade e segurança no uso de medicamentos. | A automação possibilita um controle mais rigoroso sobre a administração dos medicamentos, reduzindo erros, garantindo conformidade com normas regulatórias e melhorando a segurança dos pacientes. | 1. Implementar um sistema de rastreamento que registre todas as etapas do processo, desde a separação até a administração do medicamento; 2. Integrar notificações automáticas para alertar sobre possíveis erros ou divergências no uso dos medicamentos; 3. Garantir conformidade com normas regulatórias e desenvolver auditorias periódicas para validação do sistema. |
 
     <sub>Fonte: Material produzido pelos autores (2025).</sub>
+    
 </div>
 
+<br />
 
 &emsp; A matriz de risco evidencia os principais desafios e oportunidades do projeto, permitindo uma abordagem proativa para mitigação de ameaças e aproveitamento de benefícios. A implementação de estratégias bem definidas garantirá maior eficiência operacional, reduzindo riscos e otimizando processos.
