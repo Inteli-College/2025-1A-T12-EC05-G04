@@ -24,7 +24,9 @@ sidebar_position: 2
 
 ## Márcia
 
-![Persona Marcia](../../../../media/PersonaMarcia.png)
+<div align="center">
+<img src="../../../static/img/">
+</div>
 
 &emsp;Márcia, com mais de 15 anos dedicados à profissão de farmacêutica, sempre desempenhou um papel importante em diversos ambientes hospitalares. Recentemente, ela foi contratada pelo Hospital de Clínicas da Unicamp para ocupar um cargo similar.
 
