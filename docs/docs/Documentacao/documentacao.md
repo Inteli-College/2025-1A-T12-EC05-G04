@@ -1,12 +1,12 @@
 ---
-title: Documentação
+title: Documentação Acadêmica
 sidebar_position: 1
 slug: /
 ---
 
 # Documentação - Módulo 5 - Inteli
 
-## (Nome do Grupo)
+ (Nome do Grupo)
 
 #### Integrantes do grupo
 
@@ -18,13 +18,13 @@ slug: /
 - Pietra Batista
 - Roberto Diniz Branco Filho
 
-# Introdução
+# 1. Introdução
 
 &emsp; O parceiro de projeto do (Nome do Grupo) é o Hospital de Clínicas da Unicamp - Núcleo Farmácia, uma referência em saúde pública no Brasil, oferecendo serviços médicos de alta complexidade. O serviço de farmácia do hospital é responsável pelo gerenciamento de medicamentos, desde a análise técnica da aquisição até a dispensação, garantindo a segurança e a eficácia no atendimento aos pacientes.
 
-## Descrição da Solução a ser Desenvolvida
+## 1.1. Descrição da Solução a ser Desenvolvida
 
-### Qual é o problema a ser resolvido
+## 1.1.1. Qual é o problema a ser resolvido
 
 &emsp;O HC da Unicamp enfrenta desafios significativos no processo de montagem da “Fita de medicamentos” para pacientes
 internados, apresentando alta demanda de tempo e riscos associados, como erros de separação ou
@@ -33,13 +33,13 @@ de farmácia, além de demandar alto custo com recursos humanos.
 
 &emsp;Atualmente, a montagem de kits de medicamentos é realizado de forma manual, resultando em ineficiências operacionais, erros na montagem, perda de medicametos. Essas falhas comprometem diretamente no monitoramento e segurança dos ativos.  
 
-### Como a solução proposta deverá ser utilizada
+### 1.1.2.Como a solução proposta deverá ser utilizada
 
 &emsp;A solução proposta é composta por duas partes principais: a robótica, responsável pela manipulação física dos medicamentos, e o software, que gerencia a integração com o sistema hospitalar, processa as prescrições eletrônicas e controla a operação dos robôs em tempo real.
 
 &emsp;O funcionamento da solução começa com a leitura das prescrições eletrônicas diretamente do sistema de gestão hospitalar. O software então envia os comandos para os manipuladores robóticos, que selecionam os medicamentos corretos e os organizam conforme a “Fita de medicamentos” de cada paciente. Sensores de código de barras, para a validação os itens antes da inclusão no kit, garantindo conformidade e minimizando erros. A interface digital permite que a equipe farmacêutica monitore o processo, faça ajustes quando necessário e acompanhe relatórios sobre a separação, garantindo maior segurança e eficiência na dispensação dos medicamentos.
 
-### Quais os benefícios trazidos pela solução proposta
+### 1.1.3.Quais os benefícios trazidos pela solução proposta
 
 > **Eficiência operacional e otimização de tempo:** Com a utilização de manipuladores robóticos e sensores inteligentes, o tempo necessário para a separação e conferência dos medicamentos será reduzido em até 40%, permitindo maior agilidade no atendimento hospitalar.
 
@@ -49,7 +49,7 @@ de farmácia, além de demandar alto custo com recursos humanos.
 
 > **Interface de Gestão Intuitiva:** A equipe farmacêutica terá acesso a uma plataforma de fácil uso para monitoramento em tempo real, ajustes manuais quando necessário e geração de relatórios detalhados sobre a eficiência do processo e a conformidade das dispensações.
 
-### Qual será o critério de sucesso e quais medidas serão utilizadas para avaliá-lo  
+### 1.1.4. Qual será o critério de sucesso e quais medidas serão utilizadas para avaliá-lo  
 
 &emsp;A avaliação do sistema será realizada por meio de testes que garantirão a precisão e eficiência da automação na separação e montagem da “Fita de medicamentos”, a eficácia da comunicação entre os sensores, o robô e a usabilidade da interface Homem-Máquina.  
 
