@@ -12,7 +12,9 @@ sidebar_position: 2
 
 ## Mauro
 
-![Persona Mauro](../../../../media/Personas%20G3%20M5.png)
+<div align="center">
+<img src="../../../static/img/Personas G3 M5.png">
+</div>
 
 &emsp; Mauro é um profissional dedicado, com 15 anos de experiência na área da saúde, sendo os últimos 10 anos no Hospital das Clínicas da Unicamp. Seu trabalho é essencial para garantir a correta separação e distribuição dos medicamentos aos pacientes. Ele valoriza o dinamismo do ambiente hospitalar, a interação com equipes médicas e a oportunidade de aprendizado contínuo, pois acredita que cada plantão é uma nova chance de oferecer cuidado, esperança e humanidade.
 
@@ -25,7 +27,7 @@ sidebar_position: 2
 ## Márcia
 
 <div align="center">
-<img src="../../../static/img/">
+<img src="../../../static/img/PersonaMarcia.png">
 </div>
 
 &emsp;Márcia, com mais de 15 anos dedicados à profissão de farmacêutica, sempre desempenhou um papel importante em diversos ambientes hospitalares. Recentemente, ela foi contratada pelo Hospital de Clínicas da Unicamp para ocupar um cargo similar.
