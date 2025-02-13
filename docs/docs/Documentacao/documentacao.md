@@ -6,7 +6,7 @@ slug: /
 
 # Documentação - Módulo 5 - Inteli
 
-## (Nome do Grupo)
+## Hígia
 
 #### Integrantes do grupo
 
@@ -15,12 +15,12 @@ slug: /
 - Lucas Periquito Costa
 - Marcelo Conde Filho
 - Murilo Couto Oliveira
-- Pietra Batista
+- Pietra Pasqualini Batista
 - Roberto Diniz Branco Filho
 
 # Introdução
 
-&emsp; O parceiro de projeto do (Nome do Grupo) é o Hospital de Clínicas da Unicamp - Núcleo Farmácia, uma referência em saúde pública no Brasil, oferecendo serviços médicos de alta complexidade. O serviço de farmácia do hospital é responsável pelo gerenciamento de medicamentos, desde a análise técnica da aquisição até a dispensação, garantindo a segurança e a eficácia no atendimento aos pacientes.
+&emsp; O parceiro de projeto da Hígia é o Hospital de Clínicas da Unicamp - Núcleo Farmácia, uma referência em saúde pública no Brasil, oferecendo serviços médicos de alta complexidade. O serviço de farmácia do hospital é responsável pelo gerenciamento de medicamentos, desde a análise técnica da aquisição até a dispensação, garantindo a segurança e a eficácia no atendimento aos pacientes.
 
 ## Descrição da Solução a ser Desenvolvida
 
