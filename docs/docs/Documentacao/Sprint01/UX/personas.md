@@ -25,6 +25,8 @@ sidebar_position: 1
 
 &emsp; Portanto, a implementação de um braço robótico para a seleção e bipagem automática dos medicamentos traria benefícios diretos, reduzindo erros e aumentando a velocidade do processo. Além disso, a solução melhoraria a gestão do estoque, garantindo mais precisão no controle dos insumos hospitalares. Isso permitiria que Mauro e sua equipe focassem em atividades mais estratégicas e no cuidado direto aos pacientes.
 
+---
+
 ## Márcia
 
 <div align="center">
