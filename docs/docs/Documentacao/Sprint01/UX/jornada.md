@@ -3,8 +3,9 @@ title: Jornada do Usuário
 sidebar_position: 2
 ---
 
+&emsp;Durante o início de um projeto, a criação de uma jornada de usuário para suas personas permite que a equipe passe das suposições sobre as atitudes do usuário do sistema e se ponha em seu lugar. Isso ajuda na identificação de motivações, desafios e comportamentos de cada indivíduo em cada ocasião.
 
-Mano periquito favor colocar a introdução, agradeço desde já
+&emsp;Além disso, definir a jornada de cada persona reduz o retrabalho e conflitos ao deixar claro cada etapa da interação. Com a jornada pronta, a equipe tem um guia sobre as principais etapas que a equipe deve desenhar e desenvolver para completar o produto, tendo dessa forma já sido acordadas e discutidas em grupo, evitando casos de mal comunicação que resultariam em ter que reestruturar o projeto.
 
 ## Jornada do Usuário - Mauro
 
@@ -40,3 +41,12 @@ Apesar da automação trazer benefícios claros, algumas fragilidades podem impa
 A implementação do novo sistema automatizado representa um avanço significativo na rotina de Mauro, proporcionando mais eficiência, precisão na separação e distribuição dos medicamentos. Com um processo mais ágil e menos suscetível a erros manuais, Mauro pode focar em atividades estratégicas que garantem um atendimento mais seguro e organizado para os pacientes.  
 
 No entanto, para que essa transição seja bem-sucedida, é essencial que o grupo Hégia garanta que o sistema possua uma interface intuitiva e que Mauro receba o suporte necessário para superar possíveis desafios técnicos. Com um treinamento adequado e uma plataforma bem estruturada, a automação trará benefícios tanto para Mauro quanto para toda a equipe hospitalar do HC, garantindo um fluxo de trabalho otimizado.
+
+
+## Jornada de usuário - Márcia
+
+&emsp;A jornada de Márcia cuida da outra parte do processo: A triagem inicial da receita e o envio para nossa solução. A farmacêutica representa nosso principal arquétipo de usuário no sistema, e dá indícios de como lidar com usuários com baixo letramento tecnológico.
+
+<div align="center">
+<img src="../../../../static/img/JornadaMarcia.png">
+</div>
