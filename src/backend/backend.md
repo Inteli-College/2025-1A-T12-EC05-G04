@@ -1,1 +1,0 @@
-apagar ao adicionar novas páginas

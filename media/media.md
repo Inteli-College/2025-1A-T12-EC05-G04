@@ -1,1 +1,0 @@
-apagar ao adicionar as fotos e mídias do repo.
