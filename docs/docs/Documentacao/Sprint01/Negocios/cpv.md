@@ -15,7 +15,7 @@ sidebar_position: 2
 &emsp;Para entender melhor se a solução idealizada pela Hígia está alinhada com as necessidades do cliente, foi elaborado um Canvas de Proposta de Valor. A seguir, é possível visualizar o perfil do cliente e a proposta de valor oferecida, relacionando suas principais dores e necessidades com os serviços e produtos para aliviá-las e gerar ganhos.
 
 <div align="center">
-![Canvas Proposta de Valor](/img/cpv.png)
+![Módulo físico de separação](/../../media/cpv.png)
 <sub>Fonte: Material produzido pelos autores (2025).</sub>
 </div>
 
