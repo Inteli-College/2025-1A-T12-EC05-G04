@@ -5,21 +5,19 @@ import type * as Preset from '@docusaurus/preset-classic';
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 const config: Config = {
-  title: 'Bot In Order',
+  title: 'Grupo 4',
   tagline: 'Hey you I love your soul',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/inteli.svg',
 
   // Set the production url of your site here
-  url: 'https://your-docusaurus-site.example.com',
-  // Set the /<baseUrl>/ pathname under which your site is served
+  url: 'https://inteli-college.github.io',  // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/',
+  baseUrl: '/2025-1A-T12-EC05-G04/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'Inteli-College', // Usually your GitHub org/user name.
   projectName: '2025-1A-T12-EC05-G04', // Usually your repo name.
-  deploymentBranch: "main", // Define a branch onde o site será publicado
   trailingSlash: false,
 
 
