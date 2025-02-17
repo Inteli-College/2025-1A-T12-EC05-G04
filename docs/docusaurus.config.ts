@@ -17,8 +17,11 @@ const config: Config = {
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'T12-EC05-G4', // Usually your GitHub org/user name.
+  organizationName: 'Inteli-College', // Usually your GitHub org/user name.
   projectName: '2025-1A-T12-EC05-G04', // Usually your repo name.
+  deploymentBranch: "gh-pages", // Define a branch onde o site será publicado
+  trailingSlash: false,
+
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -55,7 +58,7 @@ const config: Config = {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
-      title: 'Bot In Order',
+      title: 'Grupo 04',
       logo: {
         alt: 'My Site Logo',
         src: 'img/logo.svg',
@@ -77,41 +80,7 @@ const config: Config = {
     footer: {
       style: 'dark',
       links: [
-        {
-          title: 'Docs',
-          items: [
-            {
-              label: 'Tutorial',
-              to: '/docs/intro',
-            },
-          ],
-        },
-        {
-          title: 'Community',
-          items: [
-            {
-              label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-            },
-            {
-              label: 'Discord',
-              href: 'https://discordapp.com/invite/docusaurus',
-            },
-            {
-              label: 'X',
-              href: 'https://x.com/docusaurus',
-            },
-          ],
-        },
-        {
-          title: 'More',
-          items: [
-            {
-              label: 'GitHub',
-              href: 'https://github.com/facebook/docusaurus',
-            },
-          ],
-        },
+
       ],
       copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
     },
