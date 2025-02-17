@@ -19,7 +19,7 @@ const config: Config = {
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'Inteli-College', // Usually your GitHub org/user name.
   projectName: '2025-1A-T12-EC05-G04', // Usually your repo name.
-  deploymentBranch: "gh-pages", // Define a branch onde o site será publicado
+  deploymentBranch: "main", // Define a branch onde o site será publicado
   trailingSlash: false,
 
 
