@@ -48,7 +48,7 @@ No entanto, para que essa transição seja bem-sucedida, é essencial que o grup
 &emsp;A jornada de Márcia cuida da outra parte do processo: A triagem inicial da receita e o envio para nossa solução. A farmacêutica representa nosso principal arquétipo de usuário no sistema, e dá indícios de como lidar com usuários com baixo letramento tecnológico.
 
 <div align="center">
-<img src="../../../../static/img/JornadaMarcia.png">
+<img src="../../../../static/img/JornadaMarciaFix.png">
 </div>
 
 ### Descoberta e identificação
