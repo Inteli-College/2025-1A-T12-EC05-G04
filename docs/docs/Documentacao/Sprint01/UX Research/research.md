@@ -1,5 +1,6 @@
 ---
-title: UX Research
+title: Imersão Preliminar
+slug: /ux-research/imersao-preliminar
 sidebar_position: 1
 ---
 

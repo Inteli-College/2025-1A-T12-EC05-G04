@@ -11,14 +11,14 @@ sidebar_position: 2
 &emsp;Nesse primeiro momento, a equipe Hígia preocupou-se não em determinar aspectos e escolhas de tecnologias e/ou ferramentas, mas em desenvolver uma proposta de arquitetura agnóstica à tecnologia. Isso significa que não serão tratados os componentes como escolhas de dispositivos, linguagens de programação ou frameworks, mas como componentes-base que permitem a escolha das melhores tecnologias de acordo com o decorrer do projeto, desde que se adequem aos requisitos elicitados. Abaixo, encontra-se o diagrama de visão geral da arquitetura e seus respectivos cortes sobre cada uma das seções identificadas como separadas.
 
 <div align="center">
-![Visão geral da arquitetura](../../../../media/propostaArquitetura/geral.jpg)
+![Visão geral da arquitetura](/../../media/propostaArquitetura/geral.jpg)
 <sub>Fonte: Material produzido pelos autores (2025).</sub>
 </div>
 
 &emsp;Para melhorar a visualização, foram realizados recortes de 3 seções da arquitetura. Além disso, foram elencados os tipos de conexão entre os elementos no quadro abaixo. É possível destacar conexões via cabo ou fio, ou seja, físicas; conexões via Wi-fi e que utilizam o protocolo MQTT; conexões via requisições e endpoints de API; e conexões via queries no relacionamento com o banco de dados.
 
 <div align="center">
-![Conexões entre componentes](../../../../media/propostaArquitetura/conexoes.jpg)
+![Conexões entre componentes](/../../media/propostaArquitetura/conexoes.jpg)
 <sub>Fonte: Material produzido pelos autores (2025).</sub>
 </div>
 
@@ -27,21 +27,21 @@ sidebar_position: 2
 &emsp;O protocolo MQTT (Message Queuing Telemetry Transport) é um protocolo de comunicação que atua na camada OSI de aplicação e que possibilita a conexão com dispositivos IoT. Dessa forma, o MQTT foi escolhido por permitir a comunicação de dados entre o microcontrolador e o servidor e por necessitar de menos energia do dispositivo para funcionar. O MQTT funciona por meio de uma arquitetura Publish-Subscribe, na qual os dispositivos do tipo publicadores (atuando como publish na arquitetura) enviam as informações e os dispositivos assinantes (atuando como subscribe na arquitetura) recebem as informações, as quais são enviadas em mensagens que são denonimadas como tópicos. Nesse momento, precisamos do broker, o qual é uma entidade intermediária que recebe os dados enviados pelos publicadores e os encaminha para os assinantes. 
 
 <div align="center">
-![Módulo físico de separação](../../../../media/propostaArquitetura/fisico.jpg)
+![Módulo físico de separação](/../../media/propostaArquitetura/fisico.jpg)
 <sub>Fonte: Material produzido pelos autores (2025).</sub>
 </div>
 
 &emsp;No recorte do back-end, foram destacados o servidor e o banco de dados. O servidor será responsável por receber as informações tanto do microcontrolador (como assinante dos tópicos MQTT) quanto do robô e cruzá-las, permitindo que os próximos passos e movimentos do robô tenham a validação dos sensores conectados ao microcontrolador. Além disso, é necessário que o servidor receba as requisições do front-end e realize queries dentro do banco de dados a fim de responder às requisições da interface gráfica. O banco de dados será responsável por armazenar os dados de todo o sistema, mas principalmente os dados relacionados às movimentações do robô e status de montagem das fitas de remédios, dados dos medicamentos, dados dos pacientes e dados dos usuários do sistema.
 
 <div align="center">
-![Módulo físico de separação](../../../../media/propostaArquitetura/backend.jpg)
+![Módulo físico de separação](/../../media/propostaArquitetura/backend.jpg)
 <sub>Fonte: Material produzido pelos autores (2025).</sub>
 </div>
 
 &emsp;Por fim, o front-end será a interface gráfica com a qual os usuários poderão interagir com o sistema. Ela se comunicará com o servidor via API e permitirá a visualização do status reportado ao servidor pelo microcontrolador, bem como o acesso diferenciado de acordo com o tipo de usuário.
 
 <div align="center">
-![Módulo físico de separação](../../../../media/propostaArquitetura/frontend.jpg)
+![Módulo físico de separação](/../../media/propostaArquitetura/frontend.jpg)
 <sub>Fonte: Material produzido pelos autores (2025).</sub>
 </div>
 
