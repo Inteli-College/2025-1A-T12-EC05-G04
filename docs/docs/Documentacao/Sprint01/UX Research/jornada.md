@@ -1,6 +1,7 @@
 ---
 title: Jornada do Usuário
-sidebar_position: 2
+slug: /ux-research/jornada
+sidebar_position: 3
 ---
 
 &emsp;Durante o início de um projeto, a criação de uma jornada de usuário para suas personas permite que a equipe passe das suposições sobre as atitudes do usuário do sistema e se ponha em seu lugar. Isso ajuda na identificação de motivações, desafios e comportamentos de cada indivíduo em cada ocasião.
@@ -12,10 +13,9 @@ sidebar_position: 2
 A jornada do usuário Mauro foi elaborada para compreender as interações desse perfil com o sistema desenvolvido no projeto. Mauro representa um usuário típico e suas ações foram analisadas com base em suas necessidades e expectativas. Ele possui conhecimento intermediário em tecnologia e deseja uma interface intuitiva e responsiva. Sua rotina envolve acessar o sistema para realizar tarefas específicas de forma rápida e segura.
 
 <div align="center">
-![Jornada do usuário Mauro](/img/JornadaMauro.png)
+![Jornada Mauro](/../../media/JornadaMauro.png)
 <sub>Fonte: Material produzido pelos autores (2025).</sub>
 </div>
-
 
 ### 1. Descoberta e Identificação
 Mauro recebe a notícia da implementação de um novo sistema de automação na farmácia hospitalar. Ele se interessa pela proposta, pois acredita que pode otimizar seu trabalho e reduzir possíveis erros. Ao acessar a plataforma pela primeira vez, percebe que a interface é intuitiva, com opções claras e um fluxo bem definido. Após um breve treinamento, ele sente confiança para utilizar o sistema no dia a dia.  
@@ -48,29 +48,31 @@ No entanto, para que essa transição seja bem-sucedida, é essencial que o grup
 &emsp;A jornada de Márcia cuida da outra parte do processo: A triagem inicial da receita e o envio para nossa solução. A farmacêutica representa nosso principal arquétipo de usuário no sistema, e dá indícios de como lidar com usuários com baixo letramento tecnológico.
 
 <div align="center">
-<img src="../../../../static/img/JornadaMarciaFix.png">
+![Jornada Marcia](/../../media/JornadaMarcia.png)
+<sub>Fonte: Material produzido pelos autores (2025).</sub>
 </div>
 
-### Descoberta e identificação
+### 1. Descoberta e identificação
 
 &emsp;Márcia, ao chegar para um dia de trabalho, nota o novo sistema instalado na farmácia para a separação de remédios de receitas da enfermaria. Após uma introdução lenta devido a sua baixa familiaridade com sistemas tecnológicos, Márcia ainda questiona se vai conseguir utilizar eficientemente o sistema em seu dia a dia.
 
-### Aprovação da Receita
+### 2. Aprovação da Receita
 
 &emsp;Márcia recebe uma receita no novo sistema. Acessando o software, ela consegue achar o novo pedido e aprova certos remédios para a separação, considerando a necessidade, estoque e quantidade pedida. A farmacêutica acha que, na prática, o sistema é bem intuitivo.
 
-### Envio para o robô
+### 3. Envio para o robô
 
 &emsp;Após a triagem, Márcia coloca a nova cesta na frente da solução, senta na cadeira e aperta o botão de confirmação. O braço robótico da solução começa a separar os medicamentos requisitados. Em menos tempo e com menos trabalho, os remédios da fita já estão separados, e Márcia fica satisfeita com o resultado.
 
-### Atualização do estoque
+### 4. Atualização do estoque
 
 &emsp;Após a montagem, Márcia checa o estoque na interface e nota que os remédios da fita já foram retirados do estoque.
 
-### Atualização do estoque
+### 5. Atualização do estoque
 
 &emsp; Caso uma fita volte com alguns remédios não consumidos, Márcia coleta os remédios novamente, escaneia o código QR do paciente. Após a identificação do mesmo, Márcia registra os remédios que voltaram na interface, tirando do registro daquele paciente e adicionando novamente ao estoque. Mesmo que seja um caso extremo do sistema, é importante lidar com partes do sistema que o parceiro diz que acontecem.
 
-### Fragilidades do sistema
+### 6. Fragilidades do sistema
 
 &emsp;Apesar das vantagens do sistema, um problema a ser considerado no sistema é o baixo conhecimento tecnológico do usuário. Pensando nisso, nossa solução precisa levar em conta formas de facilitar a tomada de decisões e acesso a funcionalidades, de forma a diminuir a barreira de entrada para novos usuários durante o processo de implementação e em momentos após. Deve-se considerar uma interface de usuário simplificada, botões com funcionalidade clara e cores para auxiliar o usuário final.
+

@@ -1,6 +1,7 @@
 ---
 title: Personas
-sidebar_position: 1
+slug: /ux-research/personas
+sidebar_position: 2
 ---
 # Personas 
 
@@ -13,7 +14,7 @@ sidebar_position: 1
 ## Mauro
 
 <div align="center">
-![Persona Mauro](/img/PersonaMauro.png)
+![Persona Mauro](/../../media/PersonaMauro.png)
 <sub>Fonte: Material produzido pelos autores (2025).</sub>
 </div>
 
@@ -30,7 +31,7 @@ sidebar_position: 1
 ## Márcia
 
 <div align="center">
-![Persona Mauro](/img/PersonaMarcia.png)
+![Persona Marcia](/../../media/PersonaMarcia.png)
 <sub>Fonte: Material produzido pelos autores (2025).</sub>
 </div>
 
