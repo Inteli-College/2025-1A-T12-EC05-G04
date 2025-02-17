@@ -10,7 +10,7 @@ sidebar_position: 2
 &emsp;Dessa forma, foi elaborada a seguinte Matriz de Riscos considerando o presente projeto:
 
 <div align="center">
-![Matriz de Risco](/img/matrizDeRisco.png)
+![Matriz de Risco](/../../media/matrizDeRisco.png)
 <sub>Fonte: Material produzido pelos autores (2025).</sub>
 </div>
 
