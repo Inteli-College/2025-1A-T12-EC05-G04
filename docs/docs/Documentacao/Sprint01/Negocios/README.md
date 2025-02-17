@@ -10,4 +10,4 @@ sidebar_position: 2
 
 <br />
 
-&emsp;A seguir, serão apresentados os frameworks e ferramentas utilizados para embasar e aprofundar nossas pesquisas, garantindo uma compreensão sólida tanto do negócio do parceiro quanto da solução proposta.
+&emsp;A seguir, serão apresentados os *frameworks* e ferramentas utilizados para embasar e aprofundar nossas pesquisas, garantindo uma compreensão sólida tanto do negócio do parceiro quanto da solução proposta.
