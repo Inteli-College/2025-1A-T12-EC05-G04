@@ -41,6 +41,10 @@ while estaRodando:
             elif(comando == "moveZ"):
                 units = float(input("Insira a quantidade de unidades \n"))
                 d.move_to(x,y,z+units, r=0)
+            elif(comando == "suck"):
+                d.suck(True)
+            elif(comando == "unsuck"):
+                d.suck(False)
             elif(comando == "sair"):
                 rodandoManual=False
 
