@@ -31,4 +31,4 @@ df = pnd.DataFrame({
     'z': posicaoZ
     
 })
-df.to_json(fileName + ".instructions")
+df.to_json(fileName + ".instrucao")
