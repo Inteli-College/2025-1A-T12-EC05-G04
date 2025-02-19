@@ -3,6 +3,7 @@ import pydobot
 import os
 from serial.tools import list_ports
 
+os.system('sudo chmod 666 /dev/ttyACM0')
 
 isInputing = True
 currentInput = 0

@@ -32,23 +32,22 @@ while estaRodando:
         while rodandoManual:
             comando = input("Insira o comando: \n")
             (x, y, z, r, j1, j2, j3, j4) = d.pose()
-            if(comando == "moveX"):
-                units = float(input("Insira a quantidade de unidades \n"))
-                d.move_to(x+units, y,z,r=0, wait=True)
-            elif(comando == "moveY"):
-                units = float(input("Insira a quantidade de unidades \n"))
-                d.move_to(x,y+units, z, r=0)
-            elif(comando == "moveZ"):
-                units = float(input("Insira a quantidade de unidades \n"))
-                d.move_to(x,y,z+units, r=0)
-            elif(comando == "suck"):
-                d.suck(True)
-            elif(comando == "unsuck"):
-                d.suck(False)
-            elif(comando == "sair"):
-                rodandoManual=False
-
-
+            match comando:
+                case "moveX":
+                    units = float(input("Insira a quantidade de unidades \n"))
+                    d.move_to(x+units, y,z,r=0, wait=True)
+                case "moveY":
+                    units = float(input("Insira a quantidade de unidades \n"))
+                    d.move_to(x,y+units, z, r=0, wait=True)
+                case "moveZ":
+                    units = float(input("Insira a quantidade de unidades \n"))
+                    d.move_to(x,y,z+units, r=0, wait=True)
+                case "suck":
+                    d.suck(True)
+                case "unsuck":
+                    d.suck(False)           
+                case "sair":
+                    rodandoManual=False
     else:
         estaRodando = False
 
