@@ -11,7 +11,7 @@ available_ports = list_ports.comports()
 print(f'available ports: {[x.device for x in available_ports]}')
 port = available_ports[32].device
 d = pydobot.Dobot(port='/dev/ttyACM0', verbose=False)
-d.speed(100)
+d.speed(200)
 
 tipoAcao = []
 valorGrab = []
