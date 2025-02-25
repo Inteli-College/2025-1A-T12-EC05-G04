@@ -2,8 +2,9 @@ import pydobot
 import os
 import pandas
 from serial.tools import list_ports
-from leitorInstrucao import lerJsonMovimento
-from parserComando import lerComando
+from backend.modulosCodigo.leitorInstrucao import lerJsonMovimento
+from backend.modulosCodigo.parserComando import lerComando
+from backend.modulosCodigo.seletorComandos import rodarComando
 
 #No linux, garante que a porta está acessível para o sistema
 os.system('sudo chmod 666 /dev/ttyACM0')
@@ -41,23 +42,11 @@ while estaRodando:
             #Chama o parser de comando para separar o encadeamento. Teoricamente suporta infinitos comandos encadeados
             comandos = lerComando()
             for comando in comandos:
-                (x, y, z, r, j1, j2, j3, j4) = d.pose()
-                match comando:
-                    case "moveX":
-                        units = float(input("Insira a quantidade de unidades \n"))
-                        d.move_to(x+units, y,z,r=0, wait=True)
-                    case "moveY":
-                        units = float(input("Insira a quantidade de unidades \n"))
-                        d.move_to(x,y+units, z, r=0, wait=True)
-                    case "moveZ":
-                        units = float(input("Insira a quantidade de unidades \n"))
-                        d.move_to(x,y,z+units, r=0, wait=True)
-                    case "suck":
-                        d.suck(True)
-                    case "unsuck":
-                        d.suck(False)           
-                    case "sair":
-                        rodandoManual=False
+                if(comando != "sair"):
+                    rodarComando(d, comando)
+                else:
+                    rodandoManual = False
+                    break
     else:
         estaRodando = False
 
