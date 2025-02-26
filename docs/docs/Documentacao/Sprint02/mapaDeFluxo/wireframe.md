@@ -52,6 +52,8 @@ Ao longo dessa seção de documentação, serão apresentadas todas as telas, ma
 
 ### Variante 2 - Robô ligado, mas sem fitas em andamento
 
+&emsp;Na variante 2, o braço robótico se encontra ligado, mas não possui nenhuma fita aprovada para a montagem, ficando em estado de espera. Na seção de status, é mostrado que o robô está ligado, mas que não está montando nenhuma fita médica. Também, está presente a instrução para aprovar fitas para a montagem pelo robô na seção de listas pendentes.
+
 <div align="center">
 ![Visão geral da arquitetura](/../../media/wireframe/home1.jpg)
 <sub>Fonte: Material produzido pelos autores (2025).</sub>
@@ -59,12 +61,16 @@ Ao longo dessa seção de documentação, serão apresentadas todas as telas, ma
 
 ### Variante 3 - Robô ligado e montando uma fita
 
+&emsp;Na terceira variante, o robô se encontra ligado e com o processo de montagem em andamento. É possível ver informações da fita que está sendo montada como o nome do paciente, HC, leito e prontuário. Além disso, é possível avaliar as etapas de montagem com a seção de rastreabilidade, a qual indica em qual estágio de montagem o robô está para cada medicamento da lista de separação que deve ir para a fita médica. Existem 3 momentos de controle, sendo eles o momento de bipagem do QRcode/código de barras, o momento em que o braço robótico pega o medicamento do bin e o momento em que o braço robótico solta o medicamento no local indicado. 
+
 <div align="center">
 ![Visão geral da arquitetura](/../../media/wireframe/home0.jpg)
 <sub>Fonte: Material produzido pelos autores (2025).</sub>
 </div>
 
 ### Variante 4 - Robô ou sistema com erro
+
+&emsp;Na última variante, o usuário será avisado quando erros ocorrem no sistema ou no braço robótico. Possíveis erros como a queda de conexão com a internet, a soltagem do remédio em local inapropriado ou a perda de conexão direta com o braço robótico serão avisados diretamente ao usuário, de forma a auxiliá-lo a resolver o erro.
 
 <div align="center">
 ![Visão geral da arquitetura](/../../media/wireframe/home3.jpg)
