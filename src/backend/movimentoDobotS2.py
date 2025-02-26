@@ -2,8 +2,11 @@ import pydobot
 import os
 import pandas
 from serial.tools import list_ports
+# Script de ler arquivo .instrucao
 from backend.modulosCodigo.leitorInstrucao import lerJsonMovimento
+# Script de parser de comando do modo manual
 from backend.modulosCodigo.parserComando import lerComando
+# Script de execução de comando do modo manual
 from backend.modulosCodigo.seletorComandos import rodarComando
 
 #No linux, garante que a porta está acessível para o sistema
