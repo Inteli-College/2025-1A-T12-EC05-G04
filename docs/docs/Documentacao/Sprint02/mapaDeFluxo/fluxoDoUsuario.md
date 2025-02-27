@@ -29,8 +29,8 @@ sidebar_position: 3
 </div>
 
 ## Fluxo de Pedido de Emergencia
-**Objetivo:** Acessar a página de pedidos de emergência e criar um novo pedido.\
-**Caminho:** O usuário deve fazer login, sera direcionado a página home onde deve acessar a página de "Pedidos de Emergência", quando dentro deve acessar o ícone representando um novo pedido e preencher o necessário para criar um novo pedido de emergência.
+**Objetivo:** Acessar a página de pedidos de emergência e registrar o pedido.\
+**Caminho:** O usuário deve fazer login, sera direcionado a página home onde deve acessar a página de "Pedidos de Emergência", quando dentro deve acessar o ícone representando um novo pedido e preencher o necessário para registrar o pedido de emergência.
 
 <div align="center">
 ![Visão geral da arquitetura](/../../media/fluxoDoUsuario/FluxoPedidoEmergencia.png)
