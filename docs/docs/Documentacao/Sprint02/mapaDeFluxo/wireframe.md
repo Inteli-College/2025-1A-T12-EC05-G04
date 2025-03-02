@@ -81,6 +81,23 @@ Ao longo dessa seção de documentação, serão apresentadas todas as telas, ma
 
 ## Tela de Montagens Pendentes
 
+&emsp;A tela de **Montagens Pendentes** será destinada à exibição de uma lista de separação de medicamentos previamente triada pelo farmacêutico. Sua elaboração considerou dois aspectos que a equipe identificou como relevantes neste primeiro momento. Primeiro, a inferência de que o sistema estará integrado ao sistema hospitalar atual via API, permitindo que as prescrições médicas triadas pelos farmacêuticos sejam enviadas automaticamente para essa tela. Segundo, reconheceu-se que não seria eficiente, ou mesmo viável, programar o robô para realizar as montagens de forma constantemente automática, pelo menos até esta sprint. 
+
+&emsp;Diante disso, foi criada essa lista de montagens pendentes. A ideia é que a pessoa responsável aprove manualmente o início do processo de separação. Essa validação tem o objetivo de evitar erros de montagem, como confusões entre as bandejas e fitas de diferentes pacientes. Após a aprovação de uma fita, o robô iniciará a montagem, e as demais ficarão bloqueadas até que o processo atual seja concluído. Para isso, a tela de **Montagens Pendentes** foi desenvolvida em duas variantes, contemplando dois cenários possíveis: 
+
+1. Quando nenhuma fita está em processo de montagem.
+2. Quando uma fita já está sendo montada.
+
+### Variante 1 - Nenhuma fita em montagem
+
+&emsp;Nessa variante, mostra-se a lista de montagens que estão pendentes, contendo apenas as prescrições já triadas pelo farmacêutico responsável. Ela irá aparecer dessa maneira quando nenhuma separação estiver sendo realizada pelo robô. O técnico terá que acessar essa tela através do menu lateral e escolher a fita que o robô deverá montar, garantindo um fluxo organizado e evitando erros nessa processo.
+
+### Variante 2 - Fita em montagem
+
+&emsp;Essa variante será exibida quando o robô já estiver em processo de montagem de uma fita. Após a aprovação do técnico, o sistema deverá bloquear todas as outras fitas, evitando que haja confusões na separação dos medicamentos e que ocorra qualquer mistura entre os kits de diferentes pacientes. 
+
+&emsp;É importante relembrar que esta é a primeira versão do wireframe e, após uma conversa com o parceiro, foram identificados pontos de melhorias que serão implementados nas próximas semanas. Um dos aprimoramentos será a inclusão da opção de reorganizar a lista na primeira variante, permitindo que a equipe farmacêutica customize a fila conforme sua necessidade e desejo. Além disso, na segunda variante, será adicionada a possibilidade de ativar o modo automático de montagem. O técnico responsável poderá optar por essa funcionalidade quando julgar que não há risco de confusão entre as bandejas. Para isso, a lista poderá ser personalizada por meio de um checkbox, indicando quais fitas o manipulador seguirá para montagem automática. Esses aprimoramentos são pensados para garantir que a equipe farmacêutica, apesar de contarem com a ajuda do robô, continuem mantendo o controle sobre o processo de montagem, tornando-o mais eficiente e alinhado às necessidades operacionais.
+
 ## Tela de Estoque
 
 ## Tela de Relatórios
