@@ -4,6 +4,9 @@
 # Production
 /build
 
+# Instruction Files
+**.instrucao
+
 # Generated files
 .docusaurus
 .cache-loader
