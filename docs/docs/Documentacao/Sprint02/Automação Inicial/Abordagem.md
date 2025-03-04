@@ -193,26 +193,19 @@ def rodarComando(device, comando):
 
 ## Demonstração do Sistema
 
+<video controls>
+  <source src="../../../../static/vid/videorobo.mp4" type="video/mp4">
+</video>
+
+
 ### Criação de Sequência de Movimentos
 
-Vídeo demonstrativo da criação de uma sequência de movimentos utilizando o módulo `criadorMovimento.py`.
-
-[ESPAÇO PARA VÍDEO DE DEMONSTRAÇÃO]
-
-### Leitura de Posições
-
-Vídeo demonstrativo da leitura de posições utilizando o módulo `lerMovimentoDobot.py`.
-
-[ESPAÇO PARA VÍDEO DE DEMONSTRAÇÃO]
+&emsp;No começo do vídeo, vemos nosso software de gravação das instruções para o Dobot. Com cada input, o usuário define se a próxima etapa da instrução é um movimento do braço ou uma alteração no estado do bico sugador. Para o caso do movimento (1), a posição do braço é registrada automaticamente, enquanto para a alteração da sucção (2) é necessário declarar o estado desejado (1 para sugando, 0 para soltando).
 
 ### Execução de Sequência em Modo de Instrução
 
-Vídeo demonstrativo da execução de uma sequência predefinida em modo de instrução.
-
-[ESPAÇO PARA VÍDEO DE DEMONSTRAÇÃO]
+&emsp;No modo de instrução do script principal, o arquivo gravado na etapa anterior é lido pelo software e realiza as ações na mesma sequência da gravação.
 
 ### Controle Manual do Robô
 
-Vídeo demonstrativo do controle manual do robô utilizando o modo manual.
-
-[ESPAÇO PARA VÍDEO DE DEMONSTRAÇÃO]
+&emsp;Já no modo de controle manual, o usuário deve utilizar uma série de comandos já definidos no sistema para controlar o robô de forma mais precisa. Entre algumas das opções estão: Mover em um eixo certa quantidade de unidades, mover até uma posição [X,Y,Z] e alterar o estado de sucção do bico. Além disso, o usuário pode encadear comandos na mesma linda usando o sinal "|" separando os comandos, permitindo que uma sequência de comandos seja inserida manualmente de uma só vez.
