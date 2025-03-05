@@ -208,4 +208,4 @@ def rodarComando(device, comando):
 
 ### Controle Manual do Robô
 
-&emsp;Já no modo de controle manual, o usuário deve utilizar uma série de comandos já definidos no sistema para controlar o robô de forma mais precisa. Entre algumas das opções estão: Mover em um eixo certa quantidade de unidades, mover até uma posição [X,Y,Z] e alterar o estado de sucção do bico. Além disso, o usuário pode encadear comandos na mesma linda usando o sinal "|" separando os comandos, permitindo que uma sequência de comandos seja inserida manualmente de uma só vez.
+&emsp;Já no modo de controle manual, o usuário deve utilizar uma série de comandos já definidos no sistema para controlar o robô de forma mais precisa. Entre algumas das opções estão: Mover em um eixo certa quantidade de unidades, mover até uma posição [X,Y,Z] e alterar o estado de sucção do bico. Além disso, o usuário pode encadear comandos na mesma linha usando o sinal "|" separando os comandos, permitindo que uma sequência de comandos seja inserida manualmente de uma só vez.
