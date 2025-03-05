@@ -193,9 +193,7 @@ def rodarComando(device, comando):
 
 ## Demonstração do Sistema
 
-<video controls>
-  <source src="../../../../static/vid/videorobo.mp4" type="video/mp4">
-</video>
+<iframe src="https://drive.google.com/file/d/181uzLO_xXnsi6oZOncw6nzCQ3yxtpY4Z/preview" width="960" height="720" allow="autoplay"></iframe>
 
 
 ### Criação de Sequência de Movimentos
