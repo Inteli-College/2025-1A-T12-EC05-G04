@@ -6,7 +6,7 @@ sidebar_position: 2
 
 # Wireframe
 
-&emsp;Um wireframe é uma representação inicial da interface gráfica de um website ou aplicativo. Desenvolvido no estágio inicial dos projetos, é feito de forma rápida e com pouco investimento de recursos, pois sua finalidade é entender se a ideia e o fluxo da interface está de acordo com as regras de negócios do projeto e com as metas da empresa parceira.
+&emsp;Um wireframe é uma representação inicial da interface gráfica de um website ou aplicativo. Desenvolvido no estágio inicial dos projetos, é feito de forma rápida e com pouco investimento de recursos, pois sua finalidade é entender se a ideia e o fluxo da interface estão de acordo com as regras de negócios do projeto e com as metas da empresa parceira.
 
 &emsp;O grupo Hígia, após a etapa de UX Research durante a sprint 1 do projeto em parceria com o *Hospital de Clínicas da Unicamp* e baseando-se nas personas do produto, criou um wireframe que contempla tanto o usuário que estará em contato próximo com o manipulador robótico e os pedidos de separação de medicamentos, quanto o usuário que estará responsável por análises de métricas, gastos e relatórios de desempenho da farmácia hospitalar. 
 
@@ -89,7 +89,7 @@ Ao longo dessa seção de documentação, serão apresentadas todas as telas, ma
 
 &emsp;A tela de **Montagens Pendentes** será destinada à exibição de uma lista de separação de medicamentos previamente triada pelo farmacêutico. Sua elaboração considerou dois aspectos que a equipe identificou como relevantes neste primeiro momento. Primeiro, a inferência de que o sistema estará integrado ao sistema hospitalar atual via API, permitindo que as prescrições médicas triadas pelos farmacêuticos sejam enviadas automaticamente para essa tela. Segundo, reconheceu-se que não seria eficiente, ou mesmo viável, programar o robô para realizar as montagens de forma constantemente automática, pelo menos até esta sprint. 
 
-&emsp;Diante disso, foi criada essa lista de montagens pendentes. A ideia é que a pessoa responsável aprove manualmente o início do processo de separação. Essa validação tem o objetivo de evitar erros de montagem, como confusões entre as bandejas e fitas de diferentes pacientes. Após a aprovação de uma fita, o robô iniciará a montagem, e as demais ficarão bloqueadas até que o processo atual seja concluído. Para isso, a tela de **Montagens Pendentes** foi desenvolvida em duas variantes, contemplando dois cenários possíveis: 
+&emsp;Diante disso, foi criada essa lista de montagens pendentes. A ideia é que o responsável aprove manualmente o início do processo de separação. Essa validação tem o objetivo de evitar erros de montagem, como confusões entre as bandejas e fitas de diferentes pacientes. Após a aprovação de uma fita, o robô iniciará a montagem, e as demais ficarão bloqueadas até que o processo atual seja concluído. Para isso, a tela de **Montagens Pendentes** foi desenvolvida em duas variantes, contemplando dois cenários possíveis: 
 
 1. Quando nenhuma fita está em processo de montagem.
 2. Quando uma fita já está sendo montada.
@@ -112,7 +112,7 @@ Ao longo dessa seção de documentação, serão apresentadas todas as telas, ma
 <sub>Fonte: Material produzido pelos autores (2025).</sub>
 </div>
 
-&emsp;É importante relembrar que esta é a primeira versão do wireframe e, após uma conversa com o parceiro, foram identificados pontos de melhorias que serão implementados nas próximas semanas. Um dos aprimoramentos será a inclusão da opção de reorganizar a lista na primeira variante, permitindo que a equipe farmacêutica customize a fila conforme sua necessidade e desejo. Além disso, na segunda variante, será adicionada a possibilidade de ativar o modo automático de montagem. O técnico responsável poderá optar por essa funcionalidade quando julgar que não há risco de confusão entre as bandejas. Para isso, a lista poderá ser personalizada por meio de um checkbox, indicando quais fitas o manipulador seguirá para montagem automática. Esses aprimoramentos são pensados para garantir que a equipe farmacêutica, apesar de contarem com a ajuda do robô, continuem mantendo o controle sobre o processo de montagem, tornando-o mais eficiente e alinhado às necessidades operacionais.
+&emsp;É importante relembrar que esta é a primeira versão do wireframe e, após uma conversa com o parceiro, foram identificados pontos de melhorias que serão implementados nas próximas semanas. Um dos aprimoramentos será a inclusão da opção de reorganizar a lista na primeira variante, permitindo que a equipe farmacêutica customize a fila conforme sua necessidade e desejo. Além disso, na segunda variante, será possível ativar o modo automático de montagem. O técnico responsável poderá optar por essa funcionalidade quando julgar que não há risco de confusão entre as bandejas. Para isso, a lista poderá ser personalizada por meio de um checkbox, indicando quais fitas o manipulador seguirá para montagem automática. Esses aprimoramentos são pensados para garantir que a equipe farmacêutica, apesar de contarem com a ajuda do robô, continuem mantendo o controle sobre o processo de montagem, tornando-o mais eficiente e alinhado às necessidades operacionais.
 
 ## Tela de Estoque
 
@@ -123,7 +123,7 @@ Ao longo dessa seção de documentação, serão apresentadas todas as telas, ma
 <sub>Fonte: Material produzido pelos autores (2025).</sub>
 </div>
 
-&emsp;A tela traz duas seções iniciais, sendo a de medicamentos prestes a acabar e medicamentos próximos da data de validade. A seção de medicamentos próximos de acabar traz um botão para pedir novas unidades ao almofarixado e que poderá ser integrado no futuro ao sistema já utilizado, além de mostrar quantas unidades ainda restam nos bins do medicamento. A seção de medicamentos próximos da data de validade mostra quantos dias faltam para que o remédio chegue a data de validade e um novo medicamento é adicionado a essa seção sempre que faltarem 7 dias para a sua data de vencimento.
+&emsp;A tela traz duas seções iniciais, sendo a de medicamentos prestes a acabar e medicamentos próximos da data de validade. A seção de medicamentos próximos de acabar traz um botão para pedir novas unidades ao almoxarifado e que poderá ser integrado no futuro ao sistema já utilizado, além de mostrar quantas unidades ainda restam nos bins do medicamento. A seção de medicamentos próximos da data de validade mostra quantos dias faltam para que o remédio chegue a data de validade e um novo medicamento é adicionado a essa seção sempre que faltarem 7 dias para a sua data de vencimento.
 
 &emsp;Além disso, é possível utilizar a barra de busca e pesquisar por remédios específicos. Ao utilizar a barra de busca, os remédios cadastrados serão mostrados conforme o texto digitado na barra e é possível visualizar as informações cadastradas para cada medicamento.
 
