@@ -1,6 +1,6 @@
 ---
 title: User Stories
-slug: /user-stories
+slug: /ux/user-stories
 sidebar_position: 1
 ---
 

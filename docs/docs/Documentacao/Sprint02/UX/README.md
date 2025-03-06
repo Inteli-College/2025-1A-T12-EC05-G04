@@ -1,10 +1,10 @@
 ---
-title: Mapa de fluxo
-slug: /mapa-de-fluxo
-sidebar_position: 2
+title: UX
+slug: /ux
+sidebar_position: 3
 ---
 
-# Mapa de fluxo
+# UX
 
 Esta é a parte responsável pelo estudo aprofundado da interação do usuário com o sistema proposto e dos componentes necessários dentro da interface visual do sistema para que o usuário cumpra suas tarefas com qualidade e, conseguintemente, enxergue valor na solução.
 

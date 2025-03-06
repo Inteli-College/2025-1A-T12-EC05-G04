@@ -1,6 +1,6 @@
 ---
-title: Fluxo do Usuário
-slug: /mapa-de-fluxo/fluxodousuario
+title: Mapa de fluxo
+slug: /ux/fluxo-do-usuario
 sidebar_position: 3
 ---
 

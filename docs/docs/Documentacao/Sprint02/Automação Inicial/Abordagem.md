@@ -1,14 +1,10 @@
 ---
 title: Sistema de Controle
-slug: /automação_inicial/sistema_de_controle
+slug: /sistema-de-automatizacao/sistema-de-controle-inicial
 sidebar_position: 3
 ---
 
 # Sistema de Controle para o Dobot
-
-## Visão Geral
-
-Este documento descreve o sistema básico de automação desenvolvido para controlar o robô manipulador Dobot. O sistema permite o controle programático do robô através de uma interface de linha de comando (CLI), possibilitando a movimentação do robô para um conjunto pré-definido de pontos e a execução de operações de sucção.
 
 ## Arquitetura do Sistema
 
