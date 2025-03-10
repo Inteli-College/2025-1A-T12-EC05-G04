@@ -4,7 +4,6 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from app.configuration import ProductionConfig, DevelopmentConfig
-
 from app.Websockets import socketio
 
 app = Flask(__name__)

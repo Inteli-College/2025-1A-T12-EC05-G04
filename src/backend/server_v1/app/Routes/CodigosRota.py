@@ -4,8 +4,8 @@ from app.Controllers.CodigosController import CodigosController
 codigo_bp = Blueprint("codigo", __name__, url_prefix="/codigo")
 
 
-@codigo_bp.route("/")
-def get_codigo():
+@codigo_bp.route("/", methods=["POST"])
+def post_codigo():
     
     codigo_controller = CodigosController()
 
