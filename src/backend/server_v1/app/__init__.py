@@ -19,3 +19,6 @@ from app.Models import Models
 
 from app.Routes.CodigosRota import codigo_bp
 app.register_blueprint(codigo_bp)
+
+from app.Routes.QrcodeRouter import qrcode_bp
+app.register_blueprint(qrcode_bp)
