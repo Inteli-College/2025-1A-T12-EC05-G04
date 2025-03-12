@@ -11,4 +11,3 @@ def lerQR():
             return valor
         else:
             continue
-lerQR()
