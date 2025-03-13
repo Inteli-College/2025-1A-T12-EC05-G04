@@ -1,5 +1,6 @@
 import socketio
 import logging
+from lerQR import lerQR
 
 # Crie uma instância do cliente Socket.IO
 sio = socketio.Client()
@@ -20,10 +21,12 @@ def chat_message(data):
 logging.basicConfig(level=logging.DEBUG)
 
 # Conecte-se ao servidor Socket.IO
-sio.connect('http://127.0.0.1:5000')  # Substitua pela URL do seu servidor
+sio.connect('http://localhost:5000')  # Substitua pela URL do seu servidor
+
+qrLido = lerQR()
 
 # Envie uma mensagem para o "canal" chat_message
-sio.emit('message', {'user': 'João', 'message': 'Olá, pessoal!'})
+sio.emit('message', {qrLido})
 
 # Aguarde eventos indefinidamente
 sio.wait()
