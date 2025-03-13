@@ -1,0 +1,61 @@
+CREATE TABLE IF NOT EXISTS paciente (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome VARCHAR(100) NOT NULL,
+    HC VARCHAR(20) NOT NULL,
+    Leito VARCHAR(25) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS usuario (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    senha VARCHAR(100) NOT NULL,
+    CPF VARCHAR(11) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS lote (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    remedio VARCHAR(100) NOT NULL,
+    compostaAtivo VARCHAR(10) NOT NULL,
+    dose VARCHAR(10) NOT NULL,
+    validade VARCHAR(10) NOT NULL,
+    quantidade VARCHAR(10) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS lista (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_montagem INTEGER NOT NULL,
+    id_paciente INTEGER NOT NULL,
+    id_remedio INTEGER NOT NULL,
+    quantidade VARCHAR(10) NOT NULL,
+    FOREIGN KEY (id_montagem) REFERENCES montagem(id),
+    FOREIGN KEY (id_paciente) REFERENCES paciente(id),
+    FOREIGN KEY (id_remedio) REFERENCES lote(id)
+);
+
+CREATE TABLE IF NOT EXISTS montagem (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_lista INTEGER NOT NULL,
+    data VARCHAR(10) NOT NULL,
+    id_usuario INTEGER NOT NULL,
+    status VARCHAR(1) NOT NULL,
+    FOREIGN KEY (id_lista) REFERENCES lista(id),
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id)
+);
+
+CREATE TABLE IF NOT EXISTS devolucao (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    datetime VARCHAR(20) NOT NULL,
+    id_remedio INTEGER NOT NULL,
+    quantidade VARCHAR(10) NOT NULL,
+    id_usuario INTEGER NOT NULL,
+    FOREIGN KEY (id_remedio) REFERENCES lote(id),
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id)
+);
+
+CREATE TABLE IF NOT EXISTS erroMontagem (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_montagem INTEGER NOT NULL,
+    mensagem VARCHAR(255) NOT NULL,
+    FOREIGN KEY (id_montagem) REFERENCES montagem(id)
+);
