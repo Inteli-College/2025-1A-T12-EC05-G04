@@ -5,11 +5,12 @@ from app.QueueManager import add_message
 socketio = SocketIO(cors_allowed_origins="*")  
 
 @socketio.on("connect")
-def handle_connect():
+def handle_connect():    
     print("Cliente conectado ao WebSocket")
 
 @socketio.on("message")
 def handle_message(data):
+    socketio.emit("Data", "fodasse")
     print(f"Mensagem recebida: {data}")
     add_message(data)  
 
