@@ -1,7 +1,7 @@
 ---
 title: Periféricos
 slug: perifericos
-sidebar_position: 2
+sidebar_position: 1
 ---
 
 &emsp;Os periféricos são dispositivos complementares projetados para expandir as capacidades do sistema robótico. Esses componentes desempenham um papel fundamental ao permitir a interação do robô com o ambiente e a execução das tarefas.

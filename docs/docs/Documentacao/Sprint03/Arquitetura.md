@@ -1,7 +1,7 @@
 ---
-title: Testes
-slug: testes
-sidebar_position: 2
+title: Arquitetura
+slug: arquitetura
+sidebar_position: 3
 ---
 # Visão Geral
 
