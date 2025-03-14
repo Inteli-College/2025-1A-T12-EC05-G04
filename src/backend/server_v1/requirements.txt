@@ -18,6 +18,7 @@ netifaces==0.10.6
 psycopg2-binary==2.9.10
 python-engineio==4.11.2
 python-socketio==5.12.1
+requests==2.32.3
 setuptools==3.3
 simple-websocket==1.1.0
 six==1.17.0

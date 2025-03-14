@@ -6,7 +6,7 @@ class CodigosController:
     def __init__(self):
         pass
     
-    def post_codigo(self):
+    def get_codigo(self):
         codigo = get_message()
         
         new = CodigoBipado(codigo_barra=codigo)
