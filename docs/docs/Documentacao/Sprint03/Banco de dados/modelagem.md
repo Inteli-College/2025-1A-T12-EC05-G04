@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS usuario (
 );
 ```
 
-&emsp;Essa tabela têm 5 colunas, sendo 1 primary key. Essa tabela guarda as inforamações identificação do usuários e dados de acesso à plataforma web.
+&emsp;Essa tabela têm 5 colunas, sendo 1 primary key; e guarda as informações de identificação do usuários e dados de acesso à plataforma web.
 
 ## Paciente
 
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS paciente (
     Leito VARCHAR(25) NOT NULL
 );
 ```
-&emsp;Essa tabela têm 4 colunas, sendo 1 primary key. Essa tabela guarda as inforamações identificação do paciente e leito hospitalar.
+&emsp;Essa tabela têm 4 colunas, sendo 1 primary key; e guarda as inforamações de identificação do paciente e leito hospitalar.
 
 
 ## Montagem
@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS paciente (
     FOREIGN KEY (id_usuario) REFERENCES usuario(id)
 );
 ```
-&emsp;Essa tabela têm 5 colunas, sendo 1 primary key e 2 foreign key. Essa tabela serão armazenadas informações referêntes as montagens enviadas ao sistema. As foreign key terão a função de ligar a montagem à lista de medicamentos do kit e ao usuário que aprovou a montagem, além disso apresenta a coluna `data`. Com essas dados conseguiremos guardar logs das montagens e monitorar quais usuários aprovaram cada montagem. A coluna `status` guardará um valor para identificação se a montagem finalizou com sucesso, está pendente ou terminou incompleta.
+&emsp;Essa tabela têm 5 colunas, sendo 1 primary key e 2 foreign key. Nessa tabela serão armazenadas informações referentes às montagens enviadas ao sistema. As foreign key terão a função de ligar a montagem à lista de medicamentos do kit e ao usuário que aprovou a montagem; além disso, apresenta a coluna `data`. Com essas dados, conseguiremos guardar logs das montagens e monitorar quais usuários aprovaram cada montagem. A coluna `status` guardará um valor para identificação se a montagem foi finalizada com sucesso, está pendente ou terminou incompleta.
 
 
 ## Lista
@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS paciente (
 );
 ```
 
-&emsp;Dessa forma, a tabela Lote possui possui 6 colunas, sendo 1 primary key. A coluna `remedio` guarda o nome do medicamento, enquanto `comportoAtivo` guarda a identificação principal do remédio a partir do composto ativo que é feito. A `dose` diz respeito às diferentes doses e tamanhos de comprimidos que um medicamento pode ter, enquanto `validade` controla o tempo máximo que aquele remédio ainda tem no estoque. Por fim, a `quantidade` diz quantos comprimidos ainda existem para uso estoque.
+&emsp;Dessa forma, a tabela Lote possui possui 6 colunas, sendo 1 primary key. A coluna `remedio` guarda o nome do medicamento, enquanto `compostoAtivo` guarda a identificação principal do remédio a partir do composto ativo do qual é feito. A `dose` diz respeito às diferentes doses e tamanhos de comprimidos que um medicamento pode ter, enquanto `validade` controla o tempo máximo que aquele remédio ainda pode ficar no estoque. Por fim, a `quantidade` diz quantos comprimidos ainda existem no estoque para distribuição.
 
 ## Erro de montagem
 
@@ -116,7 +116,7 @@ CREATE TABLE IF NOT EXISTS paciente (
     FOREIGN KEY (id_montagem) REFERENCES montagem(id)
 );
 ```
-&emsp; A tabela erroMontagem possui 3 colunas, sendo 1 primary key e 1 foreing key. Ela foi criada para armazenar possíveis erros de execução da montagem dos kits de medimentos, a nossa ideia inicial é que quando ocorrer algum problema de montagem o backend envie uma mensagem para o banco de dados que será salva na coluna `mensagem` e por meio dessa mensagem e o contagem do número de elementos da tabela possamos gerar relatóriso de metrificação do desempenho de trabalho do robô e mostrem as causas dos erros.
+&emsp; A tabela erroMontagem possui 3 colunas, sendo 1 primary key e 1 foreing key. Ela foi criada para armazenar possíveis erros de execução da montagem dos kits de medimentos. A ideia inicial é: ao ocorrer algum problema de montagem, o backend da aplicação envie uma mensagem para o front-end - para alertar o usuário - e para o banco de dados, a qual será salva na coluna `mensagem`. Por meio dessa mensagem e da contagem do número de elementos da tabela, poderemos gerar relatórios de metrificação do desempenho de trabalho do robô e mostrar as causas dos erros.
 
 ## Devolução
 
@@ -134,4 +134,4 @@ CREATE TABLE IF NOT EXISTS paciente (
 );
 ``` 
 
-&emsp; A tabela erroMontagem possui 5 colunas, sendo 1 primary key e 2 foreing key. Ela servirá para salvar logs de devoluções do sistema, dessa forma conseguimeros retornar os medicamentos devolvidos à farmácia e monitorar essas devoluções por meio de relatórios.
+&emsp; Essa tabela possui 5 colunas, sendo 1 primary key e 2 foreign keys. Ela foi criada para armazenar os dados de remédios que voltam ao estoque no fim dos turnos do hospital, possibilitando maior controle dos remédios que saíram e voltaram à farmácia. A coluna `id_remedio` se relaciona aos medicamentos que retornaram; `id_usuario` permite saber quem aprovou a devolução dos itens à farmácia; `datetime` permite saber a data e o horário de devolução, e `quantidade` permite saber a quantidade de medicamentos que voltaram ao estoque.
