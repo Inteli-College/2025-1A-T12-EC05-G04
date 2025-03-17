@@ -26,7 +26,7 @@ sio.connect('http://localhost:5000')  # Substitua pela URL do seu servidor
 qrLido = lerQR()
 
 # Envie uma mensagem para o "canal" chat_message
-sio.emit('message', {qrLido})
+sio.emit('message', qrLido)
 
 # Aguarde eventos indefinidamente
 sio.wait()
