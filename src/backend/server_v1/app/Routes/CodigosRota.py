@@ -8,12 +8,7 @@ codigo_bp = Blueprint("codigo", __name__, url_prefix="/codigo")
 def post_codigo():
     
     codigo_controller = CodigosController()
-
     msg = codigo_controller.post_codigo()
-
-    if msg:
-        return f"A rota recebeu: {msg}"
-    
-    return "Nenhuma mensagem recebida..."
+    return msg
 
     

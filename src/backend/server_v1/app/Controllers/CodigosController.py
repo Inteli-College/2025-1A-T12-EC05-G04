@@ -8,10 +8,13 @@ class CodigosController:
     
     def post_codigo(self):
         codigo = get_message()
-        
-        new = CodigoBipado(codigo_barra=codigo)
-        db.session.add(new)
-        db.session.commit()
-        print(f"Adicionado ao banco com sucesso!")
 
-        return codigo
+        if codigo:
+            new = CodigoBipado(codigo_barra=codigo)
+            db.session.add(new)
+            db.session.commit()
+            print(f"Adicionado ao banco com sucesso!")
+
+            return codigo
+        
+        return "Nenhuma mensagem recebida..."
