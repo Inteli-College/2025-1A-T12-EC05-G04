@@ -1,11 +1,11 @@
-// src/pages/Home.jsx
 import React from 'react';
+import SideBar from "./components/Sidebar";
 
 export default function Home() {
   return (
-    <div>
-      <h1>Página Inicial</h1>
-      <p>Bem-vindo ao meu site React!</p>
+    <div className="screen">
+      <SideBar />
+      <div className="home"></div>
     </div>
   );
 }

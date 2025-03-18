@@ -13,6 +13,13 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+* {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
@@ -36,7 +43,7 @@ h1 {
 }
 
 button {
-  border-radius: 8px;
+  border-radius: 25px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
   font-size: 1em;
@@ -66,3 +73,41 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.sidebar-content {
+  background-color: whitesmoke;
+  height: 100vh;
+  padding: 40px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 100px;
+}
+
+.sb-button-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: 24px;
+}
+
+  .sb-button-section > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 2px;
+    
+  }
+
+    .sb-button-section > div > button {
+      height: 48px;
+      width: 48px;
+      border-radius: 50%;
+    }
+
+    .sb-button-section > div > p {
+      color: black;
+      font-weight: bold;
+    }
