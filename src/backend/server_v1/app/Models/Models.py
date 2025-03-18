@@ -43,10 +43,13 @@ class Lote(db.Model):
     dose = db.Column(db.String(10), nullable=False)
     validade = db.Column(db.String(10), nullable=False)
     quantidade = db.Column(db.String(10), nullable=False)
+    codigo = db.Column(db.String(100), nullable=False)
     
     # Relacionamentos
     listas = db.relationship('Lista', backref='remedio', lazy=True)
     devolucoes = db.relationship('Devolucao', backref='remedio', lazy=True)
+    logs = db.relationship('Logs', backref="montagem", lazy=True)
+
     
     def __repr__(self):
         return f'<Lote {self.remedio}>'
@@ -62,7 +65,7 @@ class Lista(db.Model):
     quantidade = db.Column(db.String(10), nullable=False)
     
     # Relacionamento com montagem (inverso)
-    montagens = db.relationship('Montagem', backref='lista_principal', lazy=True)
+    montagem = db.relationship('Montagem', uselist=False, back_populates="lista")
     
     def __repr__(self):
         return f'<Lista {self.id}>'
@@ -72,13 +75,15 @@ class Montagem(db.Model):
     __tablename__ = 'montagem'
     
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    id_lista = db.Column(db.Integer, db.ForeignKey('lista.id'), nullable=False)
+    id_lista = db.Column(db.Integer, db.ForeignKey('lista.id'), nullable=False, unique=True)
     data = db.Column(db.String(10), nullable=False)
     id_usuario = db.Column(db.Integer, db.ForeignKey('usuario.id'), nullable=False)
     status = db.Column(db.String(1), nullable=False)
     
     # Relacionamentos
+    lista = db.relationship('Lista', back_populates='montagem')
     erros = db.relationship('ErroMontagem', backref='montagem', lazy=True)
+    logs = db.relationship('Logs', backref="montagem", lazy=True)
     
     def __repr__(self):
         return f'<Montagem {self.id}>'
@@ -106,3 +111,16 @@ class ErroMontagem(db.Model):
     
     def __repr__(self):
         return f'<ErroMontagem {self.id}>'
+    
+
+class Logs(db.Model):
+    __tablename__ = 'logs'
+    
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    id_montagem = db.Column(db.Integer, db.ForeignKey('montagem.id'), nullable=False)
+    id_remedio = db.Column(db.Integer, db.ForeignKey('montagem.id'), nullable=False)
+    datetime = db.Column(db.String(20), nullable=False) 
+    
+    def __repr__(self):
+        return f'<Logs {self.id}>'
+
