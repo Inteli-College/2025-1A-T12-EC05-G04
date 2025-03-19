@@ -2,6 +2,12 @@ import socketio
 import logging
 from lerQR import lerQR
 
+# from serial.tools import list_ports
+
+# aval = list_ports.comports()
+
+# print(f"{[x.device for x in aval]}")
+
 # Crie uma instância do cliente Socket.IO
 sio = socketio.Client()
 
@@ -26,7 +32,7 @@ sio.connect('http://localhost:5000')  # Substitua pela URL do seu servidor
 qrLido = lerQR()
 
 # Envie uma mensagem para o "canal" chat_message
-sio.emit('message', {qrLido})
+sio.emit('message', qrLido)
 
 # Aguarde eventos indefinidamente
 sio.wait()

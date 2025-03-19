@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from app.configuration import ProductionConfig, DevelopmentConfig
 from app.Websockets import socketio
+import os
 
 app = Flask(__name__)
 app.config.from_object(DevelopmentConfig)
@@ -14,6 +15,9 @@ app.config.from_object(ProductionConfig)
 socketio.init_app(app)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+
+basedir = os.path.abspath(os.path.dirname(__file__))
+os.makedirs(os.path.join(basedir, 'migrations/versions'), exist_ok=True)
 
 from app.Models import Models
 

@@ -97,12 +97,13 @@ CREATE TABLE IF NOT EXISTS paciente (
     remedio VARCHAR(100) NOT NULL,
     compostaAtivo VARCHAR(10) NOT NULL,
     dose VARCHAR(10) NOT NULL,
+    codigo VARCHAR(100) NOT NULL,
     validade VARCHAR(10) NOT NULL,
     quantidade VARCHAR(10) NOT NULL
 );
 ```
 
-&emsp;Dessa forma, a tabela Lote possui possui 6 colunas, sendo 1 primary key. A coluna `remedio` guarda o nome do medicamento, enquanto `compostoAtivo` guarda a identificação principal do remédio a partir do composto ativo do qual é feito. A `dose` diz respeito às diferentes doses e tamanhos de comprimidos que um medicamento pode ter, enquanto `validade` controla o tempo máximo que aquele remédio ainda pode ficar no estoque. Por fim, a `quantidade` diz quantos comprimidos ainda existem no estoque para distribuição.
+&emsp;Dessa forma, a tabela Lote possui possui 6 colunas, sendo 1 primary key. A coluna `remedio` guarda o nome do medicamento, enquanto `compostoAtivo` guarda a identificação principal do remédio a partir do composto ativo do qual é feito. A `dose` diz respeito às diferentes doses e tamanhos de comprimidos que um medicamento pode ter, enquanto `validade` controla o tempo máximo que aquele remédio ainda pode ficar no estoque. `codigo` armazenará o código barra referentes ao medicamento. Dessa forma, possibilitando sua bipagem (remoção do sistema) quando adicionado a um kit de medicamento. Por fim, a `quantidade` diz quantos comprimidos ainda existem no estoque para distribuição.
 
 ## Erro de montagem
 
@@ -135,3 +136,20 @@ CREATE TABLE IF NOT EXISTS paciente (
 ``` 
 
 &emsp; Essa tabela possui 5 colunas, sendo 1 primary key e 2 foreign keys. Ela foi criada para armazenar os dados de remédios que voltam ao estoque no fim dos turnos do hospital, possibilitando maior controle dos remédios que saíram e voltaram à farmácia. A coluna `id_remedio` se relaciona aos medicamentos que retornaram; `id_usuario` permite saber quem aprovou a devolução dos itens à farmácia; `datetime` permite saber a data e o horário de devolução, e `quantidade` permite saber a quantidade de medicamentos que voltaram ao estoque.
+
+## logs
+
+&emsp;A tabela devolucao foi criada a partir do seguinte comando SQL:
+
+```sql
+    CREATE TABLE IF NOT EXISTS devolucao (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    datetime VARCHAR(20) NOT NULL,
+    id_remedio INTEGER NOT NULL,
+    id_montagem INTEGER NOT NULL,
+    FOREIGN KEY (id_remedio) REFERENCES lote(id),
+    FOREIGN KEY (id_montagem) REFERENCES montagem(id)
+);
+``` 
+
+&emsp; Essa tabela possui 4 colunas, sendo 1 primary key e 2 foreign keys. Ela foi criada para armazenar os dados de logs de bipagens realizadas nos medicamentos durante o processo de montagem dos kits.
