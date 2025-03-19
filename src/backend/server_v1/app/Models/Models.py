@@ -48,7 +48,7 @@ class Lote(db.Model):
     # Relacionamentos
     listas = db.relationship('Lista', backref='remedio', lazy=True)
     devolucoes = db.relationship('Devolucao', backref='remedio', lazy=True)
-    logs = db.relationship('Logs', backref="montagem", lazy=True)
+    logs = db.relationship('Logs', backref='montagem', lazy=True)
 
     
     def __repr__(self):
@@ -65,7 +65,7 @@ class Lista(db.Model):
     quantidade = db.Column(db.String(10), nullable=False)
     
     # Relacionamento com montagem (inverso)
-    montagem = db.relationship('Montagem', uselist=False, back_populates="lista")
+    montagem = db.relationship('Montagem', uselist=False, back_populates='lista')
     
     def __repr__(self):
         return f'<Lista {self.id}>'
@@ -83,7 +83,7 @@ class Montagem(db.Model):
     # Relacionamentos
     lista = db.relationship('Lista', back_populates='montagem')
     erros = db.relationship('ErroMontagem', backref='montagem', lazy=True)
-    logs = db.relationship('Logs', backref="montagem", lazy=True)
+    logs = db.relationship('Logs', backref='montagem', lazy=True)
     
     def __repr__(self):
         return f'<Montagem {self.id}>'
@@ -118,7 +118,7 @@ class Logs(db.Model):
     
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     id_montagem = db.Column(db.Integer, db.ForeignKey('montagem.id'), nullable=False)
-    id_remedio = db.Column(db.Integer, db.ForeignKey('montagem.id'), nullable=False)
+    id_remedio = db.Column(db.Integer, db.ForeignKey('lista.id'), nullable=False)
     datetime = db.Column(db.String(20), nullable=False) 
     
     def __repr__(self):
