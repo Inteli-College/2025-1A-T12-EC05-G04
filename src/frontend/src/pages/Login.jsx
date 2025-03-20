@@ -22,9 +22,9 @@ export default function Login() {
 
                     <form className={styles.form}>
                         <p className={styles.placeholder}>E-mail</p>
-                        <input type='email' placeholder='E-mail' className={styles.input} />
+                        <input type='email' placeholder='E-mail' className={styles.input} id='email'/>
                         <p className={styles.placeholder}>Senha</p>
-                        <input type='password' placeholder='Senha' className={styles.input} />
+                        <input type='password' placeholder='Senha' className={styles.input} id='senha'/>
                     </form>
 
                     <a href="#" className={styles.esqueceuSenha}>Esqueceu sua senha?</a>
