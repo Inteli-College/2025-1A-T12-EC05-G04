@@ -13,7 +13,6 @@ def router_create_listaAndMontagem():
         res, status_code = lista_controller.createListaAndMontagem(dados_nova_lista)
         return jsonify(res), status_code
 
-
 @lista_router_bp.route("/all", methods=["GET"])
 def router_getAll_lista():
     res, status_code = lista_controller.getAllListas()
