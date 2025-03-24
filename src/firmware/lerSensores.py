@@ -1,18 +1,28 @@
 import serial as s
+from time import sleep
 
 
 
-def lerQR():
-    ser = s.Serial('/dev/ttyUSB0', 9600)
+def lerQR(port = '/dev/ttyUSB0'):
+    ser = s.Serial(port, 9600)
     while True:
-        valor = ser.readline().decode().strip()
-        if valor != '':
+        tries = 0
+        while tries < 5:
+            valor = ser.readline().decode().strip()
+            if valor != '':
+                ser.close()
+                return valor
+            else:
+                tries += 1
+                continue
+        if tries == 5:
             ser.close()
-            return valor
-        else:
-            continue
-def lerInfra():
-    ser = s.Serial('/dev/ttyACM0', 9600)
+            raise ValueError('QR Code não lido')
+        sleep(0.5)
+
+
+def lerInfra(port = '/dev/ttyACM0'):
+    ser = s.Serial(port, 9600)
     while True:
         valor = ser.readline().decode().strip()
         if valor != '':

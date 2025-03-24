@@ -1,6 +1,6 @@
 import socketio
 import logging
-from firmware.lerSensores import lerQR, lerInfra
+from firmware.firmwarePi import lerQR, lerInfra
 
 # Crie uma instância do cliente Socket.IO
 sio = socketio.Client()
@@ -23,12 +23,8 @@ logging.basicConfig(level=logging.DEBUG)
 # Conecte-se ao servidor Socket.IO
 sio.connect('http://localhost:5000')  # Substitua pela URL do seu servidor
 
-qrLido = lerQR()
-infraLida = lerInfra()
-
 # Envie uma mensagem para o "canal" chat_message
-sio.emit('message', {qrLido})
-sio.emit('message', {infraLida})
+# sio.emit('message', {qrLido})
 
 # Aguarde eventos indefinidamente
 sio.wait()
