@@ -18,4 +18,5 @@ class QrcodeController:
     
     def getAll_qrcode(self):
         # qrcodeAll = CodigoBipado.query.all()
+        # Refazer o controlleer conforme o novo banco de dados
         return "oi"

@@ -48,7 +48,7 @@ class Lote(db.Model):
     # Relacionamentos
     listas = db.relationship('Lista', backref='remedio', lazy=True)
     devolucoes = db.relationship('Devolucao', backref='remedio', lazy=True)
-    logs = db.relationship('Logs', backref="montagem", lazy=True)
+    logs = db.relationship('Logs', backref="lote", lazy=True)
 
     
     def __repr__(self):
@@ -118,8 +118,10 @@ class Logs(db.Model):
     
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     id_montagem = db.Column(db.Integer, db.ForeignKey('montagem.id'), nullable=False)
-    id_remedio = db.Column(db.Integer, db.ForeignKey('montagem.id'), nullable=False)
+    id_remedio = db.Column(db.Integer, db.ForeignKey('lote.id'), nullable=False)
     datetime = db.Column(db.String(20), nullable=False) 
+
+    lote = db.relationship('Lote', back_populates='logs')
     
     def __repr__(self):
         return f'<Logs {self.id}>'
