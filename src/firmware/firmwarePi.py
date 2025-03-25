@@ -25,3 +25,10 @@ def lerQrCode(port):
         return qr
     except ValueError as e:
         return str(e)
+    
+def lerSensorInfra(port):
+    try:
+        valor = lerInfra(port)
+        return valor
+    except ValueError as e:
+        return str(e)
