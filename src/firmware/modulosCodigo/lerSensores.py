@@ -17,7 +17,7 @@ def lerQR(port = '/dev/ttyUSB0'):
                 continue
         if tries == 5:
             ser.close()
-            raise ValueError('QR Code não lido')
+            raise ValueError('qr_not_read')
         sleep(0.5)
 
 

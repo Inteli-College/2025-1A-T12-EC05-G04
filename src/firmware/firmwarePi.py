@@ -8,6 +8,7 @@ from modulosCodigo.leitorInstrucao import lerJsonMovimento
 from modulosCodigo.parserComando import lerComando
 # Script de execução de comando do modo manual
 from modulosCodigo.seletorComandos import rodarComando
+from modulosCodigo.lerSensores import lerQR, lerInfra
 
 def execComando(comando, port):
     d = pydobot.Dobot(port)
@@ -17,4 +18,10 @@ def execComando(comando, port):
     rodarComando(d, comando)
 
 def lerQrCode(port):
-    
+    try:
+        qr = lerQR(port)
+        if 'bin:' not in qr:
+            raise ValueError('qr_read_invalid')
+        return qr
+    except ValueError as e:
+        return str(e)
