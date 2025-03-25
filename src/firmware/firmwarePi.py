@@ -8,7 +8,8 @@ from modulosCodigo.leitorInstrucao import lerJsonMovimento
 from modulosCodigo.parserComando import lerComando
 # Script de execução de comando do modo manual
 from modulosCodigo.seletorComandos import rodarComando
-from modulosCodigo.lerSensores import lerQR, lerInfra
+
+from modulosCodigo.instrucoesDobot import execInstrucao
 
 def execComando(comando, port):
     d = pydobot.Dobot(port)
@@ -17,18 +18,10 @@ def execComando(comando, port):
     #Apesar disso, acredito eu que isto deixa o código mais limpo no ws_client, focando apenas na comunicação com o servidor, enquanto este cuida das interações com o físico
     rodarComando(d, comando)
 
-def lerQrCode(port):
-    try:
-        qr = lerQR(port)
-        if 'bin:' not in qr:
-            raise ValueError('qr_read_invalid')
-        return qr
-    except ValueError as e:
-        return str(e)
-    
-def lerSensorInfra(port):
-    try:
-        valor = lerInfra(port)
-        return valor
-    except ValueError as e:
-        return str(e)
+def rodarInstrucao(instrucao, port):
+    d = pydobot.Dobot(port)
+    execInstrucao(d, instrucao)
+
+def verificarPorta():
+    available_ports = list_ports.comports()
+    print(f'available ports: {[x.device for x in available_ports]}')
