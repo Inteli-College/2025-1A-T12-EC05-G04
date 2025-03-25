@@ -289,3 +289,16 @@ html, body, #root {
     size: 20px;
   }
 }}
+
+.lista-container-geral{
+  background-color: #2E2E2E;
+  border-radius: 20px;
+  width: 100%;
+  height: 10vh;
+  
+}
+
+.lista-infos {
+  display: flex;
+
+}
