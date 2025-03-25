@@ -19,7 +19,7 @@ migrate = Migrate(app, db)
 basedir = os.path.abspath(os.path.dirname(__file__))
 os.makedirs(os.path.join(basedir, 'migrations/versions'), exist_ok=True)
 
-from app.Models import Models
+from app.Models import DevolucaoModel, ErroMontagemModel, ListaModel, LogsModel, LoteModel, MontagemModel, PacienteModel, UsuarioModel
 
 from app.Routes.CodigosRouter import codigo_bp
 app.register_blueprint(codigo_bp)

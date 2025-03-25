@@ -22,7 +22,12 @@ def get_id_paciente():
 @pacientes_bp.route("/nome", methods=["GET"])
 def get_nome_paciente():
     data = request.json
-    return pac.get_nome_paciente(data)
+
+    if isinstance(data['nome'], str):
+        return pac.get_nome_paciente(data)
+    
+    if isinstance(data['leito'], str):
+        return pac.get_leito_paciente(data)
 
 @pacientes_bp.route("/", methods=["PUT"])
 def put_paciente():

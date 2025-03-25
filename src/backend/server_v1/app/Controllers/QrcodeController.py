@@ -1,5 +1,4 @@
 from os import abort
-from app.Models.Models import db
 
 class QrcodeController:
 
