@@ -7,9 +7,8 @@ class Montagem(db.Model):
     id_lista = db.Column(db.Integer, db.ForeignKey('lista.id'), nullable=False, unique=True)
     id_usuario = db.Column(db.Integer, db.ForeignKey('usuario.id'), nullable=True)
 
-
     datetime = db.Column(db.String(20), nullable=False)
-    status = db.Column(db.String(1), nullable=False)
+    status = db.Column(db.Integer, nullable=False)
     
     # Relacionamentos
     lista = db.relationship('Lista', back_populates='montagem')

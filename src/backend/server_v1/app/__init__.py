@@ -26,7 +26,7 @@ migrate = Migrate(app, db)
 basedir = os.path.abspath(os.path.dirname(__file__))
 os.makedirs(os.path.join(basedir, 'migrations/versions'), exist_ok=True)
 
-from app.Models import DevolucaoModel, ErroMontagemModel, ListaModel, LogsModel, LoteModel, MontagemModel, PacienteModel, UsuarioModel
+from app.Models import DevolucaoModel, ErroMontagemModel, ListaModel, LogsModel, LoteModel, MontagemModel, PacienteModel, UsuarioModel, InstrucaoRoboModel
 
 from app.Routes.CodigosRota import codigo_bp
 app.register_blueprint(codigo_bp)
@@ -39,3 +39,6 @@ app.register_blueprint(montagem_router_bp)
 
 from app.Routes.LogsRouter import log_router_bp
 app.register_blueprint(log_router_bp)
+
+from app.Routes.InstrucaoRoboRouter import instrucaoRobo_router_bp
+app.register_blueprint(instrucaoRobo_router_bp)
