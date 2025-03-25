@@ -1,12 +1,12 @@
 from app.Models.MontagemModel import Montagem, db
 from app.Models.ErroMontagemModel import ErroMontagem
-from app.Schemas.Schemas import MontagemSchema, ErroMontagemScema
+from app.Schemas.Schemas import MontagemSchema, ErroMontagemSchema
 
 montagem_schema = MontagemSchema()
 montagens_schema = MontagemSchema(many=True)
 
-erroMontagem_schema = ErroMontagemScema()
-erroMontagens_schema = ErroMontagemScema(many=True)
+erroMontagem_schema = ErroMontagemSchema()
+erroMontagens_schema = ErroMontagemSchema(many=True)
 
 
 class MontagemController:

@@ -39,3 +39,6 @@ app.register_blueprint(montagem_router_bp)
 
 from app.Routes.LogsRouter import log_router_bp
 app.register_blueprint(log_router_bp)
+
+from app.Routes.UsuarioRouter import auth_router_bp
+app.register_blueprint(auth_router_bp)
