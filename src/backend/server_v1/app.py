@@ -5,5 +5,5 @@ from app import app, socketio
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
-    print(f"Iniciando a aplicação SocketIO na porta {port}...")  # <-- print adicionado
-    socketio.run(app, host='localhost', port=port)
+    # socketio.run(app, host='localhost', port=port)
+    app.run(debug=True, port=port)

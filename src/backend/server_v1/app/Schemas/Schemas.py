@@ -6,6 +6,7 @@ from app.Models.UsuarioModel import Usuario
 
 from app import ma
 from marshmallow import fields
+from marshmallow.validate import Length
 
 
 # Validação de dados que entram e saem da aplicação. Promove um design modular. Possibilita a transformação dos dados de objetos em JSON e vice versa.

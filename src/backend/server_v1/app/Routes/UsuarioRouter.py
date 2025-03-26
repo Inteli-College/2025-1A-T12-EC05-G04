@@ -11,8 +11,8 @@ def router_auth_user():
     return jsonify(res), status_code
 
 
-@auth_router_bp.route("/newuser", methods=["POST"])
+@auth_router_bp.route("/create", methods=["POST"])
 def create_new_user():
         dados_new_user = request.get_json()
-        res, status_code = usuario_controller.createUser(dados_new_user)
+        res, status_code = usuario_controller.createUsuario(dados_new_user)
         return jsonify(res), status_code
