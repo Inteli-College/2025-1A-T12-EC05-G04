@@ -107,6 +107,8 @@ button:focus-visible {
   align-items: left;
   justify-content: start;
   padding: 0 32px;
+  margin-left: 8vw;
+  width: calc(100vw - 8vw);
 }
 
 
@@ -125,6 +127,9 @@ button:focus-visible {
   flex-direction: column;
   align-items: center;
   row-gap: 60px;
+  position: fixed; 
+  top: 0;
+  left: 0;
 }
 
 .sb-button-section {
@@ -145,14 +150,15 @@ button:focus-visible {
   }
 
     .sb-button-section > div > button {
-      height: 48px;
-      width: 48px;
+      height: 36px;
+      width: 36px;
       border-radius: 50%;
     }
 
     .sb-button-section > div > p {
       color: black;
       font-weight: bold;
+      font-size: 15px;
     }
 
 /* ---------------------------------------------- */
