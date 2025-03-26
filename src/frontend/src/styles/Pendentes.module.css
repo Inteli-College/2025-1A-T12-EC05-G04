@@ -1,0 +1,8 @@
+.montagemContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1vh; /* Espaçamento entre os itens */
+    width: 100%;
+    align-items: center; /* Centraliza os itens */
+  }
+  

@@ -108,15 +108,15 @@ const HomePage = () => {
   };
 
   return (
-    <div className={styles.appScreen}>
+    <div className='screen'>
       <SideBar />
+      <div className='content'>
       <div className={styles.topBar}>
         <div className={styles.statusButtonContainer}>
           <StatusButton type="robotStatus" label="Robô" />
           <StatusButton type="assemblyStatus" label="Montagem" />
         </div>
       </div>
-      <div className={styles.appContent}>
         <MainContent />
       </div>
     </div>

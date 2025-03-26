@@ -144,25 +144,6 @@ button:focus-visible {
       font-weight: bold;
     }
 
-.layout-container {
-  display: flex;
-  width: 100%;
-  height: 100vh;
-  overflow: hidden; /* Impede qualquer rolagem na camada do layout */
-}
-
-.main-content {
-  flex: 1;
-  overflow-y: auto; /* Permite rolagem vertical se necessário */
-  overflow-x: hidden; /* Impede rolagem horizontal */
-}
-
-/* Garantir que o body e html não tenham margens ou padding que atrapalhe */
-html, body, #root {
-  margin: 0;
-  padding: 0;
-
-
 /* ---------------------------------------------- */
 /* ---------------------------------------------- */
 /* ---------------------------------------------- */
