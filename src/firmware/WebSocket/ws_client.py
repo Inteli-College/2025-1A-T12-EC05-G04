@@ -11,7 +11,6 @@ from lerQR import lerQR
 # Crie uma instância do cliente Socket.IO
 sio = socketio.Client()
 
-# Defina os eventos que você quer escutar
 @sio.event
 def connect():
     print('Conectado ao servidor!')
@@ -26,13 +25,19 @@ def chat_message(data):
 
 logging.basicConfig(level=logging.DEBUG)
 
+def send_message(data):
+    """Envia mensagens WebSocket, comporta dois parâmetros, event e message."""
+    sio.emit(data)
+
+def listen_instrucao(data):
+    print(f"Mensagem recebida: {data}")
+    return data
+
 # Conecte-se ao servidor Socket.IO
 sio.connect('http://localhost:5000')  # Substitua pela URL do seu servidor
 
-qrLido = lerQR()
-
-# Envie uma mensagem para o "canal" chat_message
-sio.emit('message', qrLido)
+#
+sio.on('instrucao')(listen_instrucao)
 
 # Aguarde eventos indefinidamente
 sio.wait()

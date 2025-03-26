@@ -41,3 +41,6 @@ app.register_blueprint(auth_router_bp)
 
 from app.Routes.InstrucaoRoboRouter import instrucaoRobo_router_bp
 app.register_blueprint(instrucaoRobo_router_bp)
+
+from app.Routes.RoboRouter import robo_bp
+app.register_blueprint(robo_bp)
