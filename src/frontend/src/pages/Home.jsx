@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SideBar from './components/Sidebar';
+import ListaAtual from './components/Lista';
+import ProgressBar from './components/ProgressBar';
 import styles from '../styles/HomePage.module.css';
 
 const HomePage = () => {
@@ -8,27 +10,47 @@ const HomePage = () => {
     assemblyStatus: false
   });
 
+  const [medicines, setMedicines] = useState([]);
+
   const toggleStatus = (statusType) => {
     setSystemStatus(prev => {
-      // If trying to activate assembly, robot must be active first
       if (statusType === 'assemblyStatus' && !prev.robotStatus) {
         return prev;
       }
 
-      // Toggle the specific status
       const newStatus = { ...prev };
       newStatus[statusType] = !prev[statusType];
 
-      // If robot is turned off, also turn off assembly
       if (statusType === 'robotStatus' && !newStatus.robotStatus) {
         newStatus.assemblyStatus = false;
+        setMedicines([]);
       }
 
       return newStatus;
     });
   };
 
-  const StatusButton = ({ status, label, type }) => {
+  useEffect(() => {
+    if (systemStatus.robotStatus && systemStatus.assemblyStatus) {
+      const interval = setInterval(() => {
+        setMedicines(prev => prev.map(med => ({
+          ...med,
+          progress: med.progress < 100 ? med.progress + 10 : 100
+        })));
+      }, 1000);
+  
+      return () => clearInterval(interval);
+    }
+  }, [systemStatus, medicines]);
+  
+
+  const addMedicine = () => {
+    if (systemStatus.robotStatus && systemStatus.assemblyStatus) {
+      setMedicines(prev => [...prev, { name: `Remédio ${prev.length + 1}`, progress: 0 }]);
+    }
+  };
+
+  const StatusButton = ({ label, type }) => {
     const isActive = systemStatus[type];
     
     return (
@@ -45,7 +67,6 @@ const HomePage = () => {
   const MainContent = () => {
     const { robotStatus, assemblyStatus } = systemStatus;
 
-    // Variante 1: Off/Off
     if (!robotStatus && !assemblyStatus) {
       return (
         <div className={`${styles.mainContent} ${styles.mainContentInactive}`}>
@@ -57,7 +78,6 @@ const HomePage = () => {
       );
     }
 
-    // Variante 2: On/Off
     if (robotStatus && !assemblyStatus) {
       return (
         <div className={`${styles.mainContent} ${styles.mainContentRobotActive}`}>
@@ -69,17 +89,20 @@ const HomePage = () => {
       );
     }
 
-    // Variante 3: On/On
     if (robotStatus && assemblyStatus) {
       return (
         <div className={`${styles.mainContent} ${styles.mainContentSystemActive}`}>
-          <h2 className={styles.mainContentTitle}>Sistema Totalmente Operacional</h2>
-          <div className={styles.mainContentDetails}>
-            <p>Sistema de montagem está em funcionamento</p>
-          </div>
+          <ListaAtual />
+          <button onClick={addMedicine} className={styles.addMedicineButton}>
+        Adicionar Remédio
+      </button>
+          {medicines.map((med, index) => (
+            <ProgressBar key={index} name={med.name} progress={med.progress} />
+          ))}
         </div>
       );
     }
+    
 
     return null;
   };
@@ -87,19 +110,13 @@ const HomePage = () => {
   return (
     <div className={styles.appScreen}>
       <SideBar />
-      <div className={styles.appContent}>
-        <div className={styles.systemStatusBar}>
-          <div className={styles.statusButtonContainer}>
-            <StatusButton 
-              type="robotStatus" 
-              label="Robô" 
-            />
-            <StatusButton 
-              type="assemblyStatus" 
-              label="Montagem" 
-            />
-          </div>
+      <div className={styles.topBar}>
+        <div className={styles.statusButtonContainer}>
+          <StatusButton type="robotStatus" label="Robô" />
+          <StatusButton type="assemblyStatus" label="Montagem" />
         </div>
+      </div>
+      <div className={styles.appContent}>
         <MainContent />
       </div>
     </div>
