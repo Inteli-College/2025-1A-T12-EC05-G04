@@ -94,8 +94,8 @@ const HomePage = () => {
         <div className={`${styles.mainContent} ${styles.mainContentSystemActive}`}>
           <ListaAtual />
           <button onClick={addMedicine} className={styles.addMedicineButton}>
-        Adicionar Remédio
-      </button>
+          Adicionar Remédio
+          </button>
           {medicines.map((med, index) => (
             <ProgressBar key={index} name={med.name} progress={med.progress} />
           ))}
