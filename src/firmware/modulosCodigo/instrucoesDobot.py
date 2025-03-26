@@ -17,7 +17,7 @@ def execInstrucao(d, instrucao):
                     try:
                         lerQrCode('/dev/ttyUSB0')
                     except ValueError as e:
-                        # Se não conseguir ler o QR Code, levanta exceção. Deve impedir o resto da execução mas verifico amanhã (25/03)
+                        # Se não conseguir ler o QR Code, levanta exceção. Deve impedir o resto da execução mas verifico amanhã (26/03)
                         raise e
             elif(dfInstrucao["tipoAcao"][index] == 3):
                 # Se ação for tipo 2, executa ação de pegar ou soltar
