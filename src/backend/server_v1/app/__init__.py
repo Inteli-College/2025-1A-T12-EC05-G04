@@ -8,16 +8,12 @@ from app.configuration import ProductionConfig, DevelopmentConfig
 from app.Websockets import socketio
 import os
 
-print("Inicializando Flask...")  # <-- Print aqui para saber se chegou nesse ponto
-
 app = Flask(__name__)
 app.config.from_object(DevelopmentConfig)
 app.config.from_object(ProductionConfig)
 
 
 socketio.init_app(app)
-
-print("SocketIO configurado.")  # <-- Outro print
 
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
