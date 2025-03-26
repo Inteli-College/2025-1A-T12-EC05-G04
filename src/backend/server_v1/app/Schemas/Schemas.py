@@ -3,6 +3,7 @@ from app.Models.ListaModel import Lista
 from app.Models.LogsModel import Logs
 from app.Models.ErroMontagemModel import ErroMontagem
 from app.Models.UsuarioModel import Usuario
+from app.Models.InstrucaoRoboModel import InstrucaoRobo
 
 from app import ma
 from marshmallow import fields
@@ -40,5 +41,10 @@ class ErroMontagemSchema(ma.SQLAlchemyAutoSchema):
 class UsuarioSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Usuario
+        load_instance = True
+        include_fk = True   # inclui os campos de chave estrangeira 
+class InstrucaoRoboSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = InstrucaoRobo
         load_instance = True
         include_fk = True   # inclui os campos de chave estrangeira 

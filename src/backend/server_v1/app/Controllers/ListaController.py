@@ -32,7 +32,7 @@ class ListaController:
             'id_lista': lista_criada.id,
             'id_usuario': None,
             'datetime': datetime_sp_string,
-            'status': "0"
+            'status': 0
         }
         try:
             nova_montagem = montagem_schema.load(dados_nova_montagem, session=db.session)
