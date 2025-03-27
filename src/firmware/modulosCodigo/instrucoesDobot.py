@@ -5,7 +5,7 @@ def execInstrucao(d, instrucao):
     dfInstrucao = pd.DataFrame(eval(instrucao))
     shouldHaveGot = False
     for index in dfInstrucao.index:
-            if(dfInstrucao["tipoAcao"][index] < 3):
+            if(dfInstrucao["tipoAcao"][index] == "2" or dfInstrucao["tipoAcao"][index] == "1"):
                 # Se move para a posição da instrução se ação for tipo 1
                 d.move_to(float(dfInstrucao["x"][index]), float(dfInstrucao["y"][index]), float(dfInstrucao["z"][index]), r=0, wait=True)
                 poseAtual = d.pose()
@@ -13,7 +13,7 @@ def execInstrucao(d, instrucao):
                     raise ValueError('move_not_executed_correctly')
                 if(shouldHaveGot and not lerSensorInfra('/dev/ttyACM0')):
                     raise ValueError('no_medication_detected')
-                if dfInstrucao["tipoAcao"][index] == 2:
+                if dfInstrucao["tipoAcao"][index] == "2":
                     try:
                         lerQrCode('/dev/ttyUSB0')
                     except ValueError as e:
