@@ -1,9 +1,7 @@
 from flask import Blueprint, jsonify, request
 from app.Controllers.RoboController import RoboController
-from app.Controllers.ListaController import ListaController
 
-robo = RoboController
-lista = ListaController
+robo = RoboController()
 
 robo_bp = Blueprint("robo", __name__, url_prefix="/robo")
 
