@@ -1,5 +1,5 @@
 import pandas as pd
-from lerSensores import lerQR, lerInfra
+from modulosCodigo.lerSensores import lerQR, lerInfra
 
 def execInstrucao(d, instrucao):
     dfInstrucao = pd.DataFrame(eval(instrucao))
