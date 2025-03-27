@@ -40,7 +40,6 @@ class RoboController:
             }), 500
 
         if instrucaorobo:
-            instrucao = {"Instrução": instrucaorobo.instrucao}
             vivo = send_message("conectado", "Ta vivo?")
 
             if vivo.get("status") != "sucess":
@@ -49,7 +48,14 @@ class RoboController:
                     "message": "Cliente desconectado..."
                 }), 500
 
-            instrucao_ws = send_message("Data", instrucao)
+            instrucao_ws = send_message("instrucao", {"Instrucao":instrucaorobo.instrucao, "Id_remedio": id_remedio})
+
+            if instrucao_ws['status'] != "sucess":
+                print("Algo deu errado ao enviar a mensagem...")
+                return jsonify({
+                    "message": instrucao_ws["message"]
+                }), 500
+            
             print("Mensagem enviada com sucesso!", instrucao_ws)
 
             montagem = db.session.query(Montagem).filter_by(id=id_montagem).first()
