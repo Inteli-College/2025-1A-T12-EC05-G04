@@ -5,7 +5,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: white;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -22,6 +22,7 @@
   margin: 0;
   border: 0;
   box-sizing: border-box;
+  color: black;
 }
 
 a {
@@ -98,7 +99,7 @@ button:focus-visible {
 }
 
 .content {
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.85);
   height: 100%;
   width: 100%;
   display: flex;
@@ -108,6 +109,9 @@ button:focus-visible {
   padding: 0 32px;
   margin-left: 8vw;
   width: calc(100vw - 8vw);
+  background-image: url('assets/background.png');
+  background-size: cover;
+  background-blend-mode: overlay;
 }
 
 
@@ -129,6 +133,11 @@ button:focus-visible {
   position: fixed; 
   top: 0;
   left: 0;
+
+  & > img {
+    width: 80px;
+    height: 80px;
+  }
 }
 
 .sb-button-section {
@@ -136,7 +145,7 @@ button:focus-visible {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  row-gap: 24px;
+  row-gap: 48px;
 
   & > div {
     display: flex;
@@ -153,7 +162,6 @@ button:focus-visible {
       border: none;
       cursor: pointer;
     }
-    
 
     & > p {
       color: black;
@@ -166,6 +174,24 @@ button:focus-visible {
 .button-home {
   background-image:url('assets/home_icon.png');
 }
+
+.button-pendentes {
+  background-image:url('assets/hourglass_icon.png');
+}
+
+.button-emergencia {
+  background-image:url('assets/emergency_icon.png');
+}
+
+.button-relatorios {
+  background-image:url('assets/report_icon.png');
+}
+
+.button-estoque {
+  background-image:url('assets/stock_icon.png');
+}
+
+
 
 
 /* ---------------------------------------------- */
@@ -479,4 +505,13 @@ button:focus-visible {
   border-radius: 50%;
   border: 2px solid lightgreen;
   background-color: #228B22;
+}
+
+.id-fita {
+  padding-top: 64px;
+
+  & > p {
+    font-size: 40px;
+    color: #A09E9E;
+  }
 }
