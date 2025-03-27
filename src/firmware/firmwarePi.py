@@ -26,4 +26,4 @@ def verificarPorta():
     print(f'available ports: {[x.device for x in available_ports]}')
 
 verificarPorta()
-rodarInstrucao("")
+rodarInstrucao('{"x": 0, "y": 0, "z": 0, "tipoAcao": 3, "valorGrab": 1}')
