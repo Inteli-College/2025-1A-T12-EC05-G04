@@ -374,3 +374,102 @@ button:focus-visible {
 #emergencia-right {
   justify-content: space-between;
 }
+
+
+/* ---------------------------------------------- */
+/* ---------------------------------------------- */
+/* ---------------------------------------------- */
+/* ---------------------------------------------- */
+
+
+.status-paciente {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: left;
+  color: black;
+  background-color: #D9D9D9;
+  border-radius: 20px;
+  width: 90%;
+  padding: 16px 24px;
+
+  & > .paciente {
+    font-size: 40px;
+    gap: 8px;
+  }
+
+  & > .info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    font-size: 20px;
+
+    & > div {
+      border-left: 2px solid black;
+      height: 20px;
+    }
+  }
+}
+
+.line-status {
+  width: 90%;
+  border-top: 1px solid black;
+  margin-top: 24px;
+  margin-bottom: 64px;
+}
+
+
+.processo-bipagem {
+  display: flex;
+  flex-direction: row;
+  margin-top: 36px;
+  align-items: center;
+  justify-content: left;
+  gap: 32px;
+
+  & > p {
+    color: black;
+    font-size: 24px;
+  }
+}
+
+.separacao-processo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  
+  flex-direction: ;
+    & > hr {
+      border-top: 2px solid black;
+      width:250px;
+    }
+
+    & > .ball {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid black;
+    }
+}
+
+.bipagem {
+  color: black;
+  font-size: 28px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: right;
+  width: 85%;
+  gap: 160px;
+  margin-top: 64px;
+}
+
+.ball-check {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid lightgreen;
+  background-color: #228B22;
+}
