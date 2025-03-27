@@ -25,7 +25,7 @@ export default function SideBar() {
       <img id="logo" src="../../assets/react.svg"></img>
       <div className="sb-button-section">
         <div>
-          <button className="" onClick={goToHome}></button>
+          <button className="button-home" onClick={goToHome}></button>
           <p>Home</p>
         </div>
         <div>

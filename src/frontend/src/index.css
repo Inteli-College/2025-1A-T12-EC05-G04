@@ -50,7 +50,6 @@ h1 {
 }
 
 button {
-  border-radius: 25px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
   font-size: 1em;
@@ -88,14 +87,14 @@ button:focus-visible {
 /* ---------------------------------------------- */
 
 
-
 .screen {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: calc(100vh);
   width: 100vw;
+  background-color: white;
 }
 
 .content {
@@ -138,28 +137,36 @@ button:focus-visible {
   align-items: center;
   justify-content: center;
   row-gap: 24px;
-}
 
-  .sb-button-section > div {
+  & > div {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     row-gap: 2px;
     
-  }
-
-    .sb-button-section > div > button {
-      height: 36px;
-      width: 36px;
-      border-radius: 50%;
+    & > button {
+      width: 40px;
+      height: 40px;
+      background-size: cover;
+      background-color: #F5F5F5;
+      border: none;
+      cursor: pointer;
     }
+    
 
-    .sb-button-section > div > p {
+    & > p {
       color: black;
       font-weight: bold;
       font-size: 15px;
     }
+  }
+}
+
+.button-home {
+  background-image:url('assets/home_icon.png');
+}
+
 
 /* ---------------------------------------------- */
 /* ---------------------------------------------- */
