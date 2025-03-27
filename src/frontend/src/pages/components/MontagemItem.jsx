@@ -1,9 +1,6 @@
-import MontagemButton from "./MontagemButton";
-
-
 export default function MontagemItem() {
   return (
-  <div className="montagem-item">
+  <div className="montagem-item" id="">
     <div className=" montagem-texts">
       <p>Nome do Paciente: </p>
       <div>
@@ -11,7 +8,9 @@ export default function MontagemItem() {
         <p>LEITO: </p>
       </div>
     </div>
-    <MontagemButton />
+    <button className="montagem-button">
+      <p>INICIAR MONTAGEM</p>
+    </button>
   </div>
   );
 }

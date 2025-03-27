@@ -16,6 +16,10 @@ export default function SideBar() {
       navigate('/separacao');
   };
 
+  const goToEmergencia = () => {
+    navigate('/emergencia');
+};
+
   return (
     <div className="sidebar-content">
       <img id="logo" src="../../assets/react.svg"></img>
@@ -37,7 +41,7 @@ export default function SideBar() {
           <p>Lorem</p>
         </div>
         <div>
-          <button className=""></button>
+          <button className="" onClick={goToEmergencia}></button>
           <p>Emergências</p>
         </div>
       </div>
