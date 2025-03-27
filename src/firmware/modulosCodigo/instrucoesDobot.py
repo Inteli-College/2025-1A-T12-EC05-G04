@@ -32,7 +32,7 @@ def execInstrucao(d, instrucao):
             d.wait(500)
 
 
-def lerQrCode(port):
+def lerQrCode(port='/dev/ttyUSB0'):
     try:
         qr = lerQR(port)
         #Verifica se a formatação está correta com o qrcode
@@ -42,7 +42,7 @@ def lerQrCode(port):
     except ValueError as e:
         return str(e)
     
-def lerSensorInfra(port):
+def lerSensorInfra(port='/dev/ttyACM0'):
     try:
         valor = lerInfra(port)
         if('irread:' not in valor):
