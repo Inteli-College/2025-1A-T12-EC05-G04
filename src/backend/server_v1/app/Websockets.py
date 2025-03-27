@@ -1,5 +1,6 @@
 from flask_socketio import SocketIO, emit
 from app.QueueManager import add_message
+import logging
 
 # Depois mudar a origem da conexão para o do Raspberry
 socketio = SocketIO(cors_allowed_origins="*")  
@@ -10,7 +11,13 @@ def handle_connect():
 
 @socketio.on("message")
 def handle_message(data):
-    socketio.emit("Data", "fodasse")
+    socketio.emit("Mensagem recebida no servidor! :D")
+    print(f"Mensagem recebida: {data}")
+    add_message(data)  
+
+@socketio.on("qr_code")
+def handle_message(data):    
+    socketio.emit("Mensagem recebida no servidor! :D")
     print(f"Mensagem recebida: {data}")
     add_message(data)  
 
@@ -34,3 +41,11 @@ def handle_add_medicine(data):
         })
 
         time.sleep(1)  # delay para simular tempo real
+def send_message(event, data):
+    """Envia mensagem Websocket"""
+    try:
+        socketio.emit(event,data)
+        return {"status": "sucess", "message": "Mensagem enviada com sucesso! :D"}
+    except Exception as e:
+        logging.error(f"Erro ao enviar mensagem WebSocket: {e}")
+        return {"status": "error", "message": f"Erro ao enviar mensagem: {str(e)}"}
