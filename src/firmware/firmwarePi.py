@@ -17,10 +17,13 @@ def execComando(comando, port='/dev/ttyACM1'):
     #Apesar disso, acredito eu que isto deixa o código mais limpo no ws_client, focando apenas na comunicação com o servidor, enquanto este cuida das interações com o físico
     rodarComando(d, comando)
 
-def rodarInstrucao(instrucao, port='/dev/ttyACM1'):
+def rodarInstrucao(instrucao, port='/dev/ttyACM0'):
     d = pydobot.Dobot(port)
     execInstrucao(d, instrucao)
 
 def verificarPorta():
     available_ports = list_ports.comports()
     print(f'available ports: {[x.device for x in available_ports]}')
+
+verificarPorta()
+rodarInstrucao("")
