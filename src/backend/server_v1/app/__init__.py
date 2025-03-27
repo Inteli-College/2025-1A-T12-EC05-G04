@@ -7,6 +7,8 @@ from flask_marshmallow import Marshmallow
 from app.configuration import ProductionConfig, DevelopmentConfig
 from app.Websockets import socketio
 import os
+import eventlet
+import eventlet.wsgi
 
 app = Flask(__name__)
 app.config.from_object(DevelopmentConfig)
