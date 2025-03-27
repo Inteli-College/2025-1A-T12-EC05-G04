@@ -9,7 +9,7 @@ def execInstrucao(d, instrucao):
                 # Se move para a posição da instrução se ação for tipo 1
                 d.move_to(float(dfInstrucao["x"][index]), float(dfInstrucao["y"][index]), float(dfInstrucao["z"][index]), r=0, wait=True)
                 poseAtual = d.pose()
-                if poseAtual[0] not in range(dfInstrucao["x"][index]-1, dfInstrucao["x"][index]+1) or poseAtual[1] not in range(dfInstrucao["y"][index]-1, dfInstrucao["y"][index]+1) or poseAtual[2] not in range(dfInstrucao["z"][index]-1, dfInstrucao["z"][index]+1):
+                if not (dfInstrucao["x"][index] - 1 <= poseAtual[0] <= dfInstrucao["x"][index] + 1) or not dfInstrucao["y"][index] - 1 <= poseAtual[1] <= dfInstrucao["y"][index] + 1 or not dfInstrucao["z"][index] - 1 <= poseAtual[2] <= dfInstrucao["z"][index] + 1:
                     raise ValueError('move_not_executed_correctly')
                 if(shouldHaveGot and not lerSensorInfra('/dev/ttyACM0')):
                     raise ValueError('no_medication_detected')
