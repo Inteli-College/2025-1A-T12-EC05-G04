@@ -18,8 +18,7 @@ def execInstrucao(d, instrucao):
                     except ValueError as e:
                         # Se não conseguir ler o QR Code, levanta exceção. Deve impedir o resto da execução mas verifico amanhã (26/03)
                         raise e
-            elif(dfInstrucao["tipoAcao"][index] == 3):
-                # Se ação for tipo 2, executa ação de pegar ou soltar
+            elif(dfInstrucao["tipoAcao"][index] == "3"):
                 if(dfInstrucao["valorGrab"][index] == 1):
                     print("Suck")
                     d.suck(True)
