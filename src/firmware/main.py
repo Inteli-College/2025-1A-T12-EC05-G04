@@ -1,6 +1,6 @@
 import socketio
 import logging
-from firmware.firmwarePi import execComando, rodarInstrucao
+from firmwarePi import execComando, rodarInstrucao
 
 
 # from serial.tools import list_ports

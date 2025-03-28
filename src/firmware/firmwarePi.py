@@ -18,8 +18,11 @@ def execComando(comando, port='/dev/ttyACM1'):
     rodarComando(d, comando)
 
 def rodarInstrucao(instrucao, port='/dev/ttyACM1', callback=None):
+    verificarPorta()
     d = pydobot.Dobot(port)
-    execInstrucao(d, instrucao)
+    result, qr = execInstrucao(d, instrucao)
+    return result, qr
+    
 
 def verificarPorta():
     available_ports = list_ports.comports()

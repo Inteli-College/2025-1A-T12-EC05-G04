@@ -3,6 +3,7 @@ from modulosCodigo.lerSensores import lerQR, lerInfra
 
 def execInstrucao(d, instrucao, callback=None):
     dfInstrucao = pd.DataFrame(eval(instrucao))
+    qrLido = ''
     shouldHaveGot = False
     for index in dfInstrucao.index:
             if(dfInstrucao["tipoAcao"][index] == "2" or dfInstrucao["tipoAcao"][index] == "1"):
@@ -14,11 +15,10 @@ def execInstrucao(d, instrucao, callback=None):
                 poseAtual = d.pose()
                 if not (dfInstrucao["x"][index] - 1 <= poseAtual[0] <= dfInstrucao["x"][index] + 1) or not dfInstrucao["y"][index] - 1 <= poseAtual[1] <= dfInstrucao["y"][index] + 1 or not dfInstrucao["z"][index] - 1 <= poseAtual[2] <= dfInstrucao["z"][index] + 1:
                     raise ValueError(f'move_not_executed_correctly: Expected to be around {dfInstrucao["x"][index]}, {dfInstrucao["y"][index]}, {dfInstrucao["z"][index]},  but is at {poseAtual[0]}, {poseAtual[1]}, {poseAtual[2]}')
-                if shouldHaveGot and not lerSensorInfra():
-                    raise ValueError('no_medication_grabbed')
                 if dfInstrucao["tipoAcao"][index] == "2":
                     try:
                         qrLido = lerQrCode('/dev/ttyUSB0')
+                        print(qrLido)
                     except ValueError as e:
                         # Se não conseguir ler o QR Code, levanta exceção. Deve impedir o resto da execução mas verifico amanhã (26/03)
                         raise e
@@ -27,14 +27,11 @@ def execInstrucao(d, instrucao, callback=None):
                     print("Suck")
                     d.suck(True)
                     shouldHaveGot = True
-                    if callback:
-                        callback(index+1 / len(dfInstrucao), 'suck')
                 elif(dfInstrucao["valorGrab"][index] == "0"):
                     print("Unsuck")
                     d.suck(False)
                     shouldHaveGot = False
-                    if callback:
-                        callback(index+1 / len(dfInstrucao), 'unsuck')
+
             d.wait(500)
     return 2, qrLido
 
