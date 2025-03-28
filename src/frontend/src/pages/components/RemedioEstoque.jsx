@@ -9,9 +9,7 @@ export default function RemedioEstoque() {
             <div className="remedio-estoque-unidades">
                 <p>x unidades</p>
             </div>
-            <div className="remedio-estoque-pedido">
-                <button className="remedio-estoque-pedido-button">Fazer pedido</button>
-            </div>
+            <button className="remedio-estoque-pedido-button">Fazer pedido</button>
         </div>
     )
 }

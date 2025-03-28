@@ -515,3 +515,53 @@ button:focus-visible {
     color: #A09E9E;
   }
 }
+
+/* ---------------------Estoque------------------------- */
+
+.remedio-estoque-container {
+  width: 100vw;
+  display: flex;
+  gap: 2vw;
+  height: 8vh;
+}
+
+.remedio-estoque-nome {
+  padding: 1vw;
+  background-color: #A09E9E;
+  border-radius: 20px;
+  width: 40vw;
+  display: block;
+  align-items: center;
+  justify-content: center;
+}
+
+.remedio-estoque-unidades {
+  padding: 1vw;
+  width: 20vw;
+  background-color: #A09E9E;
+  border-radius: 20px;
+  display: block;
+  align-items: center;
+  justify-content: center;
+}
+
+.remedio-estoque-pedido-button {
+  padding: 1vw;
+  width: 20vw;
+  background-color: #1a1a1a;
+  color:#F5F5F5;
+  border-radius: 20px;
+  display: block;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---------------------searchbar------------------------- */
+
+.search-bar-container {
+  width: 84vw;
+  height: 8vh;
+  padding: 1vw;
+  background-color: #A09E9E;
+  border-radius: 20px;
+}

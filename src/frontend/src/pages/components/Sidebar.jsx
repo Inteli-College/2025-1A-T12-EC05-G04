@@ -13,8 +13,8 @@ export default function SideBar() {
       navigate('/pendentes');
   };
 
-  const goToSeparacoes = () => {
-      navigate('/separacao');
+  const goToEstoque = () => {
+      navigate('/estoque');
   };
 
   const goToEmergencia = () => {
@@ -34,7 +34,7 @@ export default function SideBar() {
           <p>Pendentes</p>
         </div>
         <div>
-          <button className="button-estoque" onClick={goToSeparacoes}></button>
+          <button className="button-estoque" onClick={goToEstoque}></button>
           <p>Estoque</p>
         </div>
         <div>
