@@ -39,10 +39,10 @@ class ListaController:
             db.session.add(nova_montagem)
             db.session.commit()
             # Retorne um dicionário serializável, usando dump
-            return montagem_schema.dump(nova_montagem), 201, lista_criada
+            return montagem_schema.dump(nova_montagem), 201
         except Exception as e:
             db.session.rollback()
-            return {"erro ao adicionar montagem": str(e)}, 500, lista_criada
+            return {"erro ao adicionar montagem": str(e)}, 500
 
     def getAllListas(self):
         try:
