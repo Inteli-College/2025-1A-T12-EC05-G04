@@ -30,7 +30,7 @@ def execInstrucao(d, instrucao):
                     d.suck(False)
                     shouldHaveGot = False
             d.wait(500)
-    return 500
+    return "500:instruct_executed_correctly"
 
 
 def lerQrCode(port='/dev/ttyUSB0'):

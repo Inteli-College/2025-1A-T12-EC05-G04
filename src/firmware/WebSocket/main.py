@@ -2,13 +2,13 @@ import socketio
 import logging
 from firmware.firmwarePi import execComando, rodarInstrucao
 
+
 # from serial.tools import list_ports
 
 # aval = list_ports.comports()
 
 # print(f"{[x.device for x in aval]}")
 
-# Crie uma instância do cliente Socket.IO
 sio = socketio.Client()
 
 @sio.event
@@ -25,19 +25,23 @@ def chat_message(data):
 
 logging.basicConfig(level=logging.DEBUG)
 
-def send_message(data):
+def send_message(event, data):
     """Envia mensagens WebSocket, comporta dois parâmetros, event e message."""
-    sio.emit(data)
+    sio.emit(event, data)
 
+    # Tem que mandar para o qr_code, status e receber da instrucao message_status
+
+@sio.on("instrucao")
 def listen_instrucao(data):
-    print(f"Mensagem recebida: {data}")
-    return data
-
-# Conecte-se ao servidor Socket.IO
-sio.connect('http://localhost:5000')  # Substitua pela URL do seu servidor
+    print(f"Mensagem recebida: {data}")    
 
 
 sio.on('instrucao')(listen_instrucao)
 
-# Aguarde eventos indefinidamente
-sio.wait()
+if __name__ == "__main__":
+    sio.connect('http://localhost:5000')  # Substitua pela URL do seu servidor
+    send_message('instrucao', "O raspberry está conectado!")
+    print("Mensagem enviada!")
+    sio.wait()
+
+

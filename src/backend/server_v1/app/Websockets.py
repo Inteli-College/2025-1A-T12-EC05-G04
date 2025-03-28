@@ -17,9 +17,15 @@ def handle_message(data):
 
 @socketio.on("qr_code")
 def handle_message(data):    
-    socketio.emit("Mensagem recebida no servidor! :D")
+    socketio.emit('message_status', {"message":"Mensagem recebida pelo server!"})
     print(f"Mensagem recebida: {data}")
     add_message(data)  
+
+@socketio.on("instrucao_fe")
+def handle_message(data): 
+    socketio.emit('message_status', {"message":"Mensagem recebida pelo server!"})   
+    socketio.emit('instrucao',{"instrucao":data})
+    print(f"Mensagem recebida: {data}")
 
 @socketio.on("disconnect")
 def handle_disconnect():
