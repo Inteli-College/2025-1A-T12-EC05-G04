@@ -19,11 +19,11 @@ def execInstrucao(d, instrucao):
                         # Se não conseguir ler o QR Code, levanta exceção. Deve impedir o resto da execução mas verifico amanhã (26/03)
                         raise e
             elif(dfInstrucao["tipoAcao"][index] == "3"):
-                if(dfInstrucao["valorGrab"][index] == 1):
+                if(dfInstrucao["valorGrab"][index] == "1"):
                     print("Suck")
                     d.suck(True)
                     shouldHaveGot = True
-                elif(dfInstrucao["valorGrab"][index] == 0):
+                elif(dfInstrucao["valorGrab"][index] == "0"):
                     print("Unsuck")
                     d.suck(False)
                     shouldHaveGot = False
