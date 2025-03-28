@@ -5,7 +5,7 @@ codigo_bp = Blueprint("codigo", __name__, url_prefix="/codigo")
 
 
 @codigo_bp.route("/")
-def post_codigo():
+def router_post_codigo():
     
     codigo_controller = CodigosController()
 
@@ -15,5 +15,3 @@ def post_codigo():
         return f"A rota recebeu: {msg}"
     
     return "Nenhuma mensagem recebida..."
-
-    
