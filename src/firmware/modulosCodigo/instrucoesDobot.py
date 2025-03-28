@@ -12,6 +12,8 @@ def execInstrucao(d, instrucao):
                 poseAtual = d.pose()
                 if not (dfInstrucao["x"][index] - 1 <= poseAtual[0] <= dfInstrucao["x"][index] + 1) or not dfInstrucao["y"][index] - 1 <= poseAtual[1] <= dfInstrucao["y"][index] + 1 or not dfInstrucao["z"][index] - 1 <= poseAtual[2] <= dfInstrucao["z"][index] + 1:
                     raise ValueError(f'move_not_executed_correctly: : Expected to be around {dfInstrucao["x"][index]}, {dfInstrucao["y"][index]}, {dfInstrucao["z"][index]},  but is at {poseAtual[0]}, {poseAtual[1]}, {poseAtual[2]}')
+                if shouldHaveGot and not lerSensorInfra():
+                    raise ValueError('no_medication_grabbed')
                 if dfInstrucao["tipoAcao"][index] == "2":
                     try:
                         lerQrCode('/dev/ttyUSB0')
@@ -28,6 +30,7 @@ def execInstrucao(d, instrucao):
                     d.suck(False)
                     shouldHaveGot = False
             d.wait(500)
+    return 500
 
 
 def lerQrCode(port='/dev/ttyUSB0'):
@@ -44,7 +47,8 @@ def lerSensorInfra(port='/dev/ttyACM0'):
     try:
         valor = lerInfra(port)
         if('irread:' not in valor):
-            raise ValueError('not_ir_read')
+            raise ValueError('no_ir_read')
+        print(valor)
         return int(valor.split(':')[1]) < 20000
     except ValueError as e:
         return str(e)
