@@ -36,7 +36,7 @@ def execInstrucao(d, instrucao, callback=None):
                     if callback:
                         callback(index+1 / len(dfInstrucao), 'unsuck')
             d.wait(500)
-    return "200:instruct_executed_correctly", qrLido
+    return 2, qrLido
 
 
 def lerQrCode(port='/dev/ttyUSB0'):

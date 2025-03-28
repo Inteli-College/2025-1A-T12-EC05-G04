@@ -42,7 +42,7 @@ def listen_instrucao(data):
         #Pega instrução e roda
         resultado, qr = rodarInstrucao(data['instrucao'], callback=send_callback)
         #Envio:
-        send_message('qr_code', {'message': resultado, 'qr': qr, 'id_montagem': data['id_montagem']})
+        send_message('qr_code', {'result': resultado, 'qr': qr, 'id_montagem': data['id_montagem']})
     except Exception as e:
         print(f"Erro ao executar instrução: {e}")
         send_message('error_status', {'message': 'Erro ao executar instrução', 'error': str(e)})
