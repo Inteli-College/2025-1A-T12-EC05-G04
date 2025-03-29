@@ -98,19 +98,3 @@ class RoboController:
     def deletarMontagem(self):
         pass
 
-
-
-
-
-
-                
-
-
-
-
-
-            
-
-
-
-

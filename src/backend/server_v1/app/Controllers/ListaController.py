@@ -42,7 +42,7 @@ class ListaController:
             return montagem_schema.dump(nova_montagem), 201, lista_criada
         except Exception as e:
             db.session.rollback()
-            return {"erro ao adicionar montagem": str(e)}, 500, lista_criada
+            return {"erro ao adicionar montagem": str(e)}, 500
 
     def getAllListas(self):
         try:

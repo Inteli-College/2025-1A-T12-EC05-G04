@@ -4,10 +4,12 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_marshmallow import Marshmallow
+from flask_cors import CORS
 from app.configuration import ProductionConfig, DevelopmentConfig
 from app.Websockets import socketio
 import os
 from flask_cors import CORS
+
 
 app = Flask(__name__)
 app.config.from_object(DevelopmentConfig)

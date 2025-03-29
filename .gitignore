@@ -30,5 +30,5 @@ yarn-debug.log*
 yarn-error.log*
 yarn.lock
 
-package-lock.json
-package.json
+/package-lock.json
+/package.json

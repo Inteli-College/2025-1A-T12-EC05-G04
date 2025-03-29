@@ -1,4 +1,7 @@
 from app.Models.MontagemModel import Montagem, db
+from app.Models.PacienteModel import Paciente
+from app.Models.ListaModel import Lista
+
 from app.Models.ErroMontagemModel import ErroMontagem
 from app.Schemas.Schemas import MontagemSchema, ErroMontagemSchema
 
@@ -32,8 +35,33 @@ class MontagemController:
         
     def getPendentesMontagem(self):
         try:
-            pendentesMontagem = Montagem.query.filter(Montagem.status == '0').all()
-            return montagens_schema.dump(pendentesMontagem), 200
+            pendentesMontagem = ( #define os campos que serão retornados da consulta ao banco de dados
+            db.session.query( 
+                Montagem.id.label("id_montagem"),
+                Paciente.nome.label("nome_paciente"),
+                Paciente.HC.label("hc"),
+                Paciente.Leito.label("leito"),
+                Montagem.datetime.label("datetime")
+            )
+            # realiza um JOIN entre as tabelas
+            .join(Lista, Montagem.id_lista == Lista.id) 
+            .join(Paciente, Lista.id_paciente == Paciente.id)
+            .filter(Montagem.status == 0)
+            .order_by(Montagem.datetime.asc())
+            .all()
+        )
+            montagens = [
+                {
+                    "id": r.id_montagem,
+                    "nome_paciente": r.nome_paciente,
+                    "hc": r.hc,
+                    "leito": r.leito,
+                    "datetime": r.datetime
+                }
+                for r in pendentesMontagem
+            ]
+            return montagens, 200
+        
         except Exception as e:
             return {"erro": str(e)}, 404
         
