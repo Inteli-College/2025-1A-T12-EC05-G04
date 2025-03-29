@@ -1,6 +1,7 @@
-from flask_socketio import SocketIO, emit
+from flask_socketio import SocketIO
 from app.QueueManager import add_message
 import logging
+import json
 
 # Depois mudar a origem da conexão para o do Raspberry
 socketio = SocketIO(cors_allowed_origins="*")  
@@ -17,30 +18,39 @@ def handle_message(data):
 
 @socketio.on("qr_code")
 def handle_message(data):    
-    socketio.emit("Mensagem recebida no servidor! :D")
+    socketio.emit('message_status', {"message":"Mensagem recebida pelo server!"})
     print(f"Mensagem recebida: {data}")
     add_message(data)  
+
+@socketio.on("instrucao_fe")
+def handle_message(data): 
+    socketio.emit('message_status', {"message":"Mensagem recebida pelo server!"})   
+    socketio.emit('instrucao',{"instrucao":data})
+    print(f"Mensagem recebida: {data}")
+
+@socketio.on("log")
+def handle_log(data):
+    try:
+        data = parse_socketio_payload(data)
+        if isinstance(data, str):
+            data = json.loads(data)
+        print("[WS] Evento 'log' recebido:", data)
+
+        if not isinstance(data, dict):
+            print(" Ignorado: payload não é dicionário")
+            return
+        if "medicineName" not in data or "progress" not in data:
+            print(" Ignorado: campos obrigatórios ausentes")
+            return
+
+        socketio.emit("log", data)
+    except Exception as e:
+        print("❌ Erro ao processar 'log':", str(e))
 
 @socketio.on("disconnect")
 def handle_disconnect():
     print("Cliente desconectado")
 
-
-import time
-
-@socketio.on('add_medicine')
-def handle_add_medicine(data):
-    name = data['name']
-    print(f"[WS] Evento add_medicine recebido: {name}")
-
-    for progress in [0, 25, 50, 75, 100]:
-        socketio.emit('log', {
-            'medicineName': data['name'],
-            'progress': 0,
-            'message': 'Início da montagem'
-        })
-
-        time.sleep(1)  # delay para simular tempo real
 def send_message(event, data):
     """Envia mensagem Websocket"""
     try:
@@ -49,3 +59,17 @@ def send_message(event, data):
     except Exception as e:
         logging.error(f"Erro ao enviar mensagem WebSocket: {e}")
         return {"status": "error", "message": f"Erro ao enviar mensagem: {str(e)}"}
+    
+
+def parse_socketio_payload(raw):
+    """Extrai e decodifica o JSON do frame socket.io."""
+    try:
+        if isinstance(raw, str) and raw.startswith("42"):
+            payload = raw[2:]  # remove o "42"
+            return json.loads(payload)[1]  # [event, data]
+        elif isinstance(raw, dict):
+            return raw
+        return None
+    except Exception as e:
+        print("❌ Erro ao parsear payload socket.io:", e)
+        return None

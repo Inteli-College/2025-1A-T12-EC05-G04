@@ -67,3 +67,35 @@
   color: #666;
   max-width: 400px;
 }
+
+.loadingWrapper {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  margin: 0 auto 10px;
+  border: 4px solid #ccc;
+  border-top: 4px solid #4caf50;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.errorMessage {
+  color: red;
+  text-align: center;
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+.logTexto {
+  color: black;
+}

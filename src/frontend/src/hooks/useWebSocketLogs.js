@@ -1,4 +1,3 @@
-// hooks/useWebSocketLogs.js
 import { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 
@@ -8,7 +7,6 @@ export default function useWebSocketLogs(url) {
 
   useEffect(() => {
     const safeUrl = (url || 'http://localhost:5000').trim();
-
     const newSocket = io(safeUrl, {
       reconnection: true,
       reconnectionAttempts: 5,
@@ -20,17 +18,18 @@ export default function useWebSocketLogs(url) {
     });
 
     newSocket.on('log', (data) => {
-      console.log('⚡ Evento log recebido');
-      console.log('📦 Dados do log:', data);
-      console.log('🧪 Tipo:', typeof data);
-      console.log('🔑 Campos:', Object.keys(data));
+      console.log('Log recebido no frontend:', data);
 
-      setLogs(prev => {
-        const isDuplicate = prev.some(
-          log => JSON.stringify(log) === JSON.stringify(data)
-        );
-        console.log(isDuplicate ? '⛔ Duplicado - ignorado' : '✅ Adicionado aos logs');
-        return isDuplicate ? prev : [...prev, data];
+      if (!data?.medicineName || typeof data.progress !== 'number') return;
+
+      setLogs((prev) => {
+        const updated = [...prev];
+        const index = updated.findIndex((log) => log.medicineName === data.medicineName);
+
+        if (index !== -1) updated[index] = data;
+        else updated.push(data);
+
+        return updated;
       });
     });
 
@@ -39,7 +38,6 @@ export default function useWebSocketLogs(url) {
     });
 
     setSocket(newSocket);
-    console.log('📡 Socket criado:', newSocket);
 
     return () => newSocket.disconnect();
   }, [url]);

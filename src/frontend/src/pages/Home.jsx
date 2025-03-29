@@ -1,100 +1,151 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import SideBar from './components/Sidebar';
-import ListaAtual from './components/Lista';
-import ProgressBar from './components/ProgressBar';
-import styles from '../styles/HomePage.module.css';
-import useWebSocketLogs from '../hooks/useWebSocketLogs';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+  // ProgressBar.js
+  import React, { useEffect, useState } from "react";
+  import SideBar from "./components/Sidebar";
+  import ListaAtual from "./components/Lista";
+  import ProgressBar from "./components/ProgressBar";
+  import styles from "../styles/HomePage.module.css";
+  import useWebSocketLogs from "../hooks/useWebSocketLogs";
 
-const HomePage = () => {
-  const [systemStatus, setSystemStatus] = useState({
-    robotStatus: false,
-    assemblyStatus: false
-  });
+  const HomePage = () => {
+    const { logs, socket } = useWebSocketLogs("http://localhost:5000");
 
-  const [medicines, setMedicines] = useState([]);
-  const { logs, socket } = useWebSocketLogs('http://localhost:5000');
+    const [connectionError, setConnectionError] = useState(false);
 
-  useEffect(() => {
-    if (!logs.length) return;
-
-    const latestLog = logs[logs.length - 1];
-    const { medicineName, progress } = latestLog;
-
-    setMedicines(prevMeds => {
-      const exists = prevMeds.some(m => m.name === medicineName);
-      const updated = exists
-        ? prevMeds.map(med =>
-            med.name === medicineName
-              ? {
-                  ...med,
-                  progress,
-                }
-              : med
-          )
-        : [...prevMeds, { name: medicineName, progress }];
-
-      if (progress === 100) {
-        toast.success(`Montagem concluída: ${medicineName}`);
-      }
-
-      return updated;
+    const [systemStatus, setSystemStatus] = useState({
+      robotStatus: false,
+      assemblyStatus: false
     });
-  }, [logs]);
 
-  const handleTestEvent = () => {
-    if (socket) {
-      socket.emit('add_medicine', {
-        name: `Remédio Teste ${new Date().toLocaleTimeString()}`
+    const [medicines, setMedicines] = useState([]);
+
+    const toggleStatus = (statusType) => {
+      setSystemStatus(prev => {
+        if (statusType === 'assemblyStatus' && !prev.robotStatus) {
+          return prev;
+        }
+  
+        const newStatus = { ...prev };
+        newStatus[statusType] = !prev[statusType];
+  
+        if (statusType === 'robotStatus' && !newStatus.robotStatus) {
+          newStatus.assemblyStatus = false;
+          setMedicines([]);
+        }
+  
+        return newStatus;
       });
-    }
-  };
-
-  const simulateLog = () => {
-    const fakeLog = {
-      medicineName: 'Dipirona',
-      progress: 80,
-      message: 'Simulação local'
     };
 
-    setMedicines(prev => {
-      const exists = prev.some(m => m.name === fakeLog.medicineName);
-      const updated = exists
-        ? prev.map(m => m.name === fakeLog.medicineName ? { ...m, progress: fakeLog.progress } : m)
-        : [...prev, { name: fakeLog.medicineName, progress: fakeLog.progress }];
+    useEffect(() => {
+      if (!socket) return;
+        const handleError = () => setConnectionError(true);
+        socket.on("connect_error", handleError);
+        return () => socket.off("connect_error", handleError);
+    }, [socket]);
 
-      if (fakeLog.progress === 100) {
-        toast.success(`Montagem concluída: ${fakeLog.medicineName}`);
+    useEffect(() => {
+      if (systemStatus.robotStatus && systemStatus.assemblyStatus) {
+        const interval = setInterval(() => {
+          setMedicines(prev => prev.map(med => ({
+            ...med,
+            progress: med.progress < 100 ? med.progress + 10 : 100
+          })));
+        }, 1000);
+    
+        return () => clearInterval(interval);
       }
+    }, [systemStatus, medicines]);
 
-      return updated;
-    });
-  };
+    const addMedicine = () => {
+      if (systemStatus.robotStatus && systemStatus.assemblyStatus) {
+        setMedicines(prev => [...prev, { name: `Remédio ${prev.length + 1}`, progress: 0 }]);
+      }
+    };
+  
+    const StatusButton = ({ label, type }) => {
+      const isActive = systemStatus[type];
+      
+      return (
+        <button 
+          className={`${styles.statusButton} ${isActive ? styles.statusButtonActive : styles.statusButtonInactive}`}
+          onClick={() => toggleStatus(type)}
+          disabled={type === 'assemblyStatus' && !systemStatus.robotStatus}
+        >
+          {label}: {isActive ? 'Ativo' : 'Inativo'}
+        </button>
+      );
+    };
 
-  return (
-    <div>
-      <h1>Teste de WebSocket</h1>
-
-      <button onClick={handleTestEvent}>Adicionar Medicamento de Teste</button>
-      <button onClick={simulateLog}>Simular Evento log</button>
-
-      <div>
-        <h2>Logs Recebidos:</h2>
-        {logs.map((log, index) => (
-          <div key={index}>
-            <p>Nome: {log.medicineName}</p>
-            <p>Progresso: {log.progress}%</p>
-            <p>Mensagem: {log.message}</p>
+    const MainContent = () => {
+      const { robotStatus, assemblyStatus } = systemStatus;
+  
+      if (!robotStatus && !assemblyStatus) {
+        return (
+          <div className={`${styles.mainContent} ${styles.mainContentInactive}`}>
+            <h2 className={styles.mainContentTitle}>Sistema Inativo</h2>
+            <p className={styles.mainContentDescription}>
+              Ative o robô para iniciar
+            </p>
           </div>
-        ))}
+        );
+      }
+  
+      if (robotStatus && !assemblyStatus) {
+        return (
+          <div className={`${styles.mainContent} ${styles.mainContentRobotActive}`}>
+            <h2 className={styles.mainContentTitle}>Robô Ativo</h2>
+            <p className={styles.mainContentDescription}>
+              Robô está pronto. Você pode ativar a montagem.
+            </p>
+          </div>
+        );
+      }
+  
+      if (robotStatus && assemblyStatus) {
+        return (
+          <div className={`${styles.mainContent} ${styles.mainContentSystemActive}`}>
+            <ListaAtual />
+            <button onClick={addMedicine} className={styles.addMedicineButton}>
+            Adicionar Remédio
+            </button>
+            <div className={styles.progressContainer}>
+              {connectionError ? (
+                <p className={styles.errorMessage}>Erro ao conectar com o servidor WebSocket.</p>
+              ) : logs.length === 0 ? (
+                <div className={styles.loadingWrapper}>
+                  <div className={styles.spinner}></div>
+                  <p>Aguardando dados...</p>
+                </div>
+              ) : (
+                logs.map((log, index) => (
+                  <div className={styles.logTexto} key={index}>
+                    <ProgressBar key={index} name={log.medicineName} progress={log.progress}/>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+        );
+      }
+      
+  
+      return null;
+    };
+  
+    return (
+      <div className='screen'>
+        <SideBar />
+        <div className='content'>
+        <div className={styles.topBar}>
+          <div className={styles.statusButtonContainer}>
+            <StatusButton type="robotStatus" label="Robô" />
+            <StatusButton type="assemblyStatus" label="Montagem" />
+          </div>
+        </div>
+          <MainContent />
+        </div>
       </div>
-
-      <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
-    </div>
-  );
-};
-
-export default HomePage;
+    );
+  };
+  
+  export default HomePage;
