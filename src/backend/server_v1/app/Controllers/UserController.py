@@ -37,15 +37,11 @@ class UsuarioController:
     
     def createUsuario(self, dados_new_user):
         try:
-            print("[DEBUG] Dados recebidos:", dados_new_user)
             dados_new_user["senha"] = generate_password_hash(dados_new_user["senha"])
             new_user = usuario_schema.load(dados_new_user, session=db.session)
-            print("[DEBUG] Usuário carregado no schema:", new_user)
             db.session.add(new_user)
             db.session.flush()
-            print("[DEBUG] flush() passou")
             db.session.commit()
-            print("[DEBUG] commit() passou")
             return usuario_schema.dump(new_user), 201
         except SQLAlchemyError as e:
             print("[ERRO SQL]", e)
