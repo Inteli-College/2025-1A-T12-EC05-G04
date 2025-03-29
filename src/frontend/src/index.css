@@ -1,0 +1,304 @@
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  width: 100%;
+  height: 100vh;
+  display: flex;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  padding: 0;
+  overflow-x: hidden; /* Impede rolagem horizontal */
+  width: 100%;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 25px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
+
+/* ---------------------------------------------- */
+/* ---------------------------------------------- */
+/* ---------------------------------------------- */
+/* ---------------------------------------------- */
+
+
+
+.screen {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+
+/* ---------------------------------------------- */
+/* ---------------------------------------------- */
+/* ---------------------------------------------- */
+/* ---------------------------------------------- */
+
+
+.sidebar-content {
+  width: 8vw;
+  background-color: whitesmoke;
+  height: 100vh;
+  padding: 40px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 60px;
+}
+
+.sb-button-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: 24px;
+}
+
+  .sb-button-section > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 2px;
+    
+  }
+
+    .sb-button-section > div > button {
+      height: 48px;
+      width: 48px;
+      border-radius: 50%;
+    }
+
+    .sb-button-section > div > p {
+      color: black;
+      font-weight: bold;
+    }
+
+.layout-container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden; /* Impede qualquer rolagem na camada do layout */
+}
+
+.main-content {
+  flex: 1;
+  overflow-y: auto; /* Permite rolagem vertical se necessário */
+  overflow-x: hidden; /* Impede rolagem horizontal */
+}
+
+/* Garantir que o body e html não tenham margens ou padding que atrapalhe */
+html, body, #root {
+  margin: 0;
+  padding: 0;
+
+
+/* ---------------------------------------------- */
+/* ---------------------------------------------- */
+/* ---------------------------------------------- */
+/* ---------------------------------------------- */
+
+
+.content {
+  background-color: white;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: start;
+  padding: 0 32px;
+}
+
+.montagem-item {
+  width: 100%;
+  height: 64px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: gray;
+  border-radius: 16px;
+  padding: 16px;
+  margin-top: 24px;
+}
+
+.montagem-texts {
+
+  & > div {
+    display: flex;
+    flex-direction: row;
+    column-gap: 74px;
+    align-items: left;
+    justify-content: left;
+  }
+
+  & > p {
+    color: white;
+    font-weight: bold;
+  }
+}
+
+
+.montagem-button {
+  width: 200px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: #2E2E2E;
+  align-items: center;
+  justify-content: center;
+  display: flex;;
+  
+  & > p{
+    color: white;
+  }
+}
+
+.montagem-title {
+  color: black;
+  size: 40px;
+  font-family: Inter;
+  padding: 88px 0 24px 0;
+}
+
+
+
+/* ---------------------------------------------- */
+/* ---------------------------------------------- */
+/* ---------------------------------------------- */
+/* ---------------------------------------------- */
+
+
+.status-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: left;
+  gap: 32px;
+  padding-top: 48px;
+
+  & > h2 {
+    size: 40px;
+    color: black;
+    font-family: Inter;
+  }
+}
+
+.status-list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: left;
+  gap: 80px;
+}
+
+.status-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: left;
+  gap: 8px;
+
+  & > p {
+    color: black;
+    size: 32px;
+  }
+}
+
+.status-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #D9D9D9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & > p {
+    color: black;
+    size: 20px;
+  }
+}}
+
+.lista-container-geral{
+  background-color: #2E2E2E;
+  border-radius: 20px;
+  width: 100%;
+  height: 10vh;
+  
+}
+
+.lista-infos {
+  display: flex;
+
+}

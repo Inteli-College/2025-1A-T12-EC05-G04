@@ -1,0 +1,101 @@
+.appScreen {
+  display: flex;
+  height: 100vh;
+}
+
+.appContent {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.systemStatusBar {
+  display: flex;
+  padding: 1rem;
+  background-color: #f3f4f6;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.statusButtonContainer {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.statusButton {
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+}
+
+.statusButtonActive {
+  background-color: #10b981;
+  color: white;
+}
+
+.statusButtonInactive {
+  background-color: #ef4444;
+  color: white;
+}
+
+.statusButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.mainContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  text-align: center;
+  padding: 2rem;
+}
+
+.mainContentTitle {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.mainContentDescription {
+  color: #666;
+  max-width: 400px;
+}
+
+.loadingWrapper {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  margin: 0 auto 10px;
+  border: 4px solid #ccc;
+  border-top: 4px solid #4caf50;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.errorMessage {
+  color: red;
+  text-align: center;
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+.logTexto {
+  color: black;
+}
