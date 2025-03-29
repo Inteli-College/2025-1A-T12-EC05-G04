@@ -1,13 +1,13 @@
 from flask import Blueprint
-from app.Controllers.CodigosController import CodigosController
+from app.Controllers.CodigosController import QrCodeController
 
 codigo_bp = Blueprint("codigo", __name__, url_prefix="/codigo")
 
 
 @codigo_bp.route("/")
-def post_codigo():
+def router_post_codigo():
     
-    codigo_controller = CodigosController()
+    codigo_controller = QrCodeController()
 
     msg = codigo_controller.post_codigo()
 
@@ -15,5 +15,3 @@ def post_codigo():
         return f"A rota recebeu: {msg}"
     
     return "Nenhuma mensagem recebida..."
-
-    

@@ -1,17 +1,13 @@
-from app.QueueManager import get_message
-from app.Models.Models import CodigoBipado, db
+from app.QueueManager import QueueErrorStatus, QueueQrCode, QueueRoboStatus
 
-class CodigosController:
+class QrCodeController:
 
     def __init__(self):
         pass
     
-    def post_codigo(self):
-        codigo = get_message()
-        
-        new = CodigoBipado(codigo_barra=codigo)
-        db.session.add(new)
-        db.session.commit()
-        print(f"Adicionado ao banco com sucesso!")
+    def post_codigo(self, data):
+        message = data['message']
+        qr_code = data['qr']
+        id_montagem = data['id_montagem']
 
-        return codigo
+        return "shalallalalalal"
