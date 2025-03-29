@@ -8,6 +8,7 @@ from flask_cors import CORS
 from app.configuration import ProductionConfig, DevelopmentConfig
 from app.Websockets import socketio
 import os
+from flask_cors import CORS
 
 
 app = Flask(__name__)
@@ -17,7 +18,6 @@ app.config.from_object(ProductionConfig)
 CORS(app)
 
 socketio.init_app(app)
-
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 migrate = Migrate(app, db)

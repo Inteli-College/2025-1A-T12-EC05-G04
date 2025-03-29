@@ -1,2 +1,0 @@
--r src/backend/server_v1/requirements.txt
--r src/firmware/requirements.txt
