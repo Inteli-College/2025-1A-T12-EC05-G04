@@ -1,11 +1,13 @@
-from app.QueueManager import get_message
+from app.QueueManager import QueueErrorStatus, QueueQrCode, QueueRoboStatus
 
-class CodigosController:
+class QrCodeController:
 
     def __init__(self):
         pass
     
-    def post_codigo(self):
-        codigo = get_message()
+    def post_codigo(self, data):
+        message = data['message']
+        qr_code = data['qr']
+        id_montagem = data['id_montagem']
 
-        return codigo
+        return "shalallalalalal"
