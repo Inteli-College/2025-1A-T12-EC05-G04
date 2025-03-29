@@ -30,7 +30,6 @@ def send_message(event, data):
     sio.emit(event, data)
 
     # Tem que mandar para o qr_code, status e receber da instrucao message_status
-    
 def send_callback(percentage, acao):
     send_message('current_status', {'acao': acao, 'percentage': percentage})
     
@@ -52,5 +51,4 @@ if __name__ == "__main__":
     send_message('instrucao', "O raspberry está conectado!")
     print("Mensagem enviada!")
     sio.wait()
-
 

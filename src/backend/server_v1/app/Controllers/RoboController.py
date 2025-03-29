@@ -48,7 +48,7 @@ class RoboController:
                     "message": "Cliente desconectado..."
                 }), 500
 
-            instrucao_ws = send_message("instrucao", {"Instrucao":instrucaorobo.instrucao, "Id_remedio": id_remedio})
+            instrucao_ws = send_message("instrucao", {"instrucao":instrucaorobo.instrucao, "id_montagem": id_montagem})
 
             if instrucao_ws['status'] != "sucess":
                 print("Algo deu errado ao enviar a mensagem...")
