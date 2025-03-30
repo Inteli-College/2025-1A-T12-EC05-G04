@@ -8,7 +8,7 @@ lista_controller = ListaController()  # instanciando o controller
 def router_create_listaAndMontagem():
 
         dados_nova_lista = request.get_json()
-        res, status_code, None = lista_controller.createListaAndMontagem(dados_nova_lista)
+        res, status_code, nova_lista = lista_controller.createListaAndMontagem(dados_nova_lista)
         return jsonify(res), status_code, None
 
 @lista_router_bp.route("/all", methods=["GET"])
