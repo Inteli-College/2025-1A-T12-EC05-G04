@@ -15,9 +15,16 @@ export default function Status() {
             <p>OFF</p>
           </div>
             <p>Pronto para separar</p>
-      </div>
-    </div>
+        </div>
+        
+        <div className="status-item">
+          <div className="status-circle">
+            <p className="error">!</p>
+          </div>
+          <p>Erro</p>
+        </div>
 
+    </div>
     </div>
   )
 }

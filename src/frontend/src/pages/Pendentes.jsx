@@ -3,6 +3,7 @@ import axios from "axios";
 
 import SideBar from "./components/Sidebar";
 import MontagemItem from "./components/MontagemItem";
+import styles from '../styles/Pendentes.module.css';
 
 export default function Pendentes() {
   const [montagens, setMontagens] = useState([]);
@@ -41,17 +42,3 @@ export default function Pendentes() {
     </div>
   );
 }
-
-
-
-// export default function Pendentes() {
-//   return (
-//     <div className="screen">
-//         <SideBar />
-//       <div className='content'>
-//         <h1 className='montagem-title'>Montagens Pendentes</h1>
-//         <MontagemItem />
-//       </div>
-//     </div>
-//   );
-// }

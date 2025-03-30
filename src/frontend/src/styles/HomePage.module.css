@@ -1,71 +1,63 @@
 .appScreen {
   display: flex;
-  height: 100vh;
+  background-color: white;
+  min-height: 100vh;
 }
 
 .appContent {
-  display: flex;
-  flex-direction: column;
   flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.systemStatusBar {
-  display: flex;
-  padding: 1rem;
-  background-color: #f3f4f6;
-  border-bottom: 1px solid #e5e7eb;
+.mainContent {
+  width: 80%;
+  max-width: 1200px;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .statusButtonContainer {
   display: flex;
-  gap: 1rem;
-  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
 .statusButton {
-  padding: 0.5rem 1rem;
-  border-radius: 0.25rem;
-  font-weight: bold;
-  transition: all 0.3s ease;
+  padding: 10px 20px;
+  border: none;
   cursor: pointer;
-  text-transform: uppercase;
-  font-size: 0.875rem;
+  font-size: 16px;
+  border-radius: 5px;
+  transition: background 0.3s;
 }
 
 .statusButtonActive {
-  background-color: #10b981;
+  background: #4caf50;
   color: white;
 }
 
 .statusButtonInactive {
-  background-color: #ef4444;
+  background: #d32f2f;
   color: white;
 }
 
-.statusButton:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+.addMedicineButton {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
 }
 
-.mainContent {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  flex-grow: 1;
-  text-align: center;
-  padding: 2rem;
-}
-
-.mainContentTitle {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
-}
-
-.mainContentDescription {
-  color: #666;
-  max-width: 400px;
+.addMedicineButton:hover {
+  background-color: #0056b3;
 }
 
 .loadingWrapper {

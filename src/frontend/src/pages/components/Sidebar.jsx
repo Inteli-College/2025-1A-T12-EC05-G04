@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import logo from '../../assets/logo.png'
 
 export default function SideBar() {
 
@@ -12,32 +13,36 @@ export default function SideBar() {
       navigate('/pendentes');
   };
 
-  const goToSeparacoes = () => {
-      navigate('/separacao');
+  const goToEstoque = () => {
+      navigate('/estoque');
   };
+
+  const goToEmergencia = () => {
+    navigate('/emergencia');
+};
 
   return (
     <div className="sidebar-content">
-      <img id="logo" src="../../assets/react.svg"></img>
+      <img id="logo" src={logo} alt=""></img>
       <div className="sb-button-section">
         <div>
-          <button className="" onClick={goToHome}></button>
+          <button className="button-home" onClick={goToHome}></button>
           <p>Home</p>
         </div>
         <div>
-          <button className="" onClick={goToPendentes}></button>
+          <button className="button-pendentes" onClick={goToPendentes}></button>
           <p>Pendentes</p>
         </div>
         <div>
-          <button className="" onClick={goToSeparacoes}></button>
-          <p>Separação</p>
+          <button className="button-estoque" onClick={goToEstoque}></button>
+          <p>Estoque</p>
         </div>
         <div>
-          <button className=""></button>
-          <p>Lorem</p>
+          <button className="button-relatorios"></button>
+          <p>Relatórios</p>
         </div>
         <div>
-          <button className=""></button>
+          <button className="button-emergencia" onClick={goToEmergencia}></button>
           <p>Emergências</p>
         </div>
       </div>
