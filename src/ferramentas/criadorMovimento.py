@@ -21,13 +21,13 @@ posicaoZ = []
 
 
 while isInputing:
-    tipoAcao.append(input("Digite o tipo de ação (1: movimento, 2: pegar/soltar): \n"))
-    if(tipoAcao[currentInput] == "2"):
+    tipoAcao.append(input("Digite o tipo de ação (1: movimento, 2: movimento com leitura, 3: pegar/soltar): \n"))
+    if(tipoAcao[currentInput] == "3"):
         valorGrab.append(input("Digite o valor de pegada: \n"))
         posicaoX.append("0")
         posicaoY.append("0")
         posicaoZ.append("0")
-    elif(tipoAcao[currentInput] == "1"):
+    elif(tipoAcao[currentInput] == "1" or tipoAcao[currentInput] == "2"):
         valorGrab.append("0")
         (x, y, z, r, j1, j2, j3, j4) = d.pose()
         posicaoX.append(x)

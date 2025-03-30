@@ -1,16 +1,16 @@
-export default function MontagemItem() {
+import MontagemButton from "./MontagemButton";
+
+export default function MontagemItem({ id, nomePaciente, hc, leito }) {
   return (
-  <div className="montagem-item" id="">
-    <div className=" montagem-texts">
-      <p>Nome do Paciente: </p>
-      <div>
-        <p>HC: </p>
-        <p>LEITO: </p>
+    <div className="montagem-item">
+      <div className="montagem-texts">
+        <p><strong>Nome do Paciente:</strong> {nomePaciente}</p>
+        <div>
+          <p>HC: {hc}</p>
+          <p>LEITO: {leito}</p>
+        </div>
       </div>
+      <MontagemButton idMontagem={id} />
     </div>
-    <button className="montagem-button">
-      <p>INICIAR MONTAGEM</p>
-    </button>
-  </div>
   );
 }
