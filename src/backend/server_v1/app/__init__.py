@@ -15,7 +15,7 @@ app = Flask(__name__)
 app.config.from_object(DevelopmentConfig)
 app.config.from_object(ProductionConfig)
 
-CORS(app)
+CORS(app)   
 
 socketio.init_app(app)
 db = SQLAlchemy(app)

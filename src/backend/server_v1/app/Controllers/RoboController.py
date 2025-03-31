@@ -1,6 +1,8 @@
 from app.Controllers.ListaController import ListaController
 from app.Models.InstrucaoRoboModel import InstrucaoRobo, db
 from app.Models.MontagemModel import Montagem
+from app.Models.LoteModel import Lote
+from app.Models.ListaModel import Lista
 from app.Websockets import send_message
 from flask import jsonify
 
@@ -15,20 +17,19 @@ class RoboController:
 
     def iniciarMontagem(self, data):
         """Recebe uma nova mensagem e lista"""
+
+        id_montagem = data['id']
+ 
+        query_louca = (db.session.query(Lista.id_remedio).join(Montagem, Lista.id == Montagem.id_lista).filter(Montagem.id == id_montagem).first())
+        print(query_louca)
         
-        new_montagem, code, new_lista = lista.createListaAndMontagem(data)
-
-        if code != 201:
-            print("Robo Controller: Algo deu errado...")
+        id_remedio = query_louca.id_remedio
+ 
+        if not id_remedio:
             return jsonify({
-                "message": "Erro ao criar montagem",
-                "montagem": new_montagem,
-                "lista": new_lista
-            }), code
-
-        id_montagem = new_montagem['id']
-        id_remedio = int(new_lista.id_remedio)
-
+                "message": f'Erro ao buscar o id remedio...',
+                'code': 500
+            }), 500
         try:
             instrucaorobo = db.session.query(InstrucaoRobo).filter_by(id_remedio=id_remedio).first()
 
@@ -36,7 +37,8 @@ class RoboController:
         except Exception as e:
             db.session.rollback()
             return jsonify({
-                'message': f'Erro ao buscar a Instrução: {str(e)}'
+                'message': f'Erro ao buscar a Instrução: {str(e)}',
+                'code': 500
             }), 500
 
         if instrucaorobo:
