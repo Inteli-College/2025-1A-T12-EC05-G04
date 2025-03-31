@@ -1,0 +1,567 @@
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: white;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  width: 100%;
+  height: 100vh;
+  display: flex;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  box-sizing: border-box;
+  color: black;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  padding: 0;
+  overflow-x: hidden; /* Impede rolagem horizontal */
+  width: 100%;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
+
+/* ---------------------------------------------- */
+/* ---------------------------------------------- */
+/* ---------------------------------------------- */
+/* ---------------------------------------------- */
+
+
+.screen {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh);
+  width: 100vw;
+  background-color: white;
+}
+
+.content {
+  background-color: rgba(255, 255, 255, 0.85);
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: start;
+  padding: 0 32px;
+  margin-left: 8vw;
+  width: calc(100vw - 8vw);
+  background-image: url('assets/background.png');
+  background-size: cover;
+  background-blend-mode: overlay;
+}
+
+
+/* ---------------------------------------------- */
+/* ---------------------------------------------- */
+/* ---------------------------------------------- */
+/* ---------------------------------------------- */
+
+
+.sidebar-content {
+  width: 8vw;
+  background-color: whitesmoke;
+  height: 100vh;
+  padding: 40px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 60px;
+  position: fixed; 
+  top: 0;
+  left: 0;
+
+  & > img {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+.sb-button-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: 48px;
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 2px;
+    
+    & > button {
+      width: 40px;
+      height: 40px;
+      background-size: cover;
+      background-color: #F5F5F5;
+      border: none;
+      cursor: pointer;
+    }
+
+    & > p {
+      color: black;
+      font-weight: bold;
+      font-size: 15px;
+    }
+  }
+}
+
+.button-home {
+  background-image:url('assets/home_icon.png');
+}
+
+.button-pendentes {
+  background-image:url('assets/hourglass_icon.png');
+}
+
+.button-emergencia {
+  background-image:url('assets/emergency_icon.png');
+}
+
+.button-relatorios {
+  background-image:url('assets/report_icon.png');
+}
+
+.button-estoque {
+  background-image:url('assets/stock_icon.png');
+}
+
+
+
+
+/* ---------------------------------------------- */
+/* ---------------------------------------------- */
+/* ---------------------------------------------- */
+/* ---------------------------------------------- */
+
+/* no ID do montagem-item */
+#montando { 
+  background-color: #3A633280;
+
+  & > button {
+    background-color: #3A6332;
+  }
+}
+
+/* na classe do montagem-item */
+.disable {
+  opacity: 0.4;
+}
+
+
+ .montagem-item {
+  width: 100%;
+  height: 64px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: gray;
+  border-radius: 16px;
+  padding: 16px;
+  margin-top: 24px;
+}
+
+.montagem-texts {
+
+  & > div {
+    display: flex;
+    flex-direction: row;
+    column-gap: 74px;
+    align-items: left;
+    justify-content: left;
+  }
+
+  & > p {
+    color: white;
+    font-weight: bold;
+  }
+}
+
+.montagem-button {
+  width: 200px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: #2E2E2E;
+  align-items: center;
+  justify-content: center;
+  display: flex;;
+  
+  & > p{
+    color: white;
+  }
+}
+
+.montagem-title {
+  color: black;
+  size: 40px;
+  font-family: Inter;
+  padding: 88px 0 24px 0;
+} 
+
+
+
+
+/* ---------------------------------------------- */
+/* ---------------------------------------------- */
+/* ---------------------------------------------- */
+/* ---------------------------------------------- */
+
+
+.status-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: left;
+  gap: 32px;
+  padding-top: 48px;
+
+  & > h2 {
+    size: 40px;
+    color: black;
+    font-family: Inter;
+  }
+}
+
+.status-list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: left;
+  gap: 80px;
+}
+
+.status-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: left;
+  gap: 8px;
+
+  & > p {
+    color: black;
+    size: 32px;
+  }
+}
+
+.status-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #D9D9D9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & > p {
+    color: black;
+    size: 20px;
+  }
+}
+
+
+.emergencia-content {
+  display: flex;
+  flex-direction: row;
+  align-items: left;
+  background-color: #D9D9D9;
+  width: fit-content;
+  margin-top: 20px;
+  border-radius: 24px;
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: left;
+    gap: 24px;
+    padding: 24px;
+    width: 90%;
+    width: fit-content;
+  
+    & > input , & > textarea, .leito-hc > input {
+      background-color: #FFFFFF;
+      padding: 12px;
+      border-radius: 20px;
+      color: #1a1a1a;
+      text-align: left;
+      vertical-align: text-top;
+      display: flex;
+      align-items: flex-start;
+    }
+
+    & > button {
+      background-color: #228B22;
+      border-radius: 20px;
+      width: 134px;
+    }
+  }
+}
+
+.leito-hc {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+/* ----------------------ID's input----------------------- */
+
+#nome-paciente {
+  width: 600px;
+  height: 64px;
+}
+
+#leito {
+  width: 240px;
+  height: 64px;
+}
+
+#hc {
+  width: 160px;
+  height: 64px;
+}
+
+#enfermeiro-responsavel {
+  width: 600px;
+  height: 64px;
+}
+
+#medicamentos, #observacoes {
+  width: 600px;
+  height: 160px;  
+  resize: none;
+  font-family:  Arial;
+  padding-top: 16px;
+}
+
+#data {
+  width:fit-content;
+  padding: 24px 0 24px 24px;
+}
+
+#emergencia-right {
+  justify-content: space-between;
+}
+
+
+/* ---------------------------------------------- */
+/* ---------------------------------------------- */
+/* ---------------------------------------------- */
+/* ---------------------------------------------- */
+
+
+.status-paciente {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: left;
+  color: black;
+  background-color: #D9D9D9;
+  border-radius: 20px;
+  width: 90%;
+  padding: 16px 24px;
+
+  & > .paciente {
+    font-size: 40px;
+    gap: 8px;
+  }
+
+  & > .info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    font-size: 20px;
+
+    & > div {
+      border-left: 2px solid black;
+      height: 20px;
+    }
+  }
+}
+
+.line-status {
+  width: 90%;
+  border-top: 1px solid black;
+  margin-top: 24px;
+  margin-bottom: 64px;
+}
+
+
+.processo-bipagem {
+  display: flex;
+  flex-direction: row;
+  margin-top: 36px;
+  align-items: center;
+  justify-content: left;
+  gap: 32px;
+
+  & > p {
+    color: black;
+    font-size: 24px;
+  }
+}
+
+.separacao-processo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  
+  flex-direction: ;
+    & > hr {
+      border-top: 2px solid black;
+      width:250px;
+    }
+
+    & > .ball {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid black;
+    }
+}
+
+.bipagem {
+  color: black;
+  font-size: 28px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: right;
+  width: 85%;
+  gap: 160px;
+  margin-top: 64px;
+}
+
+.ball-check {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid lightgreen;
+  background-color: #228B22;
+}
+
+.id-fita {
+  padding-top: 64px;
+
+  & > p {
+    font-size: 40px;
+    color: #A09E9E;
+  }
+}
+
+/* ---------------------Estoque------------------------- */
+
+.remedio-estoque-container {
+  width: 100vw;
+  display: flex;
+  gap: 2vw;
+  height: 8vh;
+}
+
+.remedio-estoque-nome {
+  padding: 1vw;
+  background-color: #A09E9E;
+  border-radius: 20px;
+  width: 40vw;
+  display: block;
+  align-items: center;
+  justify-content: center;
+}
+
+.remedio-estoque-unidades {
+  padding: 1vw;
+  width: 20vw;
+  background-color: #A09E9E;
+  border-radius: 20px;
+  display: block;
+  align-items: center;
+  justify-content: center;
+}
+
+.remedio-estoque-pedido-button {
+  padding: 1vw;
+  width: 20vw;
+  background-color: #1a1a1a;
+  color:#F5F5F5;
+  border-radius: 20px;
+  display: block;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---------------------searchbar------------------------- */
+
+.search-bar-container {
+  width: 84vw;
+  height: 8vh;
+  padding: 1vw;
+  background-color: #A09E9E;
+  border-radius: 20px;
+}
