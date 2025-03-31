@@ -105,9 +105,6 @@
         return (
           <div className={`${styles.mainContent} ${styles.mainContentSystemActive}`}>
             <ListaAtual />
-            <button onClick={addMedicine} className={styles.addMedicineButton}>
-            Adicionar Remédio
-            </button>
             <div className={styles.progressContainer}>
               {connectionError ? (
                 <p className={styles.errorMessage}>Erro ao conectar com o servidor WebSocket.</p>
