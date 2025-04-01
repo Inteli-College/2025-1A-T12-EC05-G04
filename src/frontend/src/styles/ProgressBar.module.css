@@ -30,3 +30,34 @@
     text-align: right;
   }
   
+  .progressLine {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .progressStep {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .progressCircle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid black;
+    background-color: white;
+  }
+  
+  .completed {
+    background-color: #4caf50;
+    border-color: #4caf50;
+  }
+  
+  .progressLabel {
+    font-size: 12px;
+    margin-top: 4px;
+  }
+  

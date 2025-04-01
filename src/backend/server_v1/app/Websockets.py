@@ -49,24 +49,36 @@ def handle_message(data):
     socketio.emit('instrucao',{"instrucao":data})
     print(f"Mensagem recebida: {data}")
 
-@socketio.on("log")
-def handle_log(data):
+import json
+
+@socketio.on("robo_status_fe")
+def handle_robo_status_fe(data):
     try:
-        data = parse_socketio_payload(data)
         if isinstance(data, str):
-            data = json.loads(data)
-        print("[WS] Evento 'log' recebido:", data)
+            data = json.loads(data)  # tenta converter string JSON em dict
+
+        print("[WS] Evento 'robo_status_fe' recebido:", data)
 
         if not isinstance(data, dict):
-            print(" Ignorado: payload não é dicionário")
-            return
-        if "medicineName" not in data or "progress" not in data:
-            print(" Ignorado: campos obrigatórios ausentes")
+            print(" Tipo de dado ainda inválido:", type(data), data)
             return
 
-        socketio.emit("log", data)
+        # Validação desativada para testes
+        socketio.emit("robo_status_fe", data)
+
     except Exception as e:
-        print("❌ Erro ao processar 'log':", str(e))
+        print(" Erro ao processar 'robo_status_fe':", str(e))
+
+
+
+
+@socketio.on("message_status_fe")
+def handle_message_status_fe(data):
+    try:
+        data = parse_socketio_payload(data)
+
+    except Exception as e:
+        print(" Erro ao processar 'message_status_fe':", str(e))
 
 @socketio.on("disconnect")
 def handle_disconnect():
@@ -81,7 +93,6 @@ def send_message(event, data):
         logging.error(f"Erro ao enviar mensagem WebSocket: {e}")
         return {"status": "error", "message": f"Erro ao enviar mensagem: {str(e)}"}
     
-
 def parse_socketio_payload(raw):
     """Extrai e decodifica o JSON do frame socket.io."""
     try:
@@ -92,5 +103,5 @@ def parse_socketio_payload(raw):
             return raw
         return None
     except Exception as e:
-        print("❌ Erro ao parsear payload socket.io:", e)
+        print(" Erro ao parsear payload socket.io:", e)
         return None
