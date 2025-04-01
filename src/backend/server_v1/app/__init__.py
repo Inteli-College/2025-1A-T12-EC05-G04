@@ -47,3 +47,6 @@ app.register_blueprint(instrucaoRobo_router_bp)
 
 from app.Routes.RoboRouter import robo_bp
 app.register_blueprint(robo_bp)
+
+from app.Routes.PacientesRouter import pacientes_bp
+app.register_blueprint(pacientes_bp)
