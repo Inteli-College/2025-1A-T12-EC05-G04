@@ -1,4 +1,7 @@
 # Arquivo responsável por iniciar a aplicação
+from flask_cors import CORS
+
+
 
 import os
 from app import app, socketio
