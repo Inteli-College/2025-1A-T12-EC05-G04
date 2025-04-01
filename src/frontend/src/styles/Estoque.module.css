@@ -3,3 +3,9 @@
     margin-left: 1vw;
     margin-bottom: 5vh;
 }
+
+.containerGeral {
+    gap: 2vh;
+    display: flex;
+    flex-direction: column;
+}
