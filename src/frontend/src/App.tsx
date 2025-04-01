@@ -4,7 +4,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Pendentes from './pages/Pendentes';
 import Estoque from './pages/Estoque';
-import Emergencia from './pages/Emergencia'
+import Relatorios from './pages/Relatorios'
 
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/pendentes" element={<Pendentes />} />
           <Route path="/estoque" element={<Estoque />} />
-          <Route path="/emergencia" element={<Emergencia />} />
+          <Route path="/relatorios" element={<Relatorios />} />
         </Routes>
     </BrowserRouter>
   );
