@@ -7,6 +7,7 @@ class Lista(db.Model):
     id_paciente = db.Column(db.Integer, db.ForeignKey('paciente.id'), nullable=False)
     id_remedio = db.Column(db.Integer, db.ForeignKey('lote.id'), nullable=False)
     
+    id_fita = db.Column(db.Integer, nullable=False)
     quantidade = db.Column(db.Integer, nullable=False)
     
     # Relacionamento 1:1 com Montagem
