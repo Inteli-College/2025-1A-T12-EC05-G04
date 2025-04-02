@@ -48,7 +48,7 @@ def listen_instrucao(data):
 
 if __name__ == "__main__":
     sio.connect('http://localhost:5000')  # Substitua pela URL do seu servidor
-    send_message('instrucao', "O raspberry está conectado!")
+    send_message('alive', "O raspberry está conectado!")
     print("Mensagem enviada!")
     sio.wait()
 
