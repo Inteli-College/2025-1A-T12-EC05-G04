@@ -1,14 +1,14 @@
 import pandas as pd
 from modulosCodigo.lerSensores import lerQR, lerInfra
 
-def execInstrucao(d, instrucao, callback=None):
+def execInstrucao(d, instrucao, callback=None, id_montagem=None):
     dfInstrucao = pd.DataFrame(eval(instrucao))
     qrLido = ''
     shouldHaveGot = False
     for index in dfInstrucao.index:
             if(dfInstrucao["tipoAcao"][index] == "2" or dfInstrucao["tipoAcao"][index] == "1"):
                 if callback:
-                    callback(index+1 / len(dfInstrucao), f'move_pos(x:{float(dfInstrucao["x"][index])}, y:{float(dfInstrucao["y"][index])}, z:{float(dfInstrucao["z"][index])}')
+                    callback(index+1 / len(dfInstrucao), f'move_pos(x:{float(dfInstrucao["x"][index])}, y:{float(dfInstrucao["y"][index])}, z:{float(dfInstrucao["z"][index])}', id_montagem)
                 # Se move para a posição da instrução se ação for tipo 1
                 d.move_to(float(dfInstrucao["x"][index]), float(dfInstrucao["y"][index]), float(dfInstrucao["z"][index]), r=0, wait=True)
                 d.wait(1000)
