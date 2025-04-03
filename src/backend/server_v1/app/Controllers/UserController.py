@@ -22,7 +22,7 @@ class UsuarioController:
             usuario = Usuario.query.filter_by(email=email).first()
 
             if not usuario:
-                return {'erro': 'Email não encontrado'}, 404
+                return {'erro': 'Email incorreto ou não cadastrado'}, 404
 
             if not check_password_hash(usuario.senha, senha):
                 return {'erro': 'Senha incorreta'}, 401
