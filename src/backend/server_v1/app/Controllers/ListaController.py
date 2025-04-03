@@ -134,8 +134,24 @@ class ListaController:
             db.session.add(nova_montagem)
             db.session.commit()
 
+            remedios_deletados, status_code = self.deleteRemedioForms(remedios)
+            if status_code != 201:
+                return remedios_deletados, status_code  # erro já tratado no método
+            
             return montagem_schema.dump(nova_montagem), 201
 
         except Exception as e:
             db.session.rollback()
             return {"erro geral": str(e)}, 500
+
+    def deleteRemedioForms(self, remedios):
+        try:
+            for r in remedios:
+                remedio_id = r.get("remedioID") or r.get("id_remedio")
+                if remedio_id:
+                    remedio = Montagem.query.get_or_404(remedio_id)
+                    db.session.delete(remedio)
+                    db.session.commit()
+        except Exception as e:
+            db.session.rollback()
+            return {"erro ao deletar remédios selecionados": str(e)}, 500

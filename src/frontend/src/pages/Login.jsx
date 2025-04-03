@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import styles from '../styles/Login.module.css';
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function Login() {
     const navigate = useNavigate();
@@ -17,22 +17,57 @@ export default function Login() {
                 },
                 body: JSON.stringify({ email, senha })
             });
-
+    
             const data = await response.json();
-
+    
             if (!response.ok) {
                 setErro(data.erro || 'Erro ao fazer login');
                 return;
             }
-
+    
             console.log('Login bem-sucedido:', data);
-
+    
+            // Pega os dados do usuário pelo e-mail e salva no localStorage
+            const sucesso = await handleNomeUser();
+    
+            if (!sucesso) {
+                return; // se falhou ao buscar nome, para aqui
+            }
+    
             navigate('/home');
         } catch (error) {
             console.error('Erro ao logar:', error);
             setErro('Erro de conexão com o servidor');
         }
     };
+    
+
+    const handleNomeUser = async () => {
+        try {
+            const response = await fetch(`http://localhost:5000/auth/getUserName/${email}`);
+            const data = await response.json();
+    
+            if (data.nome) {
+                const usuario = {
+                    nome: data.nome,
+                    leito: data.leito,
+                    email: email
+                };
+                localStorage.setItem("usuario", JSON.stringify(usuario));
+                console.log("Usuário salvo:", usuario);
+                return true; // ✅ sucesso
+            } else {
+                alert("Usuário não encontrado com esse e-mail.");
+                return false;
+            }
+        } catch (error) {
+            console.error("Erro ao buscar usuário:", error);
+            alert("Erro ao buscar informações do usuário.");
+            return false;
+        }
+    };
+    
+
 
     return (
         <div className={styles.containerGeral}>

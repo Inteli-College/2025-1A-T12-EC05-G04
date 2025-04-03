@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import SideBar from "./components/Sidebar";
 import axios from "axios";
 
@@ -12,27 +12,47 @@ const getTodayDate = () => {
 };
 
 export default function Emergencia() {
+  const usuarioLogado = JSON.parse(localStorage.getItem("usuario"));
+
   const [emergencia, setEmergencia] = useState({
     nomePaciente: '',
     leito: '',
     hc: '',
     date: getTodayDate(),
+    nomeEnfermeiro: usuarioLogado?.nome || '',
   });
 
-  const usuarioLogado = JSON.parse(localStorage.getItem("usuario"));
   const [remediosDisponiveis, setRemediosDisponiveis] = useState([]);
   const [remediosSelecionados, setRemediosSelecionados] = useState([]);
 
-  // MOCKANDO USUÁRIO LOGADO (para teste)
   useEffect(() => {
-    const usuarioMock = {
-      id: 4,
-      nome: "Roberto",
-      email: "roberto@teste.com",
-      cpf: "1222233444"
+    const fetchUsuarioLogado = async () => {
+      const usuario = JSON.parse(localStorage.getItem("usuario"));
+  
+      if (usuario?.email) {
+        try {
+          const response = await axios.get(`http://localhost:5000/auth/getUserName/${usuario.email}`);
+          const data = response.data;
+  
+          if (data?.nome) {
+            console.log("Nome do usuário carregado:", data.nome);
+            // Se quiser mostrar o nome do enfermeiro na tela ou em algum lugar
+            setEmergencia((prev) => ({
+              ...prev,
+              // exemplo: pode colocar o nome em um campo visível ou só logar
+              nomeEnfermeiro: data.nome
+            }));
+          }
+          
+        } catch (error) {
+          console.error("Erro ao buscar nome do usuário logado:", error);
+        }
+      }
     };
-    localStorage.setItem("usuario", JSON.stringify(usuarioMock));
+  
+    fetchUsuarioLogado();
   }, []);
+  
 
   // Busca os remédios disponíveis
   useEffect(() => {
@@ -128,92 +148,101 @@ export default function Emergencia() {
     }
   };
 
-  return (
-    <div className="screen">
-      <SideBar />
-      <div className="content">
-        <form onSubmit={handleSubmit}>
-          <h1>Novo pedido de emergência</h1>
-          <div className="emergencia-content">
-            <div>
-              {/* Apenas o HC é editável */}
-              <input 
+    return (
+      <div className="screen">
+        <SideBar />
+        <div className="content">
+          <form onSubmit={handleSubmit}>
+            <h1>Novo pedido de emergência</h1>
+            <div className="emergencia-content">
+              <div>
+                {/* Apenas o HC é editável */}
+                <input 
+                  type="text" 
+                  id="hc"
+                  name="hc"
+                  placeholder="Informe o HC do paciente"
+                  value={emergencia.hc}
+                  onChange={handleChange}
+                  onBlur={handleHcBlur}
+                />
+                {/* Esses campos serão preenchidos automaticamente */}
+                <input 
+                  type="text" 
+                  id="nome-paciente"
+                  name="nomePaciente"
+                  placeholder="Nome do paciente"
+                  value={emergencia.nomePaciente}
+                  readOnly
+                />
+                <input 
+                  type="text"
+                  id="leito" 
+                  name="leito"
+                  placeholder="Leito"
+                  value={emergencia.leito}
+                  readOnly
+                />
+                <input 
                 type="text" 
-                id="hc"
-                name="hc"
-                placeholder="Informe o HC do paciente"
-                value={emergencia.hc}
-                onChange={handleChange}
-                onBlur={handleHcBlur}
-              />
-              {/* Esses campos serão preenchidos automaticamente */}
-              <input 
-                type="text" 
-                id="nome-paciente"
-                name="nomePaciente"
-                placeholder="Nome do paciente"
-                value={emergencia.nomePaciente}
+                id="nome-enfermeiro"
+                name="nomeEnfermeiro"
+                placeholder="Nome do enfermeiro"
+                value={emergencia.nomeEnfermeiro || ""}
                 readOnly
-              />
-              <input 
-                type="text"
-                id="leito" 
-                name="leito"
-                placeholder="Leito"
-                value={emergencia.leito}
-                readOnly
-              />
-              {/* Removido o campo de enfermeiro, pois o ID será enviado */}
-              <div className="remedios-lista">
-                <p><strong>Selecione os remédios:</strong></p>
-                {remediosDisponiveis.map((remedio) => {
-                  const selecionado = remediosSelecionados.find((r) => r.id_remedio === remedio.id);
-                  return (
-                    <div key={remedio.id} style={{ display: "flex", alignItems: "center", marginBottom: "8px" }}>
-                      <label style={{ flex: 1 }}>
-                        <input
-                          type="checkbox"
-                          checked={!!selecionado}
-                          onChange={() => handleSelecionarRemedio(remedio.id, remedio.quantidade)}
-                        />
-                        {` ${remedio.remedio} (${remedio.dose}) - ${remedio.quantidade} disponíveis`}
-                      </label>
-                      {selecionado && (
-                        <input
-                          type="number"
-                          min="1"
-                          max={selecionado.quantidadeMaxima}
-                          value={selecionado.quantidade}
-                          onChange={(e) => handleQuantidadeChange(remedio.id, e.target.value)}
-                          style={{
-                            width: "60px",
-                            marginLeft: "10px",
-                            padding: "5px",
-                            borderRadius: "4px",
-                            border: "1px solid #ccc",
-                            backgroundColor: "#fff",
-                            color: "#000"
-                          }}
-                        />
-                      )}
-                    </div>
-                  );
-                })}
+                />
+                {/* Removido o campo de enfermeiro, pois o ID será enviado */}
+                <div className="remedios-lista">
+                  <p><strong>Selecione os remédios:</strong></p>
+                  {remediosDisponiveis.map((remedio) => {
+                    const selecionado = remediosSelecionados.find((r) => r.id_remedio === remedio.id);
+                    return (
+                      <div key={remedio.id} style={{ display: "flex", alignItems: "center", marginBottom: "8px" }}>
+                        <label style={{ flex: 1 }}>
+                          <input
+                            type="checkbox"
+                            checked={!!selecionado}
+                            onChange={() => handleSelecionarRemedio(remedio.id, remedio.quantidade)}
+                          />
+                          {` ${remedio.remedio} (${remedio.dose}) - ${remedio.quantidade} disponíveis`}
+                        </label>
+                        {selecionado && (
+                          <input
+                            type="number"
+                            min="1"
+                            max={selecionado.quantidadeMaxima}
+                            value={selecionado.quantidade}
+                            onChange={(e) => handleQuantidadeChange(remedio.id, e.target.value)}
+                            style={{
+                              width: "60px",
+                              marginLeft: "10px",
+                              padding: "5px",
+                              borderRadius: "4px",
+                              border: "1px solid #ccc",
+                              backgroundColor: "#fff",
+                              color: "#000"
+                            }}
+                          />
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              <div id="emergencia-right">
+                <input 
+                  type="date"
+                  id="date"
+                  name="date"
+                  value={emergencia.date}
+                  onChange={handleChange}
+                />
+                <button className="emergencia-confirmar" type="submit" id="emergencia-confirmar">CONFIRMAR</button>
               </div>
             </div>
-            <div id="emergencia-right">
-              <input 
-                type="date"
-                id="date"
-                name="date"
-                value={emergencia.date}
-                onChange={handleChange}
-              />
-              <button className="emergencia-confirmar" type="submit" id="emergencia-confirmar">CONFIRMAR</button>
-            </div>
-          </div>
-        </form>      
+          </form>      
+        </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
+    // Removed duplicate export default statement
