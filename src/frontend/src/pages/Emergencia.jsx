@@ -92,7 +92,12 @@ export default function Emergencia() {
     };
   
     try {
-      const response = await axios.post("http://localhost:5000/emergencia/forms", dadosFormulario);
+      const response = await axios.post(
+        "http://localhost:5000/lista/emergencia/forms",
+        dadosFormulario,
+        { mode: 'cors', headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({ /* seus dados do formulário aqui */ }) }
+      );
       console.log("Formulário enviado com sucesso:", response.data);
       // Aqui você pode exibir uma mensagem de sucesso ou redirecionar
     } catch (error) {
