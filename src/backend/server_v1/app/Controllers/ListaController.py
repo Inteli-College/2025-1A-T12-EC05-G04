@@ -45,7 +45,7 @@ class ListaController:
         try:
 
             novo_id_fita = gerar_novo_id_fita()  # Criamos essa função logo abaixo
-
+            print(novo_id_fita)
             for r in remedios:
                 remedio_id = r.get("remedioID") or r.get("id_remedio")
                 quantidade = r.get("quantidade")
@@ -122,19 +122,6 @@ class ListaController:
             lista_criada, status_code = self.createListaPorIdPaciente(paciente, remedios)
             if status_code != 201:
                 return lista_criada, status_code  # erro já tratado no método
-
-            for r in remedios:
-                remedio_id = r.get("remedioID") or r.get("id_remedio")
-                quantidade = r.get("quantidade")
-                if remedio_id and quantidade:
-                    novo_item = Lista(
-                        id_paciente=paciente.id,
-                        id_fita=lista_criada.id_fita,  # Usa o mesmo id_fita, que é o id do registro master
-                        id_remedio=remedio_id,
-                        quantidade=quantidade
-                    )
-                    db.session.add(novo_item)
-            db.session.commit()
 
             # 5. Criação da montagem associada ao master da lista e ao enfermeiro
             dados_nova_montagem = {

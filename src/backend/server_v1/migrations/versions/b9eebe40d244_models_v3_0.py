@@ -17,12 +17,14 @@ depends_on = None
 
 
 def upgrade():
-    # Conversão explícita de id_fita de INTEGER para UUID
+    # Conversão explícita do tipo e depois restrição NOT NULL
     op.execute("""
         ALTER TABLE lista
-        ALTER COLUMN id_fita
-        TYPE UUID
-        USING id_fita::text::uuid;
+        ALTER COLUMN id_fita TYPE UUID USING id_fita::text::uuid;
+    """)
+    op.execute("""
+        ALTER TABLE lista
+        ALTER COLUMN id_fita SET NOT NULL;
     """)
 
 
