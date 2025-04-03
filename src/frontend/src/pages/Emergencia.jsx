@@ -16,7 +16,6 @@ export default function Emergencia() {
     nomePaciente: '',
     leito: '',
     hc: '',
-    enfermeiro: '',
     date: getTodayDate(),
   });
 
@@ -24,6 +23,18 @@ export default function Emergencia() {
   const [remediosDisponiveis, setRemediosDisponiveis] = useState([]);
   const [remediosSelecionados, setRemediosSelecionados] = useState([]);
 
+  // MOCKANDO USUÁRIO LOGADO (para teste)
+  useEffect(() => {
+    const usuarioMock = {
+      id: 4,
+      nome: "Roberto",
+      email: "roberto@teste.com",
+      cpf: "1222233444"
+    };
+    localStorage.setItem("usuario", JSON.stringify(usuarioMock));
+  }, []);
+
+  // Busca os remédios disponíveis
   useEffect(() => {
     const fetchRemedios = async () => {
       try {
@@ -33,18 +44,40 @@ export default function Emergencia() {
         console.error("Erro ao buscar remédios:", error);
       }
     };
-  
     fetchRemedios();
 
-    // Atualiza o nome do enfermeiro com base no usuário logado
-    const usuario = JSON.parse(localStorage.getItem("usuario"));
-    if (usuario && usuario.nome) {
-      setEmergencia((prev) => ({
-        ...prev,
-        enfermeiro: usuario.nome
-      }));
-    }
+    // Atualiza o nome do paciente com base no usuário logado (se necessário, mas neste caso não mandamos o nome do enfermeiro)
+    // Você pode remover essa parte se o nome do enfermeiro não for necessário para o envio.
   }, []);
+
+  // Função que dispara quando o campo HC perde o foco
+  const handleHcBlur = async () => {
+    if (emergencia.hc.trim() !== "") {
+      try {
+        // Supondo que exista um endpoint que valida o HC e retorna os dados do paciente
+        const response = await axios.get(`http://localhost:5000/pacientes/validar/${emergencia.hc}`);
+        // Se paciente for encontrado, atualize os campos de nome e leito
+        if (response.data && response.data.nome && response.data.leito) {
+          setEmergencia((prev) => ({
+            ...prev,
+            nomePaciente: response.data.nome,
+            leito: response.data.leito
+          }));
+        } else {
+          // Caso não encontre, limpar os campos
+          setEmergencia((prev) => ({
+            ...prev,
+            nomePaciente: '',
+            leito: ''
+          }));
+          alert("Paciente não encontrado com esse HC.");
+        }
+      } catch (error) {
+        console.error("Erro ao validar HC:", error);
+        alert("Erro ao validar HC.");
+      }
+    }
+  };
 
   const handleSelecionarRemedio = (id, quantidadeMaxima) => {
     const jaSelecionado = remediosSelecionados.find((r) => r.id_remedio === id);
@@ -67,42 +100,31 @@ export default function Emergencia() {
     setEmergencia({ ...emergencia, [e.target.name]: e.target.value });
   };  
 
-  useEffect(() => {
-    // MOCKANDO USUÁRIO LOGADO
-    const usuarioMock = {
-      id: 4,
-      nome: "Roberto",
-      email: "roberto@teste.com",
-      cpf: "1222233444"
-    };
-    localStorage.setItem("usuario", JSON.stringify(usuarioMock));
-  }, []);
-  
-
   const handleSubmit = async (e) => {
     e.preventDefault();
   
     const dadosFormulario = {
       ...emergencia,
-      enfermeiro_id: usuarioLogado?.id, // importante para associar a montagem
+      enfermeiro_id: usuarioLogado?.id,
       remedios: remediosSelecionados.map((r) => ({
-        id_remedio: r.id_remedio,
+        remedioID: r.id_remedio, // mapeia a chave para "remedioID"
         quantidade: r.quantidade,
       })),
     };
+  
+    console.log("Dados a enviar:", dadosFormulario);
   
     try {
       const response = await axios.post(
         "http://localhost:5000/lista/emergencia/forms",
         dadosFormulario,
-        { mode: 'cors', headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({ /* seus dados do formulário aqui */ }) }
+        { headers: { "Content-Type": "application/json" } }
       );
       console.log("Formulário enviado com sucesso:", response.data);
-      // Aqui você pode exibir uma mensagem de sucesso ou redirecionar
+      // Exiba mensagem de sucesso ou redirecione
     } catch (error) {
       console.error("Erro ao enviar dados:", error.response?.data || error.message);
-      // Aqui você pode exibir uma mensagem de erro
+      // Exiba mensagem de erro
     }
   };
 
@@ -114,40 +136,34 @@ export default function Emergencia() {
           <h1>Novo pedido de emergência</h1>
           <div className="emergencia-content">
             <div>
+              {/* Apenas o HC é editável */}
+              <input 
+                type="text" 
+                id="hc"
+                name="hc"
+                placeholder="Informe o HC do paciente"
+                value={emergencia.hc}
+                onChange={handleChange}
+                onBlur={handleHcBlur}
+              />
+              {/* Esses campos serão preenchidos automaticamente */}
               <input 
                 type="text" 
                 id="nome-paciente"
                 name="nomePaciente"
                 placeholder="Nome do paciente"
                 value={emergencia.nomePaciente}
-                onChange={handleChange}
-              />
-              <div className="leito-hc">
-                <input 
-                  type="text"
-                  id="leito" 
-                  name="leito"
-                  placeholder="Leito"
-                  value={emergencia.leito}
-                  onChange={handleChange}
-                />
-                <input 
-                  type="text"
-                  id="hc"
-                  name="hc"
-                  placeholder="HC"
-                  value={emergencia.hc}
-                  onChange={handleChange}
-                />
-              </div>
-              <input 
-                type="text"
-                id="enfermeiro-responsavel"
-                name="enfermeiro"
-                placeholder="Enfermeiro responsável"
-                value={emergencia.enfermeiro}
                 readOnly
               />
+              <input 
+                type="text"
+                id="leito" 
+                name="leito"
+                placeholder="Leito"
+                value={emergencia.leito}
+                readOnly
+              />
+              {/* Removido o campo de enfermeiro, pois o ID será enviado */}
               <div className="remedios-lista">
                 <p><strong>Selecione os remédios:</strong></p>
                 {remediosDisponiveis.map((remedio) => {
@@ -184,7 +200,6 @@ export default function Emergencia() {
                   );
                 })}
               </div>
-
             </div>
             <div id="emergencia-right">
               <input 

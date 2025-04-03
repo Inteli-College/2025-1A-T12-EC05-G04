@@ -6,6 +6,10 @@ from app.Models.LoteModel import Lote
 from app.Schemas.Schemas import ListaSchema, MontagemSchema
 from app.Models.UsuarioModel import Usuario
 from app import db
+import uuid
+import logging
+logger = logging.getLogger(__name__)
+
 
 from app.datetime import datetime_sp_string
 
@@ -13,6 +17,10 @@ montagem_schema = MontagemSchema()
 
 lista_schema = ListaSchema()
 listas_schema = ListaSchema(many=True)
+
+def gerar_novo_id_fita():
+    return str(uuid.uuid4())
+
 
 class ListaController:
 
@@ -30,17 +38,34 @@ class ListaController:
             db.session.rollback()
             return {"erro ao adicionar lista": str(e)}, 500
         
-    def createListaPorIdPaciente(self, paciente):
+    def createListaPorIdPaciente(self, paciente, remedios):
+        """
+        Cria um registro na tabela 'lista' com os campos id_paciente, id_fita, id_remedio e quantidade.
+        """
         try:
-            nova_lista = Lista(id_paciente=paciente.id)
-            db.session.add(nova_lista)
+
+            novo_id_fita = gerar_novo_id_fita()  # Criamos essa função logo abaixo
+
+            for r in remedios:
+                remedio_id = r.get("remedioID") or r.get("id_remedio")
+                quantidade = r.get("quantidade")
+                if remedio_id and quantidade:
+                    nova_lista = Lista(
+                        id_paciente=paciente.id,
+                        id_fita=novo_id_fita,  # Usa o mesmo id_fita, que é o id do registro master
+                        id_remedio=remedio_id,
+                        quantidade=quantidade
+                    )
+                    db.session.add(nova_lista)
             db.session.commit()
-            # Retorne a instância (você pode usar o dump se preferir)
+            if not nova_lista:
+                return {"erro": "Nenhum remédio válido foi informado."}, 400
+
             return nova_lista, 201
         except Exception as e:
             db.session.rollback()
             return {"erro ao adicionar lista": str(e)}, 500
-        
+
     def getRemediosDisponiveis(self):
         try:
             # Consulta todos os remédios com quantidade > 0
@@ -94,41 +119,35 @@ class ListaController:
                 return {"erro": "Paciente não encontrado com os dados fornecidos."}, 400
 
             # 2. Criação da nova lista para esse paciente
-            lista_criada, status_code = self.createListaPorIdPaciente(paciente)
+            lista_criada, status_code = self.createListaPorIdPaciente(paciente, remedios)
             if status_code != 201:
                 return lista_criada, status_code  # erro já tratado no método
 
-            # 3. Inserção dos remédios na lista
-            try:
-                for r in remedios:
-                    if r.get("id_remedio") and r.get("quantidade"):
-                        item = Lista(
-                            id_paciente=paciente.id,
-                            id_remedio=r["id_remedio"],
-                            quantidade=r["quantidade"]
-                        )
-                        db.session.add(item)
-                db.session.commit()
-            except Exception as e:
-                db.session.rollback()
-                return {"erro ao registrar remédios": str(e)}, 500
+            for r in remedios:
+                remedio_id = r.get("remedioID") or r.get("id_remedio")
+                quantidade = r.get("quantidade")
+                if remedio_id and quantidade:
+                    novo_item = Lista(
+                        id_paciente=paciente.id,
+                        id_fita=lista_criada.id_fita,  # Usa o mesmo id_fita, que é o id do registro master
+                        id_remedio=remedio_id,
+                        quantidade=quantidade
+                    )
+                    db.session.add(novo_item)
+            db.session.commit()
 
-            # 4. Criação da montagem associada à lista e ao enfermeiro
+            # 5. Criação da montagem associada ao master da lista e ao enfermeiro
             dados_nova_montagem = {
                 'id_lista': lista_criada.id,
                 'id_usuario': enfermeiro_id,
                 'datetime': datetime_sp_string,
                 'status': 0
             }
+            nova_montagem = montagem_schema.load(dados_nova_montagem, session=db.session)
+            db.session.add(nova_montagem)
+            db.session.commit()
 
-            try:
-                nova_montagem = montagem_schema.load(dados_nova_montagem, session=db.session)
-                db.session.add(nova_montagem)
-                db.session.commit()
-                return montagem_schema.dump(nova_montagem), 201
-            except Exception as e:
-                db.session.rollback()
-                return {"erro ao adicionar montagem": str(e)}, 500
+            return montagem_schema.dump(nova_montagem), 201
 
         except Exception as e:
             db.session.rollback()

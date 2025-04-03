@@ -1,5 +1,3 @@
-# Configuração para iniciar o servidor
-
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -8,14 +6,14 @@ from flask_cors import CORS
 from app.configuration import ProductionConfig, DevelopmentConfig
 from app.Websockets import socketio
 import os
-from flask_cors import CORS
 
 
 app = Flask(__name__)
 app.config.from_object(DevelopmentConfig)
 app.config.from_object(ProductionConfig)
+CORS(app, supports_credentials=True, resources={r"/*": {"origins": "http://localhost:5173"}})
 
-CORS(app)   
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 socketio.init_app(app)
 db = SQLAlchemy(app)
