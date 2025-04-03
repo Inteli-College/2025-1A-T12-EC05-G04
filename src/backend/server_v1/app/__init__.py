@@ -4,17 +4,22 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_marshmallow import Marshmallow
+from flask_cors import CORS
 from app.configuration import ProductionConfig, DevelopmentConfig
 from app.Websockets import socketio
 import os
 
 app = Flask(__name__)
+
+# Configurações de ambiente
 app.config.from_object(DevelopmentConfig)
 app.config.from_object(ProductionConfig)
 
+# Ativa o CORS para permitir chamadas do frontend
+CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})
 
+# Inicializa extensões
 socketio.init_app(app)
-
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 migrate = Migrate(app, db)
@@ -22,8 +27,20 @@ migrate = Migrate(app, db)
 basedir = os.path.abspath(os.path.dirname(__file__))
 os.makedirs(os.path.join(basedir, 'migrations/versions'), exist_ok=True)
 
-from app.Models import DevolucaoModel, ErroMontagemModel, ListaModel, LogsModel, LoteModel, MontagemModel, PacienteModel, UsuarioModel, InstrucaoRoboModel
+# Importa models
+from app.Models import (
+    DevolucaoModel,
+    ErroMontagemModel,
+    ListaModel,
+    LogsModel,
+    LoteModel,
+    MontagemModel,
+    PacienteModel,
+    UsuarioModel,
+    InstrucaoRoboModel
+)
 
+# Registra as rotas
 from app.Routes.CodigosRota import codigo_bp
 app.register_blueprint(codigo_bp)
 

@@ -1,8 +1,8 @@
 from flask import Blueprint, jsonify
 from app.Controllers.LoteController import LoteController
 
-lote_router_bp = Blueprint("lotes", __name__, url_prefix="/lotes")
 lote_controller = LoteController()
+lote_router_bp = Blueprint("lotes", __name__, url_prefix="/lotes")
 
 @lote_router_bp.route("/", methods=["GET"])
 def get_lotes():
