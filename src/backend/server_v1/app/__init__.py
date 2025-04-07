@@ -4,7 +4,7 @@ from flask_migrate import Migrate
 from flask_marshmallow import Marshmallow
 from flask_cors import CORS
 from app.configuration import ProductionConfig, DevelopmentConfig
-from app.Websockets import socketio
+
 import os
 
 
@@ -15,7 +15,7 @@ CORS(app, supports_credentials=True, resources={r"/*": {"origins": "http://local
 
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-socketio.init_app(app)
+
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 migrate = Migrate(app, db)
@@ -48,3 +48,6 @@ app.register_blueprint(robo_bp)
 
 from app.Routes.PacientesRouter import pacientes_bp
 app.register_blueprint(pacientes_bp)
+
+from app.Websockets import socketio
+socketio.init_app(app)
