@@ -1,12 +1,10 @@
-# Configuração para iniciar o servidor
-
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_marshmallow import Marshmallow
 from flask_cors import CORS
 from app.configuration import ProductionConfig, DevelopmentConfig
-from app.Websockets import socketio
+
 import os
 
 app = Flask(__name__)
@@ -14,12 +12,10 @@ app = Flask(__name__)
 # Configurações de ambiente
 app.config.from_object(DevelopmentConfig)
 app.config.from_object(ProductionConfig)
+CORS(app, supports_credentials=True, resources={r"/*": {"origins": "http://localhost:5173"}})
 
-# Ativa o CORS para permitir chamadas do frontend
-CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})
+app.config['CORS_HEADERS'] = 'Content-Type'
 
-# Inicializa extensões
-socketio.init_app(app)
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 migrate = Migrate(app, db)
@@ -64,3 +60,9 @@ app.register_blueprint(robo_bp)
 
 from app.Routes.LoteRouter import lote_router_bp
 app.register_blueprint(lote_router_bp)
+
+from app.Routes.PacientesRouter import pacientes_bp
+app.register_blueprint(pacientes_bp)
+
+from app.Websockets import socketio
+socketio.init_app(app)
