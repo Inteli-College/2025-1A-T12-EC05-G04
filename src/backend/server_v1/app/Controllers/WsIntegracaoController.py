@@ -96,6 +96,7 @@ class WsIntegracaoController:
         data = queue_es.get_message()
 
         message = data['message']
+        
 
 
 
