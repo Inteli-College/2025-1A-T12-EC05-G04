@@ -28,8 +28,8 @@ class RoboController:
         if not id_remedio:
             return jsonify({
                 "message": f'Erro ao buscar o id remedio...',
-                'code': 500
-            }), 500
+                'code': 404
+            }), 404
         try:
             instrucaorobo = db.session.query(InstrucaoRobo).filter_by(id_remedio=id_remedio).first()
 
@@ -38,11 +38,11 @@ class RoboController:
             db.session.rollback()
             return jsonify({
                 'message': f'Erro ao buscar a Instrução: {str(e)}',
-                'code': 500
-            }), 500
+                'code': 404
+            }), 404
 
         if instrucaorobo:
-            vivo = send_message("conectado", "Ta vivo?")
+            vivo = send_message("alive", "Ta vivo?")
 
             if vivo.get("status") != "sucess":
                 print("Cliente não conectado...")

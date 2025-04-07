@@ -1,0 +1,32 @@
+.card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 16px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 0.5rem;  /* menor espaço entre caixinhas */
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  }
+  
+  .topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.4rem;
+  }
+  
+  .nome {
+    font-size: 1.1rem;
+  }
+  
+  .codigo {
+    font-size: 0.9rem;
+    color: #777;
+  }
+  
+  .detalhes {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    font-size: 0.95rem;
+  }
+  

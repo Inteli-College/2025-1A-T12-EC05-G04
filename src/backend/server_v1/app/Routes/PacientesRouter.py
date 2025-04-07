@@ -1,5 +1,7 @@
 from flask import Blueprint, jsonify, request
 from app.Controllers.PacientesController import PacientesController
+from flask_cors import cross_origin
+
 
 pac = PacientesController()
 
@@ -38,3 +40,14 @@ def put_paciente():
 def delete_paciente():
     data = request.json
     return pac.deletePaciente(data)
+
+@pacientes_bp.route("/validar/<string:hc_paciente>", methods=["GET"])
+@cross_origin(supports_credentials=True)
+def validar_paciente(hc_paciente):
+    # Sua lógica para buscar o paciente pelo HC
+    paciente, status = pac.getHCPaciente(hc_paciente)
+    if status == 200:
+        # Retorna os dados do paciente em JSON
+        return jsonify({"nome": paciente.nome, "leito": paciente.Leito}), 200
+    else:
+        return jsonify(paciente), 404

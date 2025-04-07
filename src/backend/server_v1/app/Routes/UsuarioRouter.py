@@ -16,3 +16,8 @@ def create_new_user():
         dados_new_user = request.get_json()
         res, status_code = usuario_controller.createUsuario(dados_new_user)
         return jsonify(res), status_code
+
+@auth_router_bp.route("/getUserName/<string:email>", methods=["GET"])
+def get_name_user(email):
+        res, status_code = usuario_controller.getUserName(email)
+        return jsonify(res), status_code

@@ -232,3 +232,14 @@ class PacientesController:
             'message': "O id não é válido...",
             'code': 400
         }, 400 
+    
+    def getHCPaciente(self, hc_paciente):
+        try:
+            paciente = Paciente.query.filter_by(HC=hc_paciente).first()
+            if paciente:
+                return paciente, 200
+            else:
+                return {"erro": "Paciente não encontrado"}, 404
+        except Exception as e:
+            return {"erro": str(e)}, 404
+   
