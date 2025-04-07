@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "../../styles/SearchBarEstoque.module.css";
+import styles from "../../styles/SearchBarRelatorios.module.css";
 
 export default function SearchBarRelatorios({ onSearch }) {
     const [turno, setTurno] = useState("");
