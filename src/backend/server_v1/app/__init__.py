@@ -7,14 +7,14 @@ from app.configuration import ProductionConfig, DevelopmentConfig
 
 import os
 
-
 app = Flask(__name__)
+
+# Configurações de ambiente
 app.config.from_object(DevelopmentConfig)
 app.config.from_object(ProductionConfig)
 CORS(app, supports_credentials=True, resources={r"/*": {"origins": "http://localhost:5173"}})
 
 app.config['CORS_HEADERS'] = 'Content-Type'
-
 
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
@@ -23,8 +23,20 @@ migrate = Migrate(app, db)
 basedir = os.path.abspath(os.path.dirname(__file__))
 os.makedirs(os.path.join(basedir, 'migrations/versions'), exist_ok=True)
 
-from app.Models import DevolucaoModel, ErroMontagemModel, ListaModel, LogsModel, LoteModel, MontagemModel, PacienteModel, UsuarioModel, InstrucaoRoboModel
+# Importa models
+from app.Models import (
+    DevolucaoModel,
+    ErroMontagemModel,
+    ListaModel,
+    LogsModel,
+    LoteModel,
+    MontagemModel,
+    PacienteModel,
+    UsuarioModel,
+    InstrucaoRoboModel
+)
 
+# Registra as rotas
 from app.Routes.CodigosRota import codigo_bp
 app.register_blueprint(codigo_bp)
 
@@ -45,6 +57,9 @@ app.register_blueprint(instrucaoRobo_router_bp)
 
 from app.Routes.RoboRouter import robo_bp
 app.register_blueprint(robo_bp)
+
+from app.Routes.LoteRouter import lote_router_bp
+app.register_blueprint(lote_router_bp)
 
 from app.Routes.PacientesRouter import pacientes_bp
 app.register_blueprint(pacientes_bp)
