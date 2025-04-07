@@ -15,7 +15,7 @@ sidebar_position: 3
 
 ## Funcionalidades
 
-**Sistema de Loop:**A cada
+**Sistema de Loop:**A cada lista de montagem no backend, um item de montagem é criado no na página de montagem pendentes, de forma que não é necessário adicionar cada um desses itens manualmente.
 
 **Feedback Visual de Estado:** A interface utiliza cores e opacidade para indicar o estado das montagens:
 

@@ -39,11 +39,8 @@ def router_getAll_ErroMontagem():
     res, status_code = montagem_controller.getAllErroMontagem()
     return jsonify(res), status_code
 
-@montagem_router_bp.route("/error/create", methods=["GET", "POST"])
+@montagem_router_bp.route("/error/create", methods=["POST"])
 def router_create_ErroMontagem():
-    if request.method == 'GET':
-        return "Exemplo de resposta GET"
-    elif request.method == 'POST':
         dados_novo_erroMontagem = request.get_json()
         res, status_code = montagem_controller.createErroMontagem(dados_novo_erroMontagem)
         return jsonify(res), status_code

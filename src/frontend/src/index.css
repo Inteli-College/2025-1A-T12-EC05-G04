@@ -527,10 +527,7 @@ button:focus-visible {
 
 .remedio-estoque-nome {
   padding: 1vw;
-  background-color: #ffffff;
-  border-color: #A09E9E;
-  border-width: 1px;
-  border-style: solid;
+  background-color: #A09E9E;
   border-radius: 20px;
   width: 40vw;
   display: block;
@@ -541,10 +538,7 @@ button:focus-visible {
 .remedio-estoque-unidades {
   padding: 1vw;
   width: 20vw;
-  background-color: #ffffff;
-  border-color: #A09E9E;
-  border-width: 1px;
-  border-style: solid;
+  background-color: #A09E9E;
   border-radius: 20px;
   display: block;
   align-items: center;
@@ -555,49 +549,7 @@ button:focus-visible {
   padding: 1vw;
   width: 20vw;
   background-color: #1a1a1a;
-  border-color: #ffffff;
-  border-width: 1px;
-  border-style: solid;
   color:#F5F5F5;
-  border-radius: 20px;
-  display: block;
-  align-items: center;
-  justify-content: center;
-}
-
-.remedio-vencimento-data {
-  padding: 1vw;
-  width: 13vw;
-  background-color: #ffffff;
-  border-color: #A09E9E;
-  border-width: 1px;
-  border-style: solid;
-  border-radius: 20px;
-  display: block;
-  align-items: center;
-  justify-content: center;
-}
-
-.remedio-vencimento-lote {
-  padding: 1vw;
-  width: 13vw;
-  background-color: #ffffff;
-  border-color: #A09E9E;
-  border-width: 1px;
-  border-style: solid;
-  border-radius: 20px;
-  display: block;
-  align-items: center;
-  justify-content: center;
-}
-
-.remedio-vencidade-quantidade {
-  padding: 1vw;
-  width: 13vw;
-  background-color: #ffffff;
-  border-color: #A09E9E;
-  border-width: 1px;
-  border-style: solid;
   border-radius: 20px;
   display: block;
   align-items: center;
@@ -610,10 +562,15 @@ button:focus-visible {
   width: 84vw;
   height: 8vh;
   padding: 1vw;
-  background-color: #ffffff;
-  border-color: #A09E9E;
-  border-width: 1px;
-  border-style: solid;
+  background-color: #A09E9E;
   border-radius: 20px;
-  margin-bottom: 4vh;
+}
+
+
+.remedios-lista {
+  background-color: white;
+  padding: 10px;
+  border-radius: 8px;
+  max-height: 300px;
+  overflow-y: auto;
 }
