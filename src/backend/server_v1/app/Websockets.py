@@ -66,8 +66,11 @@ def handle_message(data):
 
     socketio.emit('message_status', {"message":"Mensagem recebida pelo server no evento error_status"})
     print(f"Mensagem recebida: {data}")
-    queue_es.add_message(data)   
-
+    queue_es.add_message(data)  
+    bd_friend = ws_controller.errorStatus()
+    print(bd_friend) 
+    
+    socketio.emit('error_status_fe', bd_friend)
 
 
 import json

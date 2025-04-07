@@ -4,7 +4,6 @@ from flask_migrate import Migrate
 from flask_marshmallow import Marshmallow
 from flask_cors import CORS
 from app.configuration import ProductionConfig, DevelopmentConfig
-
 import os
 
 
@@ -14,7 +13,6 @@ app.config.from_object(ProductionConfig)
 CORS(app, supports_credentials=True, resources={r"/*": {"origins": "http://localhost:5173"}})
 
 app.config['CORS_HEADERS'] = 'Content-Type'
-
 
 db = SQLAlchemy(app)
 ma = Marshmallow(app)

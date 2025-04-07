@@ -10,54 +10,92 @@ queue_rs = QueueRoboStatus
 queue_qr = QueueQrCode
 queue_es = QueueErrorStatus
 
+def attStatusMontagem(id_m, result):
+    montagem = Montagem.query.filter_by(id=id_m).first()
+    montagem.status = result
+
+    try:
+        db.session.commit()
+        print("Status da montagem alterado com sucesso no banco! :D")
+
+    except Exception as e:
+        return jsonify({
+            'message': f"Algo deu errado ao aplicar mudanças no banco de dados {e}",
+            'code': 500
+        })
+    
+
 class WsIntegracaoController:
     def __init__(self):
         pass
 
-    def roboStatus(self):
+    def montagemRemedio(self):
         data = queue_rs.get_message()
 
         acao = data['acao']
         percentage = data['percentage']
         id_montagem = data['id_montagem']
         
+        if percentage == 0:
         # Pega o objeto montagem
-        montagem = Montagem.query.filter_by(id=id_montagem).first()
+            montagem = Montagem.query.filter_by(id=id_montagem).first()
 
-        if montagem:
+            if montagem:
+                # Id Lista a partir de montagem
+                id_lista = montagem.id_lista
+
+                # Pega o objeto Lista
+                lista = Lista.query.filter_by(id=id_lista).first()
+
+                # Pega o objeto Paciente
+                paciente = Paciente.query.filter_by(id=lista.id_paciente).first()
+
+                # Pega o objeto Lote (Remédio)
+                lote = Lote.query.filter_by(id=lista.id_remedio).first()
+
+                id_fita = lista.id_fita
+
+                listas = Lista.query.filter_by(id_fita=id_fita).all()
+
+                attStatusMontagem(id_montagem, 1)
+
+
+                return "montagem_remedio", jsonify({
+                    "PacienteId": paciente.id,
+                    "Paciente": {
+                        "nome": paciente.nome,
+                        "hc": paciente.HC,
+                        "leito": paciente.Leito
+                    },
+                    "Medicamentos": [
+                        { "nome": Lote.query.filter_by(id=lis.id_remedio).remedio }
+                        for lis in listas
+                    ],
+                    "StatusMontagem": 1
+                })
+            
+            else:
+                return "montagem_remedio", jsonify({
+                    'message': "Montagem inexistente",
+                    'code': 404
+                })
+            
+        else:
             # Id Lista a partir de montagem
             id_lista = montagem.id_lista
 
             # Pega o objeto Lista
             lista = Lista.query.filter_by(id=id_lista).first()
 
-            # Pega o objeto Paciente
-            paciente = Paciente.query.filter_by(id=lista.id_paciente).first()
-
             # Pega o objeto Lote (Remédio)
             lote = Lote.query.filter_by(id=lista.id_remedio).first()
 
-            return 1, jsonify({
-                "PacienteId": paciente.id,
-                "Paciente": {
-                    "nome": paciente.nome,
-                    "hc": paciente.HC,
-                    "leito": paciente.Leito
-                },
-                "Medicamentos": [
-                    { "nome": lote.remedio, "quantidade": lista.quantidade }
-                ],
-                "Logs": [
-                    { "NomeRemedio": lote.remedio, "Porcentagem":percentage }
-                ],
-                "StatusMontagem": 1
+
+            return "robo_status_fe", jsonify({
+                "NomeRemedio": lote.remedio,
+                "Porcentagem": percentage              
             })
-        
-        else:
-            return 0, jsonify({
-                'message': "Montagem inexistente",
-                'code': 404
-            })
+
 
     def qrCode(self):
         data = queue_qr.get_message()
@@ -80,9 +118,8 @@ class WsIntegracaoController:
                 print("Status da montagem alterado com sucesso no banco! :D")
 
             except Exception as e:
-                queue_qr.add_message(data)
-                return 0, jsonify({
-                    'message': "Algo deu errado ao aplicar mudanças no banco de dados",
+                return jsonify({
+                    'message': f"Algo deu errado ao aplicar mudanças no banco de dados {e}",
                     'code': 500
                 })
 
@@ -94,9 +131,26 @@ class WsIntegracaoController:
     def errorStatus(self):
 
         data = queue_es.get_message()
-
+        id_montagem = data['id_montagem']
         message = data['message']
+
+        montagem = Montagem.query.filter_by(id=id_montagem).first()
+
+        new = ErroMontagem(id_montagem=id_montagem, mensagem=message)
+        try:
+            db.session.add(new)
+            db.session.commit()
+
+            return jsonify({
+                "Montagem": montagem,
+                "Message": message
+            })
         
+        except Exception as e:
+            return jsonify({
+                'message': f"Erro ao criar paciente {e}",
+                'code': 500
+            })
 
 
 
