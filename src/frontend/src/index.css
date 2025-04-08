@@ -574,3 +574,69 @@ button:focus-visible {
   max-height: 300px;
   overflow-y: auto;
 }
+
+/* ---------------------Relatorios------------------------- */
+.metricas-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.metricas-container h1 {
+  margin-bottom: 4vh;
+  font-size: 30px;
+}
+
+.metricas-cards-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center; /* centraliza os cards */
+  align-items: center;     /* alinha os cards verticalmente se necessário */
+  gap: 5vw;
+  flex-wrap: nowrap;
+}
+
+.metricas-card {
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  padding: 16px;
+  border-radius: 25px;
+  width: 17vw;
+  height: 20vh;
+  text-align: center;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centraliza o conteúdo dentro do card */
+  justify-content: center; /* centraliza verticalmente se tiver altura fixa */
+}
+
+.metricas-card h2 {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.metricas-card p {
+  font-size: 18px;
+  font-weight: bold;
+  color: #000000;
+}
+
+.graficos-container {
+  margin-top: 3vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center; /* centraliza os gráficos horizontalmente */
+  align-items: flex-start;
+  gap: 15vw; /* espaço entre os gráficos */
+  flex-wrap: wrap; /* permite que quebrem em telas menores */
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.grafico-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centraliza os títulos e os gráficos */
+}

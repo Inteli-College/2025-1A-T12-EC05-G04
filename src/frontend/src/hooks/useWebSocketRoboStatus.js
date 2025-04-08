@@ -24,7 +24,7 @@ export default function useWebSocketRoboStatus(url) {
     });
 
     socketInstance.on('robo_status_fe', (data) => {
-      if (!data?.PacienteId || !data?.Paciente || !data?.Medicamentos || !data?.Logs) {
+      if (!data?.PacienteId || !data?.Paciente || !data?.Medicamentos || !data?.Logs || !data?.StatusMontagem) {
         console.warn(" Dados incompletos recebidos:", data);
         return;
       }
@@ -40,7 +40,7 @@ export default function useWebSocketRoboStatus(url) {
       setPaciente({
         nome: data.Paciente.nome,
         hc: data.Paciente.hc,
-        leito: data.Paciente.leito,
+        leito: data.Paciente.leito
       });
 
       // Atualiza lista de medicamentos

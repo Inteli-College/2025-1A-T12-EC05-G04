@@ -1,0 +1,47 @@
+.container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    background-color: white;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 2rem;
+  }
+  
+  .input,
+  .select {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 20px;
+    background-color: #f5f5f5;
+    font-size: 1rem;
+  }
+  
+  .input {
+    flex: 2;
+  }
+  
+  .select {
+    flex: 1;
+    cursor: pointer;
+  }
+
+  .clearButton {
+    padding: 8px 12px;
+    margin-left: 8px;
+    background-color: #ffd1ce;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.clearButton:hover {
+    background-color: #d32f2f;
+}
+
+  

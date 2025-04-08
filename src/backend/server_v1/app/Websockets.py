@@ -13,12 +13,15 @@ queue_rs = QueueRoboStatus()
 
 ws_controller = WsIntegracaoController()
 
+ws_controller = WsIntegracaoController
+
 @socketio.on("connect")
 def handle_connect():    
     print("Cliente conectado ao WebSocket")
 
 @socketio.on("robo_status")
 def handle_message(data):
+
     """Recebe os Status do Robo e reenvia ao Front-End, antes fazendo consultas no banco para relacionar objetos com Id-Montagem.
     ---
     Conteúdos: acao, percentage e id_montagem
@@ -31,6 +34,7 @@ def handle_message(data):
     print(f"Mensagem recebida: {data}")
     queue_rs.add_message(data)
     
+
     fe_friend = ws_controller.montagemRemedio()
     if fe_friend["Topico"] == "Finish" or fe_friend["Topico"] == "Ongoing":
         socketio.emit("robo_status_fe", fe_friend)
@@ -38,6 +42,7 @@ def handle_message(data):
     else:
         socketio.emit("montagem_remedio", fe_friend)
         print("Ai papai")
+
 
 
 @socketio.on("qr_code")
@@ -74,6 +79,7 @@ def handle_message(data):
     queue_es.add_message(data)  
     bd_friend = ws_controller.errorStatus()
     print(bd_friend) 
+
 
     socketio.emit('error_status_fe', bd_friend)
 

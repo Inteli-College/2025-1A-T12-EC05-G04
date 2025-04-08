@@ -4,6 +4,7 @@ from app.Models.LoteModel import Lote
 from app.Models.PacienteModel import Paciente
 from app.Models.ErroMontagemModel import ErroMontagem
 from flask import jsonify
+
 from sqlalchemy.orm import aliased
 from app.QueueManager import QueueRoboStatus, QueueErrorStatus, QueueQrCode
 import json
@@ -29,9 +30,11 @@ def attStatusMontagem(id_m, result):
         })
     
 
+
 class WsIntegracaoController:
     def __init__(self):
         pass
+
 
     def montagemRemedio(self):
         data = queue_rs.get_message()
@@ -129,6 +132,7 @@ class WsIntegracaoController:
             }
 
 
+
     def qrCode(self):
         data = queue_qr.get_message()
 
@@ -150,8 +154,10 @@ class WsIntegracaoController:
                 print("Status da montagem alterado com sucesso no banco! :D")
 
             except Exception as e:
+
                 return jsonify({
                     'message': f"Algo deu errado ao aplicar mudanças no banco de dados {e}",
+
                     'code': 500
                 })
 
@@ -163,6 +169,7 @@ class WsIntegracaoController:
     def errorStatus(self):
 
         data = queue_es.get_message()
+
         id_montagem = data['id_montagem']
         message = data['message']
 
@@ -183,6 +190,7 @@ class WsIntegracaoController:
                 'message': f"Erro ao criar montagem {e}",
                 'code': 500
             })
+
 
 
 
