@@ -44,7 +44,7 @@ def listen_instrucao(data):
         send_message('qr_code', {'result': resultado, 'qr': qr, 'id_montagem': data['id_montagem']})
     except Exception as e:
         print(f"Erro ao executar instrução: {e}")
-        send_message('error_status', {'message': 'Erro ao executar instrução', 'error': str(e)})
+        send_message('error_status', {'message': 'Erro ao executar instrução', 'error': str(e), 'id_montagem': data['id_montagem']})
 
 if __name__ == "__main__":
     sio.connect('http://localhost:5000')  # Substitua pela URL do seu servidor
