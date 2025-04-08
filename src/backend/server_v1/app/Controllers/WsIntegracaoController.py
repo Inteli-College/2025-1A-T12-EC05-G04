@@ -71,14 +71,27 @@ class WsIntegracaoController:
                         { "nome": Lote.query.filter_by(id=lis.id_remedio).remedio }
                         for lis in listas
                     ],
-                    "StatusMontagem": 1
+                    "StatusMontagem": 1,
+                    "Topico": "Start"
+
                 })
+
             
             else:
                 return "montagem_remedio", jsonify({
                     'message': "Montagem inexistente",
                     'code': 404
                 })
+            
+        elif percentage == 100:
+            attStatusMontagem(id_montagem, 2)
+
+            return "robo_status_fe", jsonify({
+                "NomeRemedio": lote.remedio,
+                "Porcentagem": percentage,
+                "StatusMontagem": 2,
+                "Topico": "Finish"              
+            })
             
         else:
             # Id Lista a partir de montagem
@@ -93,7 +106,8 @@ class WsIntegracaoController:
 
             return "robo_status_fe", jsonify({
                 "NomeRemedio": lote.remedio,
-                "Porcentagem": percentage              
+                "Porcentagem": percentage,
+                "Topico": "Porcentagem"              
             })
 
 
@@ -148,7 +162,7 @@ class WsIntegracaoController:
         
         except Exception as e:
             return jsonify({
-                'message': f"Erro ao criar paciente {e}",
+                'message': f"Erro ao criar montagem {e}",
                 'code': 500
             })
 

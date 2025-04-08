@@ -31,8 +31,8 @@ def handle_message(data):
     print(f"Mensagem recebida: {data}")
     queue_rs.add_message(data)
     
-    fe_friend = ws_controller.roboStatus()
-    socketio.emit('robo_status_fe', fe_friend)  
+    fe_friend = ws_controller.montagemRemedio()
+    socketio.emit(fe_friend)  
 
 
 @socketio.on("qr_code")
@@ -69,7 +69,7 @@ def handle_message(data):
     queue_es.add_message(data)  
     bd_friend = ws_controller.errorStatus()
     print(bd_friend) 
-    
+
     socketio.emit('error_status_fe', bd_friend)
 
 
@@ -83,9 +83,11 @@ def handle_message_status_fe(data):
     except Exception as e:
         print(" Erro ao processar 'message_status_fe':", str(e))
 
+
 @socketio.on("disconnect")
 def handle_disconnect():
     print("Cliente desconectado")
+
 
 def send_message(event, data):
     """Função resposável por enviar mensagens WebSocket"""
@@ -95,7 +97,8 @@ def send_message(event, data):
     except Exception as e:
         logging.error(f"Erro ao enviar mensagem WebSocket: {e}")
         return {"status": "error", "message": f"Erro ao enviar mensagem: {str(e)}"}
-    
+
+
 def parse_socketio_payload(raw):
     """Extrai e decodifica o JSON do frame socket.io."""
     try:
