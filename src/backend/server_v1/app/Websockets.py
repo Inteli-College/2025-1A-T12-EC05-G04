@@ -7,11 +7,11 @@ from app.Controllers.WsIntegracaoController import WsIntegracaoController
 # Depois mudar a origem da conexão para o do Raspberry
 socketio = SocketIO(cors_allowed_origins="*")  
 
-queue_es = QueueErrorStatus
-queue_qr = QueueQrCode
-queue_rs = QueueRoboStatus
+queue_es = QueueErrorStatus()
+queue_qr = QueueQrCode()
+queue_rs = QueueRoboStatus()
 
-ws_controller = WsIntegracaoController
+ws_controller = WsIntegracaoController()
 
 @socketio.on("connect")
 def handle_connect():    
@@ -32,7 +32,12 @@ def handle_message(data):
     queue_rs.add_message(data)
     
     fe_friend = ws_controller.montagemRemedio()
-    socketio.emit(fe_friend)  
+    if fe_friend["Topico"] == "Finish" or fe_friend["Topico"] == "Ongoing":
+        socketio.emit("robo_status_fe", fe_friend)
+        print("Opa papai")
+    else:
+        socketio.emit("montagem_remedio", fe_friend)
+        print("Ai papai")
 
 
 @socketio.on("qr_code")

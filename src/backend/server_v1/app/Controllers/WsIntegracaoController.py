@@ -4,15 +4,19 @@ from app.Models.LoteModel import Lote
 from app.Models.PacienteModel import Paciente
 from app.Models.ErroMontagemModel import ErroMontagem
 from flask import jsonify
+from sqlalchemy.orm import aliased
 from app.QueueManager import QueueRoboStatus, QueueErrorStatus, QueueQrCode
+import json
+from app.datetime import datetime_sp_string as dt
 
-queue_rs = QueueRoboStatus
-queue_qr = QueueQrCode
-queue_es = QueueErrorStatus
+queue_rs = QueueRoboStatus()
+queue_qr = QueueQrCode()
+queue_es = QueueErrorStatus()
 
 def attStatusMontagem(id_m, result):
     montagem = Montagem.query.filter_by(id=id_m).first()
     montagem.status = result
+    montagem.datetime = dt
 
     try:
         db.session.commit()
@@ -32,35 +36,47 @@ class WsIntegracaoController:
     def montagemRemedio(self):
         data = queue_rs.get_message()
 
+        if type(data) == str:
+            data = json.loads(data)
+
         acao = data['acao']
         percentage = data['percentage']
         id_montagem = data['id_montagem']
+
+        # Pega o objeto montagem
+        montagem = Montagem.query.filter_by(id=id_montagem).first()
+
+        # Id Lista a partir de montagem
+        id_lista = montagem.id_lista    
+
+        # Pega o objeto Lista
+        lista = Lista.query.filter_by(id=id_lista).first()
+
+        # Pega o objeto Lote (Remédio)
+        lote = Lote.query.filter_by(id=lista.id_remedio).first()
+
+    
         
         if percentage == 0:
-        # Pega o objeto montagem
-            montagem = Montagem.query.filter_by(id=id_montagem).first()
 
             if montagem:
-                # Id Lista a partir de montagem
-                id_lista = montagem.id_lista
-
-                # Pega o objeto Lista
-                lista = Lista.query.filter_by(id=id_lista).first()
 
                 # Pega o objeto Paciente
                 paciente = Paciente.query.filter_by(id=lista.id_paciente).first()
 
-                # Pega o objeto Lote (Remédio)
-                lote = Lote.query.filter_by(id=lista.id_remedio).first()
-
+                # Pega o id da Fita
                 id_fita = lista.id_fita
 
-                listas = Lista.query.filter_by(id_fita=id_fita).all()
+                listas = (
+                        db.session.query(Lista, Lote)
+                        .join(Lote, Lista.id_remedio == Lote.id)
+                        .filter(Lista.id_fita == id_fita)
+                        .all()
+                    )
 
                 attStatusMontagem(id_montagem, 1)
 
-
-                return "montagem_remedio", jsonify({
+                return {
                     "PacienteId": paciente.id,
                     "Paciente": {
                         "nome": paciente.nome,
@@ -68,30 +84,32 @@ class WsIntegracaoController:
                         "leito": paciente.Leito
                     },
                     "Medicamentos": [
-                        { "nome": Lote.query.filter_by(id=lis.id_remedio).remedio }
-                        for lis in listas
+                        {
+                            "nome": lote.remedio,
+                            "quantidade": lote.quantidade
+                        } for lista, lote in listas
                     ],
                     "StatusMontagem": 1,
                     "Topico": "Start"
-
-                })
+                }
 
             
             else:
-                return "montagem_remedio", jsonify({
+                return "montagem_remedio", {
                     'message': "Montagem inexistente",
                     'code': 404
-                })
+                }
             
         elif percentage == 100:
             attStatusMontagem(id_montagem, 2)
 
-            return "robo_status_fe", jsonify({
+            return {
+                # nao ta conseguindo acessar o lote.remeido daqui.
                 "NomeRemedio": lote.remedio,
                 "Porcentagem": percentage,
                 "StatusMontagem": 2,
                 "Topico": "Finish"              
-            })
+            }
             
         else:
             # Id Lista a partir de montagem
@@ -104,11 +122,11 @@ class WsIntegracaoController:
             lote = Lote.query.filter_by(id=lista.id_remedio).first()
 
 
-            return "robo_status_fe", jsonify({
+            return {
                 "NomeRemedio": lote.remedio,
                 "Porcentagem": percentage,
-                "Topico": "Porcentagem"              
-            })
+                "Topico": "Ongoing"              
+            }
 
 
     def qrCode(self):
