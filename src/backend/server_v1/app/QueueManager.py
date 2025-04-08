@@ -68,4 +68,27 @@ class QueueErrorStatus:
                 return i
         return None 
     
+class QueueInstrucao:
+    
+    def __init__(self):
+        pass
+
+    def add_message(self, message):
+        """Adiciona uma mensagem na fila Instrucao."""
+        with queue_lock:  
+            queue.append(message)
+            print(queue)
+            print(f"Mensagem: {message} adicionada a fila Instrucao")
+
+    def get_message(self):
+        """Remove e retorna a primeira mensagem da fila Instrucao, ou None se estiver vazia."""
+        with queue_lock:
+            if queue:
+                print(queue)
+                i = queue[0]
+                queue.pop(0)            
+                return i
+        return None 
+    
+    
 
