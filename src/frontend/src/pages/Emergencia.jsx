@@ -35,7 +35,6 @@ export default function Emergencia() {
           const data = response.data;
   
           if (data?.nome) {
-            console.log("Nome do usuário carregado:", data.nome);
             // Se quiser mostrar o nome do enfermeiro na tela ou em algum lugar
             setEmergencia((prev) => ({
               ...prev,
@@ -125,7 +124,7 @@ export default function Emergencia() {
   
     const dadosFormulario = {
       ...emergencia,
-      enfermeiro_id: usuarioLogado?.id,
+      enfermeiro_id: usuarioLogado?.id_usuario,
       remedios: remediosSelecionados.map((r) => ({
         remedioID: r.id_remedio, // mapeia a chave para "remedioID"
         quantidade: r.quantidade,

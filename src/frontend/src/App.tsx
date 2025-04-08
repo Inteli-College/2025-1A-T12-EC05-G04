@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Pendentes from './pages/Pendentes';
 import Estoque from './pages/Estoque';
 import Relatorios from './pages/Relatorios'
+import Emergencia from './pages/Emergencia'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/pendentes" element={<Pendentes />} />
           <Route path="/estoque" element={<Estoque />} />
           <Route path="/relatorios" element={<Relatorios />} />
+          <Route path="/emergencia" element={<Emergencia />} />
         </Routes>
     </BrowserRouter>
   );

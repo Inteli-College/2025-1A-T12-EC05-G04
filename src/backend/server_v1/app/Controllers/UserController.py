@@ -51,6 +51,6 @@ class UsuarioController:
     def getUserName(self, email):
         try:
             user = Usuario.query.filter_by(email=email).first_or_404()
-            return {"nome": user.nome}, 200
+            return {"nome": user.nome, "id": user.id}, 200
         except Exception as e:
             return {"erro": str(e)}, 404

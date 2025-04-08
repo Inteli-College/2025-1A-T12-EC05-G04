@@ -23,41 +23,41 @@ class WsIntegracaoController:
         
         # Pega o objeto montagem
         montagem = Montagem.query.filter_by(id=id_montagem).first()
+        if not montagem:
+            return 0, jsonify({'message': "Montagem inexistente", 'code': 404})
 
-        if montagem:
-            # Id Lista a partir de montagem
-            id_lista = montagem.id_lista
+        # Id Lista a partir de montagem
+        id_lista = montagem.id_lista
+        lista = Lista.query.filter_by(id=id_lista).first()
+        if not lista:
+            return 0, jsonify({'message': "Lista inexistente para a montagem informada", 'code': 404})
 
-            # Pega o objeto Lista
-            lista = Lista.query.filter_by(id=id_lista).first()
+        # Pega o objeto Paciente
+        paciente = Paciente.query.filter_by(id=lista.id_paciente).first()
+        if not paciente:
+            return 0, jsonify({'message': "Paciente não encontrado", 'code': 404})
 
-            # Pega o objeto Paciente
-            paciente = Paciente.query.filter_by(id=lista.id_paciente).first()
+        # Pega o objeto Lote (Remédio)
+        lote = Lote.query.filter_by(id=lista.id_remedio).first()
+        if not lote:
+            return 0, jsonify({'message': "Lote (remédio) não encontrado", 'code': 404})
 
-            # Pega o objeto Lote (Remédio)
-            lote = Lote.query.filter_by(id=lista.id_remedio).first()
-
-            return 1, jsonify({
-                "PacienteId": paciente.id,
-                "Paciente": {
-                    "nome": paciente.nome,
-                    "hc": paciente.HC,
-                    "leito": paciente.Leito
-                },
-                "Medicamentos": [
-                    { "nome": lote.remedio, "quantidade": lista.quantidade }
-                ],
-                "Logs": [
-                    { "NomeRemedio": lote.remedio, "Porcentagem":percentage }
-                ],
-                "StatusMontagem": 1
-            })
-        
-        else:
-            return 0, jsonify({
-                'message': "Montagem inexistente",
-                'code': 404
-            })
+        response = {
+            "PacienteId": paciente.id,
+            "Paciente": {
+                "nome": paciente.nome,
+                "hc": paciente.HC,
+                "leito": paciente.Leito
+            },
+            "Medicamentos": [
+                { "nome": lote.remedio, "quantidade": lista.quantidade }
+            ],
+            "Logs": [
+                { "NomeRemedio": lote.remedio, "Porcentagem": percentage }
+            ],
+            "StatusMontagem": 1
+        }
+        return 1, jsonify(response)
 
     def qrCode(self):
         data = queue_qr.get_message()

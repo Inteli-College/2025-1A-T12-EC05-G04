@@ -1,10 +1,8 @@
-from flask import request, jsonify
 from app.Models.PacienteModel import Paciente
 from app.Models.ListaModel import Lista
 from app.Models.MontagemModel import Montagem
 from app.Models.LoteModel import Lote
 from app.Schemas.Schemas import ListaSchema, MontagemSchema
-from app.Models.UsuarioModel import Usuario
 from app import db
 import uuid
 import logging
@@ -19,7 +17,28 @@ lista_schema = ListaSchema()
 listas_schema = ListaSchema(many=True)
 
 def gerar_novo_id_fita():
-    return str(uuid.uuid4())
+    """
+    Gera o próximo id_fita de forma incremental.
+    Busca os valores já utilizados na tabela Lista e retorna o menor número positivo
+    que ainda não foi utilizado, retornando-o como string.
+    """
+    # Obtém todas as fitas já registradas
+    fitas = Lista.query.with_entities(Lista.id_fita).all()
+    
+    # Converte os valores para inteiros (ignorando aqueles que não podem ser convertidos)
+    usados = set()
+    for f in fitas:
+        try:
+            usados.add(int(f[0]))
+        except (ValueError, TypeError):
+            pass
+
+    # Inicia a busca pelo menor número não utilizado (começando em 1)
+    novo_id = 1
+    while novo_id in usados:
+        novo_id += 1
+
+    return str(novo_id)
 
 
 class ListaController:
@@ -123,7 +142,7 @@ class ListaController:
             if status_code != 201:
                 return lista_criada, status_code  # erro já tratado no método
 
-            # 5. Criação da montagem associada ao master da lista e ao enfermeiro
+            # 3. Criação da montagem associada ao master da lista e ao enfermeiro
             dados_nova_montagem = {
                 'id_lista': lista_criada.id,
                 'id_usuario': enfermeiro_id,
@@ -134,9 +153,11 @@ class ListaController:
             db.session.add(nova_montagem)
             db.session.commit()
 
-            remedios_deletados, status_code = self.deleteRemedioForms(remedios)
-            if status_code != 201:
-                return remedios_deletados, status_code  # erro já tratado no método
+            # 4. Deleta remédios usados na montagem do banco de dados
+            
+            # remedios_deletados, status_code = self.deleteRemedioForms(remedios)
+            # if status_code != 201:
+            #     return remedios_deletados, status_code  # erro já tratado no método
             
             return montagem_schema.dump(nova_montagem), 201
 
@@ -149,7 +170,7 @@ class ListaController:
             for r in remedios:
                 remedio_id = r.get("remedioID") or r.get("id_remedio")
                 if remedio_id:
-                    remedio = Montagem.query.get_or_404(remedio_id)
+                    remedio = Lote.query.get_or_404(remedio_id)
                     db.session.delete(remedio)
                     db.session.commit()
         except Exception as e:

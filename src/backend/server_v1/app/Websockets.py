@@ -18,7 +18,7 @@ def handle_connect():
     print("Cliente conectado ao WebSocket")
 
 @socketio.on("robo_status")
-def handle_message(data):
+def handle_robo_status(data):
     """Recebe os Status do Robo e reenvia ao Front-End, antes fazendo consultas no banco para relacionar objetos com Id-Montagem.
     ---
     Conteúdos: acao, percentage e id_montagem

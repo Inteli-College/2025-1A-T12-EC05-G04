@@ -50,12 +50,12 @@ export default function Login() {
             if (data.nome) {
                 const usuario = {
                     nome: data.nome,
-                    leito: data.leito,
-                    email: email
+                    email: email,
+                    id_usuario: data.id
                 };
                 localStorage.setItem("usuario", JSON.stringify(usuario));
                 console.log("Usuário salvo:", usuario);
-                return true; // ✅ sucesso
+                return true; 
             } else {
                 alert("Usuário não encontrado com esse e-mail.");
                 return false;
