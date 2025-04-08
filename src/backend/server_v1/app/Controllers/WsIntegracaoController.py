@@ -4,60 +4,134 @@ from app.Models.LoteModel import Lote
 from app.Models.PacienteModel import Paciente
 from app.Models.ErroMontagemModel import ErroMontagem
 from flask import jsonify
-from app.QueueManager import QueueRoboStatus, QueueErrorStatus, QueueQrCode
 
-queue_rs = QueueRoboStatus
-queue_qr = QueueQrCode
-queue_es = QueueErrorStatus
+from sqlalchemy.orm import aliased
+from app.QueueManager import QueueRoboStatus, QueueErrorStatus, QueueQrCode
+import json
+from app.datetime import datetime_sp_string as dt
+
+queue_rs = QueueRoboStatus()
+queue_qr = QueueQrCode()
+queue_es = QueueErrorStatus()
+
+def attStatusMontagem(id_m, result):
+    montagem = Montagem.query.filter_by(id=id_m).first()
+    montagem.status = result
+    montagem.datetime = dt
+
+    try:
+        db.session.commit()
+        print("Status da montagem alterado com sucesso no banco! :D")
+
+    except Exception as e:
+        return jsonify({
+            'message': f"Algo deu errado ao aplicar mudanças no banco de dados {e}",
+            'code': 500
+        })
+    
+
 
 class WsIntegracaoController:
     def __init__(self):
         pass
 
-    def roboStatus(self):
+
+    def montagemRemedio(self):
         data = queue_rs.get_message()
+
+        if type(data) == str:
+            data = json.loads(data)
 
         acao = data['acao']
         percentage = data['percentage']
         id_montagem = data['id_montagem']
-        
+
         # Pega o objeto montagem
         montagem = Montagem.query.filter_by(id=id_montagem).first()
-        if not montagem:
-            return 0, jsonify({'message': "Montagem inexistente", 'code': 404})
 
         # Id Lista a partir de montagem
-        id_lista = montagem.id_lista
-        lista = Lista.query.filter_by(id=id_lista).first()
-        if not lista:
-            return 0, jsonify({'message': "Lista inexistente para a montagem informada", 'code': 404})
+        id_lista = montagem.id_lista    
 
-        # Pega o objeto Paciente
-        paciente = Paciente.query.filter_by(id=lista.id_paciente).first()
-        if not paciente:
-            return 0, jsonify({'message': "Paciente não encontrado", 'code': 404})
+        # Pega o objeto Lista
+        lista = Lista.query.filter_by(id=id_lista).first()
 
         # Pega o objeto Lote (Remédio)
         lote = Lote.query.filter_by(id=lista.id_remedio).first()
-        if not lote:
-            return 0, jsonify({'message': "Lote (remédio) não encontrado", 'code': 404})
 
-        response = {
-            "PacienteId": paciente.id,
-            "Paciente": {
-                "nome": paciente.nome,
-                "hc": paciente.HC,
-                "leito": paciente.Leito
-            },
-            "Medicamentos": [
-                { "nome": lote.remedio, "quantidade": lista.quantidade }
-            ],
-            "Logs": [
-                { "NomeRemedio": lote.remedio, "Porcentagem": percentage }
-            ],
-            "StatusMontagem": 1
-        }
-        return 1, jsonify(response)
+    
+        
+        if percentage == 0:
+
+            if montagem:
+
+                # Pega o objeto Paciente
+                paciente = Paciente.query.filter_by(id=lista.id_paciente).first()
+
+                # Pega o id da Fita
+                id_fita = lista.id_fita
+
+                listas = (
+                        db.session.query(Lista, Lote)
+                        .join(Lote, Lista.id_remedio == Lote.id)
+                        .filter(Lista.id_fita == id_fita)
+                        .all()
+                    )
+
+                attStatusMontagem(id_montagem, 1)
+
+                return {
+                    "PacienteId": paciente.id,
+                    "Paciente": {
+                        "nome": paciente.nome,
+                        "hc": paciente.HC,
+                        "leito": paciente.Leito
+                    },
+                    "Medicamentos": [
+                        {
+                            "nome": lote.remedio,
+                            "quantidade": lote.quantidade
+                        } for lista, lote in listas
+                    ],
+                    "StatusMontagem": 1,
+                    "Topico": "Start"
+                }
+
+            
+            else:
+                return "montagem_remedio", {
+                    'message': "Montagem inexistente",
+                    'code': 404
+                }
+            
+        elif percentage == 100:
+            attStatusMontagem(id_montagem, 2)
+
+            return {
+                # nao ta conseguindo acessar o lote.remeido daqui.
+                "NomeRemedio": lote.remedio,
+                "Porcentagem": percentage,
+                "StatusMontagem": 2,
+                "Topico": "Finish"              
+            }
+            
+        else:
+            # Id Lista a partir de montagem
+            id_lista = montagem.id_lista
+
+            # Pega o objeto Lista
+            lista = Lista.query.filter_by(id=id_lista).first()
+
+            # Pega o objeto Lote (Remédio)
+            lote = Lote.query.filter_by(id=lista.id_remedio).first()
+
+
+            return {
+                "NomeRemedio": lote.remedio,
+                "Porcentagem": percentage,
+                "Topico": "Ongoing"              
+            }
+
+
 
     def qrCode(self):
         data = queue_qr.get_message()
@@ -80,9 +154,10 @@ class WsIntegracaoController:
                 print("Status da montagem alterado com sucesso no banco! :D")
 
             except Exception as e:
-                queue_qr.add_message(data)
-                return 0, jsonify({
-                    'message': "Algo deu errado ao aplicar mudanças no banco de dados",
+
+                return jsonify({
+                    'message': f"Algo deu errado ao aplicar mudanças no banco de dados {e}",
+
                     'code': 500
                 })
 
@@ -95,8 +170,27 @@ class WsIntegracaoController:
 
         data = queue_es.get_message()
 
+        id_montagem = data['id_montagem']
         message = data['message']
+
+        montagem = Montagem.query.filter_by(id=id_montagem).first()
+
+        new = ErroMontagem(id_montagem=id_montagem, mensagem=message)
+        try:
+            db.session.add(new)
+            db.session.commit()
+
+            return jsonify({
+                "Montagem": montagem,
+                "Message": message
+            })
         
+        except Exception as e:
+            return jsonify({
+                'message': f"Erro ao criar montagem {e}",
+                'code': 500
+            })
+
 
 
 

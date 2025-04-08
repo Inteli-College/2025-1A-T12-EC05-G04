@@ -7,9 +7,11 @@ from app.Controllers.WsIntegracaoController import WsIntegracaoController
 # Depois mudar a origem da conexão para o do Raspberry
 socketio = SocketIO(cors_allowed_origins="*")  
 
-queue_es = QueueErrorStatus
-queue_qr = QueueQrCode
-queue_rs = QueueRoboStatus
+queue_es = QueueErrorStatus()
+queue_qr = QueueQrCode()
+queue_rs = QueueRoboStatus()
+
+ws_controller = WsIntegracaoController()
 
 ws_controller = WsIntegracaoController
 
@@ -18,7 +20,8 @@ def handle_connect():
     print("Cliente conectado ao WebSocket")
 
 @socketio.on("robo_status")
-def handle_robo_status(data):
+def handle_message(data):
+
     """Recebe os Status do Robo e reenvia ao Front-End, antes fazendo consultas no banco para relacionar objetos com Id-Montagem.
     ---
     Conteúdos: acao, percentage e id_montagem
@@ -31,8 +34,15 @@ def handle_robo_status(data):
     print(f"Mensagem recebida: {data}")
     queue_rs.add_message(data)
     
-    fe_friend = ws_controller.roboStatus()
-    socketio.emit('robo_status_fe', fe_friend)  
+
+    fe_friend = ws_controller.montagemRemedio()
+    if fe_friend["Topico"] == "Finish" or fe_friend["Topico"] == "Ongoing":
+        socketio.emit("robo_status_fe", fe_friend)
+        print("Opa papai")
+    else:
+        socketio.emit("montagem_remedio", fe_friend)
+        print("Ai papai")
+
 
 
 @socketio.on("qr_code")
@@ -66,8 +76,12 @@ def handle_message(data):
 
     socketio.emit('message_status', {"message":"Mensagem recebida pelo server no evento error_status"})
     print(f"Mensagem recebida: {data}")
-    queue_es.add_message(data)   
+    queue_es.add_message(data)  
+    bd_friend = ws_controller.errorStatus()
+    print(bd_friend) 
 
+
+    socketio.emit('error_status_fe', bd_friend)
 
 
 import json
@@ -80,9 +94,11 @@ def handle_message_status_fe(data):
     except Exception as e:
         print(" Erro ao processar 'message_status_fe':", str(e))
 
+
 @socketio.on("disconnect")
 def handle_disconnect():
     print("Cliente desconectado")
+
 
 def send_message(event, data):
     """Função resposável por enviar mensagens WebSocket"""
@@ -92,7 +108,8 @@ def send_message(event, data):
     except Exception as e:
         logging.error(f"Erro ao enviar mensagem WebSocket: {e}")
         return {"status": "error", "message": f"Erro ao enviar mensagem: {str(e)}"}
-    
+
+
 def parse_socketio_payload(raw):
     """Extrai e decodifica o JSON do frame socket.io."""
     try:

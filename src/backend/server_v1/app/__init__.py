@@ -4,8 +4,8 @@ from flask_migrate import Migrate
 from flask_marshmallow import Marshmallow
 from flask_cors import CORS
 from app.configuration import ProductionConfig, DevelopmentConfig
-
 import os
+
 
 app = Flask(__name__)
 
@@ -66,3 +66,4 @@ app.register_blueprint(pacientes_bp)
 
 from app.Websockets import socketio
 socketio.init_app(app)
+
