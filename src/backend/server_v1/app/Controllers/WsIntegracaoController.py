@@ -3,6 +3,7 @@ from app.Models.ListaModel import Lista
 from app.Models.LoteModel import Lote
 from app.Models.PacienteModel import Paciente
 from app.Models.ErroMontagemModel import ErroMontagem
+from app.Models.LogsModel import Logs
 from flask import jsonify
 
 from sqlalchemy.orm import aliased
@@ -179,31 +180,40 @@ class WsIntegracaoController:
                 
     def qrCode(self):
         data = queue_qr.get_message()
+        if type(data) == str:
+            data = json.loads(data)
 
-        result = data['result']
-        qr = data['qr']
+        qr = str(data['qr'])
         id_montagem = data['id_montagem']
 
         # Pega o objeto montagem
         montagem = Montagem.query.filter_by(id=id_montagem).first()
-        lista = Montagem.query.filter_by(id=montagem.id_lista)
-        lote = Lote.query.filter_by(id=lista.id_remedio).first()
+        id_lista = montagem.id_lista
+
+
+        lista = Lista.query.filter_by(id=id_lista).first()
+        id_remedio = lista.id_remedio
+
+        lote = Lote.query.filter_by(id=id_remedio).first()
 
         if montagem:
-            montagem.status = result
-            lote.codigo = qr
 
-            try:
-                db.session.commit()
-                print("Status da montagem alterado com sucesso no banco! :D")
+            real_qr = lote.codigo
+            if qr == real_qr:
+                print(id_montagem, id_remedio, dt)
 
-            except Exception as e:
+                new = Logs(id_montagem=id_montagem, id_remedio=id_remedio, datetime=dt)
 
-                return jsonify({
-                    'message': f"Algo deu errado ao aplicar mudanças no banco de dados {e}",
+                try:
+                    db.session.add(new)
+                    db.session.commit()
+                    print("Status da montagem alterado com sucesso no banco! :D")
 
-                    'code': 500
-                })
+                except Exception as e:
+                    return jsonify({
+                        'message': f"Algo deu errado ao aplicar mudanças no banco de dados {e}",
+                        'code': 500
+                    })
 
         return jsonify({
             'message': "Montagem inexistente no banco de dados?",
