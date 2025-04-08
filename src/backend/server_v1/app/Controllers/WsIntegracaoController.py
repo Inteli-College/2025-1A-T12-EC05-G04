@@ -5,8 +5,6 @@ from app.Models.PacienteModel import Paciente
 from app.Models.ErroMontagemModel import ErroMontagem
 from app.Models.LogsModel import Logs
 from flask import jsonify
-
-from sqlalchemy.orm import aliased
 from app.QueueManager import QueueRoboStatus, QueueErrorStatus, QueueQrCode
 import json
 from app.datetime import datetime_sp_string as dt
@@ -244,6 +242,8 @@ class WsIntegracaoController:
                 'message': f"Erro ao criar montagem {e}",
                 'code': 500
             })
+        
+
 
 
 
