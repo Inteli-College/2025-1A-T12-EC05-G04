@@ -234,10 +234,10 @@ class WsIntegracaoController:
             db.session.add(new)
             db.session.commit()
 
-            return jsonify({
-                "Montagem": montagem,
+            return {
+                "IdMontagem": id_montagem,
                 "Message": message
-            })
+            }
         
         except Exception as e:
             return jsonify({
