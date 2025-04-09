@@ -5,13 +5,14 @@ from app.Models.PacienteModel import Paciente
 from app.Models.ErroMontagemModel import ErroMontagem
 from app.Models.LogsModel import Logs
 from flask import jsonify
-from app.QueueManager import QueueRoboStatus, QueueErrorStatus, QueueQrCode
+from app.QueueManager import QueueManager
 import json
 from app.datetime import datetime_sp_string as dt
+import re
 
-queue_rs = QueueRoboStatus()
-queue_qr = QueueQrCode()
-queue_es = QueueErrorStatus()
+queue_rs = QueueManager("robo_status")
+queue_qr = QueueManager("qr_code")
+queue_es = QueueManager("error_status")
 
 def attStatusMontagem(id_m, result):
     montagem = Montagem.query.filter_by(id=id_m).first()
@@ -36,11 +37,11 @@ class WsIntegracaoController:
 
     def montagemRemedio(self):
         data = queue_rs.get_message()
+        print("Esse é o dado bacana",data)
 
         if type(data) == str:
             data = json.loads(data)
 
-        acao = data['acao']
         percentage = data['percentage']
         id_montagem = data['id_montagem']
 
@@ -181,6 +182,7 @@ class WsIntegracaoController:
             data = json.loads(data)
 
         qr = str(data['qr'])
+        qr_codigo = qr.split(":")[1]
         id_montagem = data['id_montagem']
 
         # Pega o objeto montagem
@@ -192,12 +194,14 @@ class WsIntegracaoController:
         id_remedio = lista.id_remedio
 
         lote = Lote.query.filter_by(id=id_remedio).first()
-
+        print("Codigo QR PAPAI:", qr_codigo)
+        
         if montagem:
-
+            
             real_qr = lote.codigo
-            if qr == real_qr:
-                print(id_montagem, id_remedio, dt)
+            print("REAL QR PAPAI:", real_qr)
+            if qr_codigo == real_qr:
+                print("É o mesmo qr code papai", id_montagem, id_remedio, dt)
 
                 new = Logs(id_montagem=id_montagem, id_remedio=id_remedio, datetime=dt)
 

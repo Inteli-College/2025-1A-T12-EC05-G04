@@ -6,10 +6,10 @@ from app.Models.ListaModel import Lista
 from app.Websockets import send_message
 from flask import jsonify
 import json
-from app.QueueManager import QueueInstrucao
+from app.QueueManager import QueueManager
 from app.datetime import datetime_sp_string as dt
 
-queue_inst = QueueInstrucao()
+queue_inst = QueueManager("instrucao")
 lista = ListaController()
 
 class RoboController:
@@ -75,11 +75,13 @@ class RoboController:
             x = 0
 
             for i in instrucoes:
-                if x > 1:
+                if x > 0:
+                    print("Mais de uma instrução")
                     queue_inst.add_message(i.instrucao)
                 else:
                     first_instrucao = i
                     print(first_instrucao)
+                    x += 1
 
             instrucao_ws = send_message("instrucao", {"instrucao":first_instrucao.instrucao, "id_montagem": id_montagem})
 

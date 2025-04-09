@@ -1,5 +1,5 @@
 from flask_socketio import SocketIO
-from app.QueueManager import QueueErrorStatus, QueueQrCode, QueueRoboStatus
+from app.QueueManager import QueueManager
 import logging
 import json
 from app.Controllers.WsIntegracaoController import WsIntegracaoController
@@ -7,9 +7,10 @@ from app.Controllers.WsIntegracaoController import WsIntegracaoController
 # Depois mudar a origem da conexão para o do Raspberry
 socketio = SocketIO(cors_allowed_origins="*")  
 
-queue_es = QueueErrorStatus()
-queue_qr = QueueQrCode()
-queue_rs = QueueRoboStatus()
+queue_es = QueueManager("error_status")
+queue_qr = QueueManager("qr_code")
+queue_rs = QueueManager("robo_status")
+queue_inst = QueueManager("instrucao")
 
 ws_controller = WsIntegracaoController()
 
@@ -42,6 +43,14 @@ def handle_message(data):
         socketio.emit("montagem_remedio", fe_friend)
         print("Ai papai")
 
+
+@socketio.on("prox_instrucao")
+def handle_message(data):
+    prox = queue_inst.get_message()
+    if prox:
+        socketio.emit("instrucao",prox)
+    else:
+        socketio.emit("instrucao", {"message": "Sem próximas instruções"})
 
 
 @socketio.on("qr_code")

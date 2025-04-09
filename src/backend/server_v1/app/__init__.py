@@ -35,10 +35,6 @@ from app.Models import (
     InstrucaoRoboModel
 )
 
-# Registra as rotas
-from app.Routes.CodigosRota import codigo_bp
-app.register_blueprint(codigo_bp)
-
 from app.Routes.ListaRouter import lista_router_bp
 app.register_blueprint(lista_router_bp)
 
