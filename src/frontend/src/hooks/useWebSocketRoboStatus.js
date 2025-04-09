@@ -190,6 +190,14 @@ export default function useWebSocketRoboStatus(url) {
       console.log('Evento error_status recebido:', data);
       processErrorMessage(data);
     });
+    socketInstance.on('alive_fe', (data) => {
+      console.log('Evento alive_fe recebido:', data);
+      // Se o evento vier com a propriedade "message", atualizamos o status do robô para ativo.
+      if (data && data.message) {
+        setStatus(old => ({ ...old, robotStatus: true }));
+        console.log('Status do robô atualizado para ativo. Mensagem:', data.message);
+      }
+    });
     socketInstance.on('connect_error', (err) => {
       console.error('Erro de conexão:', err);
     });
