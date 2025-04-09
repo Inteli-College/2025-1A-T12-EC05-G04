@@ -13,7 +13,6 @@ queue_rs = QueueRoboStatus()
 
 ws_controller = WsIntegracaoController()
 
-ws_controller = WsIntegracaoController
 
 @socketio.on("connect")
 def handle_connect():    
