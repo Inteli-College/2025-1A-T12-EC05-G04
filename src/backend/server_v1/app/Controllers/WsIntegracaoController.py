@@ -46,40 +46,42 @@ class WsIntegracaoController:
         percentage = data['percentage']
         id_montagem = data['id_montagem']
 
-        result = db.session.query(Montagem, Lista, Lote)\
-            .join(Lista, Montagem.id_lista == Lista.id)\
-            .join(Lote, Lista.id_remedio == Lote.id)\
-            .filter(Montagem.id == id_montagem)\
+        # Primeira consulta: monta (Montagem, Lista, Lote) para um id_montagem específico
+        result = (
+            db.session.query(Montagem, Lista, Lote)
+            .join(Lista, Montagem.id_lista == Lista.id)
+            .join(Lote, Lista.id_remedio == Lote.id)
+            .filter(Montagem.id == id_montagem)
             .first()
+        )
 
-        if result:
-            montagem, lista, lote = result    
-        
+        if not result:
+            return "montagem_remedio", {
+                'message': "Montagem inexistente",
+                'code': 404
+            }
+
+        # Desempacota a tupla retornada
+        montagem, lista, lote = result
+
         if percentage == 0:
 
             if montagem:
+
+                # Pega o objeto Paciente
+                paciente = Paciente.query.filter_by(id=lista.id_paciente).first()
 
                 # Pega o id da Fita
                 id_fita = lista.id_fita
 
                 listas = (
-                        db.session.query(Paciente, Lista, Lote)\
-                        .join(Lista, Paciente.id == Lista.id_paciente)\
-                        .join(Lote, Lista.id_remedio == Lote.id)\
-                        .filter(Lista.id_fita == id_fita)\
+                        db.session.query(Lista, Lote)
+                        .join(Lote, Lista.id_remedio == Lote.id)
+                        .filter(Lista.id_fita == id_fita)
                         .all()
                     )
-                
-                if result:
-                    # Como o paciente é único para o grupo,
-                    # basta pegar o paciente do primeiro registro e as listas de todos os registros
-                    paciente, _, _ = result[0]
-        
-                    # Para construir a lista de listas junto com os remédios, você pode fazer:
-                    listas = [{"lista": l, "lote": lot} for (_, l, lot) in result]
-                
-                attStatusMontagem(id_montagem, 1)
 
+                attStatusMontagem(id_montagem, 1)
                 return {
                     "PacienteId": paciente.id,
                     "Paciente": {
@@ -96,43 +98,85 @@ class WsIntegracaoController:
                     "StatusMontagem": 1,
                     "Topico": "Start"
                 }
-            
+                
             else:
                 return "montagem_remedio", {
                     'message': "Montagem inexistente",
                     'code': 404
                 }
             
+            
         elif percentage == 100:
             attStatusMontagem(id_montagem, 2)
+            
 
-            return {
-                # nao ta conseguindo acessar o lote.remeido daqui.
-                "NomeRemedio": lote.remedio,
-                "Porcentagem": percentage,
-                "StatusMontagem": 2,
-                "Topico": "Finish"              
-            }
+            # Obtém o id_fita da lista associada para agrupar as montagens
+            id_fita = lista.id_fita
+
+            # Consulta todas as montagens associadas ao mesmo id_fita
+            group_results = (
+                db.session.query(Montagem)
+                .join(Lista, Montagem.id_lista == Lista.id)
+                .filter(Lista.id_fita == id_fita)
+                .all()
+            )
+
+            # Se todas as montagens do grupo estiverem finalizadas (status == 2), atualiza para 1
+            if all(montagem.status == 2 for montagem in group_results):
+                for m in group_results:
+                    m.status = 1
+                try:
+                    db.session.commit()
+                    print("Todas as montagens da fita foram finalizadas e o status atualizado para 1.")
+                    # Retorna payload indicando que a fita foi finalizada (status 1)
+                    return {
+                        "NomeRemedio": lote.remedio,
+                        "Porcentagem": percentage,
+                        "IdMontagem": id_montagem,
+                        "StatusMontagem": 1,
+                        "Topico": "Finish"
+                    }
+                except Exception as e:
+                    db.session.rollback()
+                    return {
+                        "message": f"Erro ao atualizar status da fita: {e}",
+                        "code": 500
+                    }
+            else:
+                # Caso contrário, retorna os dados individuais com status 2
+                return {
+                    "NomeRemedio": lote.remedio,
+                    "Porcentagem": percentage,
+                    "IdMontagem": id_montagem,
+                    "StatusMontagem": 2,
+                    "Topico": "Finish"
+                }
             
         else:
-            # Id Lista a partir de montagem
+            # Para casos intermediários (Ongoing)
             id_lista = montagem.id_lista
+            MedicamentoResult = (
+                db.session.query(Lista, Lote)
+                .join(Lista, Lote.id == Lista.id_remedio)
+                .filter(Lista.id == id_lista)
+                .first()
+            )
 
-            # Pega o objeto Lista
-            lista = Lista.query.filter_by(id=id_lista).first()
-
-            # Pega o objeto Lote (Remédio)
-            lote = Lote.query.filter_by(id=lista.id_remedio).first()
-
-
-            return {
-                "NomeRemedio": lote.remedio,
-                "Porcentagem": percentage,
-                "Topico": "Ongoing"              
-            }
-
-
-
+            if MedicamentoResult:
+                lista_obj, lote_obj = MedicamentoResult
+                return {
+                    "NomeRemedio": lote_obj.remedio,
+                    "Porcentagem": percentage,
+                    "IdMontagem": id_montagem,
+                    "Topico": "Ongoing"
+                }
+            else:
+                return {
+                    "message": "Dados incompletos para atualização de Ongoing",
+                    "code": 404
+                }
+                
+                
     def qrCode(self):
         data = queue_qr.get_message()
 
