@@ -4,7 +4,7 @@ slug: /interface-final/estoque
 sidebar_position: 4
 ---
 
-## Funcionalidade da tela de Estoque
+## Funcionalidade
 
 &emsp;A função desta tela é listar os medicamentos em estoque de forma avançada, por meio de um sistema de pesquisa que permite ao operador consultar diretamente o banco de dados.
 

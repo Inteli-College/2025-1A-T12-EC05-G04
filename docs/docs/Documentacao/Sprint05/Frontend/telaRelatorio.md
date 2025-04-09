@@ -4,7 +4,7 @@ slug: /interface-final/relatorio
 sidebar_position: 5
 ---
 
-## Funcionalidade da tela Relatorio
+## Funcionalidade
 
 &emsp;A tela de Relatório permite ao operador visualizar graficamente os dados de logs do robô, incluindo informações sobre horas trabalhadas, taxa de erro, tempo médio de montagem e tempo médio de resposta. Além disso, estão disponíveis gráficos relacionados ao uso das fitas ao longo do tempo e à quantidade de fitas movimentadas entre as alas do hospital.
 

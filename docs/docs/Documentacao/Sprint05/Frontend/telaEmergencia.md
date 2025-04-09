@@ -4,7 +4,7 @@ slug: /interface-final/emergencia
 sidebar_position: 6
 ---
 
-## Funcionalidade da tela Emergência
+## Funcionalidade
 
 &emsp;A tela de emergência permite que o operador registre manualmente no banco de dados a retirada de um medicamento do estoque em situações em que o processo não passou pelo robô.
 
