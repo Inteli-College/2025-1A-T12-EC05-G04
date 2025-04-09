@@ -6,7 +6,7 @@ sidebar_position: 2
 
 ## Verificação dos Requisitos
 
-No início do projeto, definimos requisitos funcionais e não funcionais com o objetivo de descrever as funcionalidades e comportamentos esperados do sistema. Agora, na entrega do MVP, realizamos uma verificação para identificar se cada requisito foi atendido totalmente, parcialmente ou não atendido. Junto a essa verificação, também detalhamos os próximos passos necessários para que os requisitos pendentes possam ser plenamente implementados.
+No início do projeto, definimos requisitos funcionais e não funcionais com o objetivo de descrever as funcionalidades e comportamentos esperados do sistema. Agora, na entrega do MVP na Sprint 5, realizamos uma verificação para identificar se cada requisito foi atendido totalmente, parcialmente ou não atendido. Junto a essa verificação, também detalhamos os próximos passos necessários para que os requisitos pendentes possam ser plenamente implementados.
 
 Para simplificar a visualização da verificação, siga a seguinte tabela de referencia:
 
