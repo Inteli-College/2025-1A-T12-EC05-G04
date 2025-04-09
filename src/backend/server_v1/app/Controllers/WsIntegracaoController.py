@@ -42,6 +42,7 @@ class WsIntegracaoController:
         if type(data) == str:
             data = json.loads(data)
 
+        acao = data['acao']
         percentage = data['percentage']
         id_montagem = data['id_montagem']
 

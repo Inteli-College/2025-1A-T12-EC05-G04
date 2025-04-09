@@ -19,6 +19,10 @@ ws_controller = WsIntegracaoController()
 def handle_connect():    
     print("Cliente conectado ao WebSocket")
 
+@socketio.on("alive")
+def handle_message(data):
+    socketio.emit("alive_fe", data)
+
 @socketio.on("robo_status")
 def handle_message(data):
 
