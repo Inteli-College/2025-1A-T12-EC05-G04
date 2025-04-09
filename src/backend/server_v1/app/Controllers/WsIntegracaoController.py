@@ -26,8 +26,7 @@ def attStatusMontagem(id_m, result):
         return jsonify({
             'message': f"Algo deu errado ao aplicar mudanças no banco de dados {e}",
             'code': 500
-        })
-    
+        })  
 
 
 class WsIntegracaoController:

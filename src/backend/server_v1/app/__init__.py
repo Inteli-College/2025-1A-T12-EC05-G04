@@ -6,7 +6,6 @@ from flask_cors import CORS
 from app.configuration import ProductionConfig, DevelopmentConfig
 import os
 
-
 app = Flask(__name__)
 
 # Configurações de ambiente

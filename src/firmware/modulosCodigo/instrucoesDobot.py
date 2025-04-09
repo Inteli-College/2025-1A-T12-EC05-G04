@@ -8,7 +8,10 @@ def execInstrucao(d, instrucao, callback=None, id_montagem=None):
     for index in dfInstrucao.index:
             if(dfInstrucao["tipoAcao"][index] == "2" or dfInstrucao["tipoAcao"][index] == "1"):
                 if callback:
-                    callback(index+1 / len(dfInstrucao), f'move_pos(x:{float(dfInstrucao["x"][index])}, y:{float(dfInstrucao["y"][index])}, z:{float(dfInstrucao["z"][index])}', id_montagem)
+                    print(dfInstrucao)
+                    message = f'move_pos(x:{dfInstrucao["x"][index]}, y: {dfInstrucao["y"][index]}, z:{dfInstrucao["z"][index]}'
+                    print(message)
+                    callback(int(index)+1 / len(dfInstrucao), message, id_montagem)
                 # Se move para a posição da instrução se ação for tipo 1
                 d.move_to(float(dfInstrucao["x"][index]), float(dfInstrucao["y"][index]), float(dfInstrucao["z"][index]), r=0, wait=True)
                 d.wait(1000)
