@@ -27,10 +27,12 @@ class RoboController:
 
         id_lista = montagem.id_lista
         lista = Lista.query.filter_by(id=id_lista).first()
+
  
         query_louca = (db.session.query(Lista.id_remedio).join(Montagem, Lista.id == Montagem.id_lista).filter(Montagem.id == id_montagem).first())
         
         id_remedio = query_louca.id_remedio
+        first_instrucao = InstrucaoRobo.query.filter_by(id_remedio=id_remedio).first()
 
         listas_mesma_fita = Lista.query.filter_by(id_fita=lista.id_fita).all()
         ids_remedio = [lista.id_remedio for lista in listas_mesma_fita]
@@ -62,26 +64,8 @@ class RoboController:
 
 
         if instrucoes:
-            vivo = send_message("alive", "Ta vivo?")
 
-            if vivo.get("status") != "sucess":
-                print("Cliente não conectado...")
-                return jsonify({
-                    "message": "Cliente desconectado..."
-                }), 500
-            
-            print(instrucoes)
 
-            x = 0
-
-            for i in instrucoes:
-                if x > 0:
-                    print("Mais de uma instrução")
-                    queue_inst.add_message(i.instrucao)
-                else:
-                    first_instrucao = i
-                    print(first_instrucao)
-                    x += 1
 
             instrucao_ws = send_message("instrucao", {"instrucao":first_instrucao.instrucao, "id_montagem": id_montagem})
 

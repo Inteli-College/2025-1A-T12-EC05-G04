@@ -37,6 +37,7 @@ def send_callback(percentage, acao, id_montagem):
 @sio.on("instrucao")
 def listen_instrucao(data):
     print(f"Mensagem recebida: {data}")
+    id_montagem = data['id_montagem']
     try:
         #Pega instrução e roda
         resultado, qr = rodarInstrucao(data['instrucao'], callback=send_callback, id_montagem=data['id_montagem'])
@@ -46,7 +47,7 @@ def listen_instrucao(data):
         send_message('prox_instrucao', "")
     except Exception as e:
         print(f"Erro ao executar instrução: {e}")
-        send_message('error_status', {'message': 'Erro ao executar instrução', 'error': str(e), 'id_montagem': data['id_montagem']})
+        send_message('error_status', {'message': 'Erro ao executar instrução', 'error': str(e), 'id_montagem': id_montagem})
 
 if __name__ == "__main__":
     sio.connect('http://localhost:5000')  # Substitua pela URL do seu servidor
