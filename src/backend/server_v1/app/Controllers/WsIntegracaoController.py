@@ -46,37 +46,38 @@ class WsIntegracaoController:
         percentage = data['percentage']
         id_montagem = data['id_montagem']
 
-        # Pega o objeto montagem
-        montagem = Montagem.query.filter_by(id=id_montagem).first()
+        result = db.session.query(Montagem, Lista, Lote)\
+            .join(Lista, Montagem.id_lista == Lista.id)\
+            .join(Lote, Lista.id_remedio == Lote.id)\
+            .filter(Montagem.id == id_montagem)\
+            .first()
 
-        # Id Lista a partir de montagem
-        id_lista = montagem.id_lista    
-
-        # Pega o objeto Lista
-        lista = Lista.query.filter_by(id=id_lista).first()
-
-        # Pega o objeto Lote (Remédio)
-        lote = Lote.query.filter_by(id=lista.id_remedio).first()
-
-    
+        if result:
+            montagem, lista, lote = result    
         
         if percentage == 0:
 
             if montagem:
 
-                # Pega o objeto Paciente
-                paciente = Paciente.query.filter_by(id=lista.id_paciente).first()
-
                 # Pega o id da Fita
                 id_fita = lista.id_fita
 
                 listas = (
-                        db.session.query(Lista, Lote)
-                        .join(Lote, Lista.id_remedio == Lote.id)
-                        .filter(Lista.id_fita == id_fita)
+                        db.session.query(Paciente, Lista, Lote)\
+                        .join(Lista, Paciente.id == Lista.id_paciente)\
+                        .join(Lote, Lista.id_remedio == Lote.id)\
+                        .filter(Lista.id_fita == id_fita)\
                         .all()
                     )
-
+                
+                if result:
+                    # Como o paciente é único para o grupo,
+                    # basta pegar o paciente do primeiro registro e as listas de todos os registros
+                    paciente, _, _ = result[0]
+        
+                    # Para construir a lista de listas junto com os remédios, você pode fazer:
+                    listas = [{"lista": l, "lote": lot} for (_, l, lot) in result]
+                
                 attStatusMontagem(id_montagem, 1)
 
                 return {
@@ -95,7 +96,6 @@ class WsIntegracaoController:
                     "StatusMontagem": 1,
                     "Topico": "Start"
                 }
-
             
             else:
                 return "montagem_remedio", {

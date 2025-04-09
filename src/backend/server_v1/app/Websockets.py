@@ -83,8 +83,6 @@ def handle_message(data):
     socketio.emit('error_status_fe', bd_friend)
 
 
-import json
-
 @socketio.on("message_status_fe")
 def handle_message_status_fe(data):
     try:

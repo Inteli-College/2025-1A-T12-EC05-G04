@@ -1,237 +1,161 @@
-import React from "react";
-import SideBar from "./components/Sidebar";
-import ProgressBar from "./components/ProgressBar";
-import useWebSocketRoboStatus from "../hooks/useWebSocketRoboStatus";
+import { useEffect, useState } from 'react';
+import { io } from 'socket.io-client';
 
-const HomePage = () => {
-  const {
+export default function useWebSocketRoboStatus(url) {
+  const [socket, setSocket] = useState(null);
+
+  // Estados que guardam os dados
+  const [paciente, setPaciente] = useState(null);
+  const [topic, setTopic] = useState(null);
+  const [medicamentos, setMedicamentos] = useState([]);
+  const [logProgresso, setLogProgresso] = useState([]);
+
+  const [status, setStatus] = useState({
+    robotStatus: false,
+    assemblyStatus: false,
+    readyToAssemble: false,
+  });
+
+  useEffect(() => {
+    const socketInstance = io(url || 'http://localhost:5000', {
+      reconnection: true,
+      reconnectionAttempts: 5,
+      reconnectionDelay: 1000,
+    });
+
+    socketInstance.on('connect', () => {
+      console.log('WebSocket conectado');
+    });
+
+    // Função para processar os dados recebidos dos eventos
+    function processReceivedData(data) {
+      console.log("Processando payload:", data);
+      if (!data || !data.Topico) {
+        console.warn("Dados sem Topico:", data);
+        return;
+      }
+
+      // Validação condicional conforme o Topico
+      switch (data.Topico) {
+        case 'Start':
+          // Exige dados completos para iniciar
+          if (!data.PacienteId || !data.Paciente || !data.Medicamentos || data.StatusMontagem === undefined) {
+            console.warn("Tópico Start - Dados incompletos recebidos:", data);
+            return;
+          }
+          break;
+        case 'Ongoing':
+          if (!data.NomeRemedio || data.Porcentagem === undefined) {
+            console.warn("Tópico Ongoing - Dados incompletos recebidos:", data);
+            return;
+          }
+          break;
+        case 'Finish':
+          if (!data.NomeRemedio || data.Porcentagem === undefined || data.StatusMontagem === undefined) {
+            console.warn("Tópico Finish - Dados incompletos recebidos:", data);
+            return;
+          }
+          break;
+        default:
+          console.warn("Tópico desconhecido:", data.Topico);
+          return;
+      }
+
+      // Se for o evento "Start", atualiza os estados completos
+      if (data.Topico === "Start") {
+        setStatus({
+          robotStatus: true,
+          assemblyStatus: data.StatusMontagem === 1,
+          readyToAssemble: data.StatusMontagem !== 1,
+        });
+        
+        // Atualiza paciente e medicamentos somente se vierem no payload
+        if (data.Paciente) {
+          setPaciente({
+            nome: data.Paciente.nome,
+            hc: data.Paciente.hc,
+            leito: data.Paciente.leito,
+          });
+        }
+
+        if (data.Medicamentos) {
+          setMedicamentos(data.Medicamentos);
+        }
+        
+        // Se os logs vierem, atualiza; se não, não altera o estado.
+        if (data.Logs && Array.isArray(data.Logs)) {
+          const logs = data.Logs.map((log) => ({
+            medicineName: log.NomeRemedio,
+            progress: log.Porcentagem,
+          }));
+          setLogProgresso(logs);
+        }
+      } else {
+        // Para os eventos "Ongoing" e "Finish", atualiza apenas os dados que foram enviados no payload
+        // Preserva os estados de paciente e medicamentos, atualizando somente os logs e, se vier StatusMontagem, o status.
+        
+        // Atualiza ou insere um log para o medicamento conforme NomeRemedio e Porcentagem
+        setLogProgresso((oldLogs) => {
+          const nome = data.NomeRemedio;
+          const porcentagem = data.Porcentagem;
+          const index = oldLogs.findIndex((log) => log.medicineName === nome);
+          if (index >= 0) {
+            const newLogs = [...oldLogs];
+            newLogs[index] = { ...newLogs[index], progress: porcentagem };
+            return newLogs;
+          } else {
+            return [...oldLogs, { medicineName: nome, progress: porcentagem }];
+          }
+        });
+
+        // Atualiza status se StatusMontagem vier no payload
+        if (data.StatusMontagem !== undefined) {
+          setStatus((oldStatus) => ({
+            ...oldStatus,
+            assemblyStatus: data.StatusMontagem === 1,
+            readyToAssemble: data.StatusMontagem !== 1,
+          }));
+        }
+      }
+
+      // Atualiza o tópico sempre
+      setTopic(data.Topico);
+
+      const estadoMensagem = {
+        paciente: data.Paciente,
+        medicamentos: data.Medicamentos,
+        status_montagem: data.StatusMontagem,
+        topic: data.Topico,
+      };
+      console.log("Estados da mensagem:", estadoMensagem);
+    }
+
+    // Escuta os eventos e chama a função de processamento
+    socketInstance.on('robo_status_fe', (data) => {
+      console.log('Evento robo_status_fe recebido:', data);
+      processReceivedData(data);
+    });
+
+    socketInstance.on('montagem_remedio', (data) => {
+      console.log('Evento montagem_remedio recebido:', data);
+      processReceivedData(data);
+    });
+
+    socketInstance.on('connect_error', (err) => {
+      console.error('Erro de conexão:', err);
+    });
+
+    setSocket(socketInstance);
+
+    return () => socketInstance.disconnect();
+  }, [url]);
+
+  return {
+    socket,
     paciente,
     medicamentos,
     logProgresso,
     status,
     topic,
-  } = useWebSocketRoboStatus("http://localhost:5000");
-
-  // Aqui, usamos diretamente os status fornecidos pelo hook.
-  // O hook já define robotStatus como true quando recebe algum evento.
-  const { robotStatus, assemblyStatus, readyToAssemble } = status;
-
-  // Componente para exibir botões de status com indicador visual
-  const StatusButton = ({ label, status }) => {
-    return (
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "0.5rem",
-          cursor: "default",
-        }}
-      >
-        <span style={{ fontWeight: 600, fontSize: "1.1rem" }}>{label}:</span>
-        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-          <span
-            style={{
-              width: "20px",
-              height: "20px",
-              borderRadius: "50%",
-              backgroundColor: status ? "#4caf50" : "#ccc",
-            }}
-          ></span>
-          <span style={{ fontSize: "1rem" }}>{status ? "Ligado" : "Desligado"}</span>
-        </div>
-      </div>
-    );
   };
-
-  // Exibe informações do paciente, se disponíveis
-  const PatientInfoCard = () => {
-    if (!paciente) return null;
-    return (
-      <div
-        style={{
-          backgroundColor: "#e0e0e0",
-          padding: "1rem",
-          borderRadius: "8px",
-          margin: "2rem 0 1rem",
-        }}
-      >
-        <h3 style={{ fontSize: "1.5rem", fontWeight: "bold", margin: 0 }}>
-          {paciente.nome}
-        </h3>
-        <div style={{ fontSize: "1rem", color: "#555" }}>
-          {paciente.leito} | {paciente.hc}
-        </div>
-      </div>
-    );
-  };
-
-  // Componente que renderiza a mensagem de status conforme o Topico
-  const AssemblyStatusMessage = () => {
-    if (!topic) return null;
-    switch (topic) {
-      case "Start":
-        return (
-          <p style={{ fontSize: "1.1rem", color: "#333" }}>
-            Iniciando montagem. Aguardando andamento...
-          </p>
-        );
-      case "Ongoing":
-        return (
-          <p style={{ fontSize: "1.1rem", color: "#333" }}>
-            Montagem em andamento.
-          </p>
-        );
-      case "Finish":
-        return (
-          <p style={{ fontSize: "1.1rem", color: "#333" }}>
-            Montagem finalizada!
-          </p>
-        );
-      default:
-        return null;
-    }
-  };
-
-  // Exibe a lista de medicamentos com barra de progresso para cada item.
-  // Note que, se o payload de Ongoing ou Finish enviar apenas informações parciais (por exemplo,
-  // só atualizando logs de progresso), os dados iniciais (Paciente e Medicamentos) permanecem.
-  const MedicationProgressTracker = () => {
-    if (!medicamentos.length) {
-      return (
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            padding: "2rem",
-            color: "#888",
-          }}
-        >
-          <div
-            style={{
-              width: "30px",
-              height: "30px",
-              border: "4px solid #f3f3f3",
-              borderTop: "4px solid #4285f4",
-              borderRadius: "50%",
-              animation: "spin 1s linear infinite",
-              marginBottom: "10px",
-            }}
-          />
-          <p>Aguardando dados...</p>
-        </div>
-      );
-    }
-
-    return (
-      <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-        {medicamentos.map((med, index) => {
-          // Procura o log correspondente com o nome do medicamento
-          const log = logProgresso.find((l) => l.medicineName === med.nome);
-          const progress = log?.progress || 0;
-          return (
-            <div
-              key={index}
-              style={{ display: "flex", alignItems: "center", gap: "1rem" }}
-            >
-              <span style={{ minWidth: "180px", fontWeight: 600, fontSize: "0.95rem" }}>
-                {med.nome}
-              </span>
-              <ProgressBar name={med.nome} progress={progress} />
-            </div>
-          );
-        })}
-      </div>
-    );
-  };
-
-  // Componente principal que define o conteúdo mostrado de acordo com o status do robô e montagem
-  const MainContent = () => {
-    // Se o robô estiver desligado
-    if (!robotStatus) {
-      return (
-        <div style={{ padding: "2rem", textAlign: "center", color: "#aaa" }}>
-          <p>
-            O robô está desligado. Acione o robô no botão de power localizado na parte traseira da base do braço robótico.
-          </p>
-        </div>
-      );
-    }
-
-    // Se o robô estiver ligado, mas não houver montagem em andamento, sugerindo que nenhum medicamento esteja sendo montado
-    if (robotStatus && !assemblyStatus && readyToAssemble) {
-      return (
-        <div style={{ padding: "2rem", textAlign: "center", color: "#aaa" }}>
-          <p>
-            Parece que o robô não está separando ou montando nenhuma fita médica agora.
-          </p>
-          <p>
-            Aprove uma fita para montagem na seção de listas pendentes.
-          </p>
-        </div>
-      );
-    }
-
-    // Se o robô estiver ligado e houver montagem em andamento ou finalizada
-    if (robotStatus && assemblyStatus) {
-      return (
-        <div style={{ padding: "2rem" }}>
-          <AssemblyStatusMessage />
-          <PatientInfoCard />
-          <div style={{ marginTop: "2rem" }}>
-            <MedicationProgressTracker />
-          </div>
-        </div>
-      );
-    }
-
-    return null;
-  };
-
-  return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        height: "100vh",
-        width: "100vw",
-        backgroundColor: "#fff",
-      }}
-    >
-      <div
-        style={{
-          minWidth: "80px",
-          width: "8vw",
-          backgroundColor: "#f5f5f5",
-          height: "100vh",
-        }}
-      >
-        <SideBar />
-      </div>
-      <div
-        style={{
-          flex: 1,
-          overflowY: "auto",
-          padding: "0 32px",
-          backgroundColor: "#fff",
-        }}
-      >
-        <div
-          style={{
-            padding: "1rem",
-            borderBottom: "1px solid #e0e0e0",
-            backgroundColor: "#fff",
-          }}
-        >
-          <div style={{ display: "flex", gap: "1.5rem", alignItems: "center" }}>
-            <StatusButton label="Robô" status={robotStatus} />
-            <StatusButton label="Montagem" status={assemblyStatus} />
-          </div>
-        </div>
-        <MainContent />
-      </div>
-    </div>
-  );
-};
-
-export default HomePage;
+}
