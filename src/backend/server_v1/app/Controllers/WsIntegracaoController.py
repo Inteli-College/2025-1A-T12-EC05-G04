@@ -199,8 +199,3 @@ class WsIntegracaoController:
                 'code': 500
             })
 
-
-
-
-NEW
-
