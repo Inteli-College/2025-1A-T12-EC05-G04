@@ -71,6 +71,8 @@ Para comprovar que os requisitos marcados como atendidos foram de fato implement
 
 <video controls src="../../../../../media/requisitosVideo/RequisitosVer.mp4" title="Title"></video>
 
+https://github.com/user-attachments/assets/fbe8500e-a15a-4565-917a-aa49c56158f3
+
 
 
 
