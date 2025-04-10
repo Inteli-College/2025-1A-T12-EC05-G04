@@ -9,6 +9,8 @@ import json
 from app.QueueManager import QueueManager
 from app.datetime import datetime_sp_string as dt
 
+# Comentário bacana
+
 queue_inst = QueueManager("instrucao")
 lista = ListaController()
 
