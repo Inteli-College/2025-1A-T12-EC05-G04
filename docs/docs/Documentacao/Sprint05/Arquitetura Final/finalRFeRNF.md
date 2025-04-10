@@ -69,8 +69,7 @@ Para simplificar a visualização da verificação, siga a seguinte tabela de re
 
 Para comprovar que os requisitos marcados como atendidos foram de fato implementados, gravamos um vídeo demonstrando o funcionamento do sistema. Nele, é possível visualizar o sistema em ação, evidenciando o cumprimento de cada um dos requisitos validados.
 
-<video controls src="../../../../../media/requisitosVideo/RequisitosVer.mp4" title="Title"></video>
-
+Link do Video:
 https://github.com/user-attachments/assets/fbe8500e-a15a-4565-917a-aa49c56158f3
 
 
