@@ -5,8 +5,13 @@ from app.Models.LoteModel import Lote
 from app.Models.ListaModel import Lista
 from app.Websockets import send_message
 from flask import jsonify
+import json
+from app.QueueManager import QueueManager
+from app.datetime import datetime_sp_string as dt
 
+# Comentário bacana
 
+queue_inst = QueueManager("instrucao")
 lista = ListaController()
 
 class RoboController:
@@ -19,38 +24,52 @@ class RoboController:
         """Recebe uma nova mensagem e lista"""
 
         id_montagem = data['id']
+        # Pega o objeto montagem
+        montagem = Montagem.query.filter_by(id=id_montagem).first()
+
+        id_lista = montagem.id_lista
+        lista = Lista.query.filter_by(id=id_lista).first()
+
  
         query_louca = (db.session.query(Lista.id_remedio).join(Montagem, Lista.id == Montagem.id_lista).filter(Montagem.id == id_montagem).first())
-        print(query_louca)
         
         id_remedio = query_louca.id_remedio
+        first_instrucao = InstrucaoRobo.query.filter_by(id_remedio=id_remedio).first()
+
+        listas_mesma_fita = Lista.query.filter_by(id_fita=lista.id_fita).all()
+        ids_remedio = [lista.id_remedio for lista in listas_mesma_fita]
+        instrucoes = InstrucaoRobo.query.filter(InstrucaoRobo.id_remedio.in_(ids_remedio)).all()
+        
+        if not listas_mesma_fita:
+            return jsonify({
+                "message": f'Erro ao buscar as listas na mesma fita...',
+                'code': 404
+            }), 404
+
+        if not ids_remedio:
+            return jsonify({
+                "message": f'Erro ao buscar o ids dos remedios...',
+                'code': 404
+            }), 404   
+
+        if not instrucoes:
+            return jsonify({
+                "message": f'Erro ao buscar o instruções...',
+                'code': 404
+            }), 404         
  
         if not id_remedio:
             return jsonify({
                 "message": f'Erro ao buscar o id remedio...',
-                'code': 500
-            }), 500
-        try:
-            instrucaorobo = db.session.query(InstrucaoRobo).filter_by(id_remedio=id_remedio).first()
+                'code': 404
+            }), 404
 
 
-        except Exception as e:
-            db.session.rollback()
-            return jsonify({
-                'message': f'Erro ao buscar a Instrução: {str(e)}',
-                'code': 500
-            }), 500
+        if instrucoes:
 
-        if instrucaorobo:
-            vivo = send_message("conectado", "Ta vivo?")
 
-            if vivo.get("status") != "sucess":
-                print("Cliente não conectado...")
-                return jsonify({
-                    "message": "Cliente desconectado..."
-                }), 500
 
-            instrucao_ws = send_message("instrucao", {"instrucao":instrucaorobo.instrucao, "id_montagem": id_montagem})
+            instrucao_ws = send_message("instrucao", {"instrucao":first_instrucao.instrucao, "id_montagem": id_montagem})
 
             if instrucao_ws['status'] != "sucess":
                 print("Algo deu errado ao enviar a mensagem...")
@@ -71,9 +90,11 @@ class RoboController:
                         "id": id_montagem,
                         "montagem_status": 1,
                         "id_remedio": id_remedio,
-                        "id_instrucao": instrucaorobo.id,
+                        "id_instrucao": first_instrucao.id,
                         "montagem": True
                     }), 201
+                
+
                 except Exception as e:
                     db.session.rollback()
                     return {
@@ -92,11 +113,3 @@ class RoboController:
             return jsonify({
                 "message": "Nenhuma instrução encontrada..."
             }), 404
-
-
-    def pararMontagem(self):
-        pass
-
-    def deletarMontagem(self):
-        pass
-

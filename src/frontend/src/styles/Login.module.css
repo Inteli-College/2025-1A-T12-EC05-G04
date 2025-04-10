@@ -40,10 +40,14 @@
   
   .input {
     padding: 16px;
-    border: 1px solid #ddd;
+    border: 1px solid #ccc;
     border-radius: 16px;
+    width: 400px;
     font-size: 1rem;
-  }
+    color: #333; /* <-- adiciona esta linha */
+    background-color: #fff; /* <-- opcional: garante fundo branco */
+}
+
 
   .button {
     padding: 0.8rem;
@@ -55,21 +59,13 @@
     cursor: pointer;
     transition: background-color 0.3s;
     width: 400px;
+    margin-top: 3vh;
   }
   
   .button:hover {
     background-color: #ae1c1c;
   }
 
-  .esqueceuSenha {
-    font-size: 12px;
-    color: #333;
-    display: block;
-    text-align: right;
-    margin-top: 8px;
-    margin-bottom: 16px;
-    cursor: pointer;
-  }
 
   .bemVindo {
     text-align: left !important;
@@ -80,7 +76,8 @@
 
   .placeholder {
     font-size: 16px;
-    color: #333;
+    color: #333; /* <-- troque de #ffffff para algo visível */
     display: block;
     text-align: left;
-  }
+    margin-bottom: 8px; /* opcional: espaço entre label e input */
+}

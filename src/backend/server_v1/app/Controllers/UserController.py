@@ -22,7 +22,7 @@ class UsuarioController:
             usuario = Usuario.query.filter_by(email=email).first()
 
             if not usuario:
-                return {'erro': 'Email não encontrado'}, 404
+                return {'erro': 'Email incorreto ou não cadastrado'}, 404
 
             if not check_password_hash(usuario.senha, senha):
                 return {'erro': 'Senha incorreta'}, 401
@@ -47,3 +47,10 @@ class UsuarioController:
             print("[ERRO SQL]", e)
             db.session.rollback()
             return {"erro": str(e)}, 500
+        
+    def getUserName(self, email):
+        try:
+            user = Usuario.query.filter_by(email=email).first_or_404()
+            return {"nome": user.nome, "id": user.id}, 200
+        except Exception as e:
+            return {"erro": str(e)}, 404

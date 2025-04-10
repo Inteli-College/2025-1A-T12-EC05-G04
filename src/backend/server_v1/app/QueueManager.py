@@ -1,71 +1,43 @@
 import threading
 
-queue = []
-queue_lock = threading.Lock()  
+# Dicionários para armazenar as filas e seus locks
+queues = {
+    "robo_status": [],
+    "qr_code": [],
+    "error_status": [],
+    "instrucao": []
+}
 
-class QueueRoboStatus:
-    def __init__(self):
-        pass
+queue_locks = {
+    "robo_status": threading.Lock(),
+    "qr_code": threading.Lock(),
+    "error_status": threading.Lock(),
+    "instrucao": threading.Lock()
+}
 
-    def add_message(self, message):
-        """Adiciona uma mensagem na fila RoboStatus."""
-        with queue_lock:  
-            queue.append(message)
-            print(queue)
-            print(f"Mensagem: {message} adicionada a fila RoboStatus")
-
-    def get_message(self):
-        """Remove e retorna a primeira mensagem da fila RoboStatus, ou None se estiver vazia."""
-        with queue_lock:
-            if queue:
-                print(queue)
-                i = queue[0]
-                queue.pop(0)            
-                return i
-        return None 
-    
-
-class QueueQrCode:
-    def __init__(self):
-        pass
+class QueueManager:
+    def __init__(self, queue_name):
+        if queue_name not in queues:
+            raise ValueError(f"Fila '{queue_name}' não existe.")
+        self.queue_name = queue_name
+        self.queue = queues[queue_name]
+        self.lock = queue_locks[queue_name]
 
     def add_message(self, message):
-        """Adiciona uma mensagem na fila do QrCode."""
-        with queue_lock:  
-            queue.append(message)
-            print(queue)
-            print(f"Mensagem: {message} adicionada a fila QrCode")
+        """Adiciona uma mensagem na fila correspondente."""
+        with self.lock:
+            self.queue.append(message)
+            print(f"Fila [{self.queue_name}]:", self.queue)
+            print(f"Mensagem: {message} adicionada à fila {self.queue_name}")
+
+    def get_all_messages(self):
+        """Retorna todas as mensagens da fila."""
+        with self.lock:
+            return list(self.queue)
 
     def get_message(self):
-        """Remove e retorna a primeira mensagem da fila QrCode, ou None se estiver vazia."""
-        with queue_lock:
-            if queue:
-                print(queue)
-                i = queue[0]
-                queue.pop(0)            
-                return i
-        return None 
-    
-
-class QueueErrorStatus:
-    def __init__(self):
-        pass
-
-    def add_message(self, message):
-        """Adiciona uma mensagem na fila ErroStatus."""
-        with queue_lock:  
-            queue.append(message)
-            print(queue)
-            print(f"Mensagem: {message} adicionada a fila ErrorStatus")
-
-    def get_message(self):
-        """Remove e retorna a primeira mensagem da fila ErrorStatus, ou None se estiver vazia."""
-        with queue_lock:
-            if queue:
-                print(queue)
-                i = queue[0]
-                queue.pop(0)            
-                return i
-        return None 
-    
-
+        """Remove e retorna a primeira mensagem da fila (FIFO)."""
+        with self.lock:
+            if self.queue:
+                return self.queue.pop(0)
+            return None

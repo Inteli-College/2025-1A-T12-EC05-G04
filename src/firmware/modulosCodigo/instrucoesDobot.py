@@ -1,14 +1,20 @@
 import pandas as pd
 from modulosCodigo.lerSensores import lerQR, lerInfra
 
-def execInstrucao(d, instrucao, callback=None):
+def execInstrucao(d, instrucao, callback=None, id_montagem=None):
     dfInstrucao = pd.DataFrame(eval(instrucao))
     qrLido = ''
     shouldHaveGot = False
+    print(dfInstrucao.index)
     for index in dfInstrucao.index:
             if(dfInstrucao["tipoAcao"][index] == "2" or dfInstrucao["tipoAcao"][index] == "1"):
                 if callback:
-                    callback(index+1 / len(dfInstrucao), f'move_pos(x:{float(dfInstrucao["x"][index])}, y:{float(dfInstrucao["y"][index])}, z:{float(dfInstrucao["z"][index])}')
+                    
+                    message = f'move_pos(x:{dfInstrucao["x"][index]}, y: {dfInstrucao["y"][index]}, z:{dfInstrucao["z"][index]}'
+
+                    print(f'index: {index}' )
+                    callback((int(index)+1) / len(dfInstrucao), message, id_montagem)
+                    print("Enviou callback")
                 # Se move para a posição da instrução se ação for tipo 1
                 d.move_to(float(dfInstrucao["x"][index]), float(dfInstrucao["y"][index]), float(dfInstrucao["z"][index]), r=0, wait=True)
                 d.wait(1000)
@@ -31,8 +37,9 @@ def execInstrucao(d, instrucao, callback=None):
                     print("Unsuck")
                     d.suck(False)
                     shouldHaveGot = False
-
+        
             d.wait(500)
+    callback(1.00, message, id_montagem)
     return 2, qrLido
 
 

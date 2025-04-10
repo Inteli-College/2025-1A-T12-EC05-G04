@@ -8,7 +8,7 @@ class Config(object):
 	"""
 	DEBUG = False
 	TESTING = False
-	SQLALCHEMY_DATABASE_URI = 'postgresql://teste_server_v1_user:ifLn9EkDWAbNo5d7KtbrDAiGnQ2NBTNE@dpg-cv5nkc3tq21c73da9hi0-a.oregon-postgres.render.com/teste_server_v1'
+	SQLALCHEMY_DATABASE_URI = 'postgresql://higiadb_user:En5OVoJZGq1KspuuDMX4rPudeOcVXWNo@dpg-cvq0ob3e5dus739rc2b0-a.oregon-postgres.render.com/higiadb'
 	SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 	#Get your reCaptche key on: https://www.google.com/recaptcha/admin/create
@@ -16,7 +16,7 @@ class Config(object):
 	#RECAPTCHA_PRIVATE_KEY = "6LffFNwSAAAAAO7UURCGI7qQ811SOSZlgU69rvv7"
 
 class ProductionConfig(Config):
-	SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL','postgresql://teste_server_v1_user:ifLn9EkDWAbNo5d7KtbrDAiGnQ2NBTNE@dpg-cv5nkc3tq21c73da9hi0-a.oregon-postgres.render.com/teste_server_v1')
+	SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL','postgresql://higiadb_user:En5OVoJZGq1KspuuDMX4rPudeOcVXWNo@dpg-cvq0ob3e5dus739rc2b0-a.oregon-postgres.render.com/higiadb')
 	SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 class DevelopmentConfig(Config):
