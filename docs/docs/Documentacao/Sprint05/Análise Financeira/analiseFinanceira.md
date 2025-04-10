@@ -185,7 +185,6 @@ Criar um dispositivo industrial com peças mais eficientes energeticamente pode 
     - Validação de fluxo
 - Delimitação dos componentes industriais
 - Arquitetura da solução
-
 - Desenvolvimento da Solução Industrial
 - Criação do site
 - Modelagem do banco de dados
