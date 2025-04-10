@@ -31,24 +31,27 @@ def send_message(event, data):
 
     # Tem que mandar para o qr_code, status e receber da instrucao message_status
 def send_callback(percentage, acao, id_montagem):
-    send_message('current_status', {'acao': acao, 'percentage': percentage, 'id_montagem': id_montagem})
+    send_message('robo_status', {'acao': acao, 'percentage': percentage, 'id_montagem': id_montagem})
     
 
 @sio.on("instrucao")
 def listen_instrucao(data):
     print(f"Mensagem recebida: {data}")
+    id_montagem = data['id_montagem']
     try:
         #Pega instrução e roda
         resultado, qr = rodarInstrucao(data['instrucao'], callback=send_callback, id_montagem=data['id_montagem'])
         #Envio:
         send_message('qr_code', {'result': resultado, 'qr': qr, 'id_montagem': data['id_montagem']})
+        #Envio 2:
+        send_message('prox_instrucao', "")
     except Exception as e:
         print(f"Erro ao executar instrução: {e}")
-        send_message('error_status', {'message': 'Erro ao executar instrução', 'error': str(e), 'id_montagem': data['id_montagem']})
+        send_message('error_status', {'message': 'Erro ao executar instrução', 'error': str(e), 'id_montagem': id_montagem})
 
 if __name__ == "__main__":
     sio.connect('http://localhost:5000')  # Substitua pela URL do seu servidor
-    send_message('alive', "O raspberry está conectado!")
+    send_message('alive', {"message":"O raspberry está conectado!"})
     print("Mensagem enviada!")
     sio.wait()
 
