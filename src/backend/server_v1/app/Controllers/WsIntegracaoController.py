@@ -9,9 +9,13 @@ from app.QueueManager import QueueManager
 import json
 from app.datetime import datetime_sp_string as dt
 import re
+
+
 queue_rs = QueueManager("robo_status")
 queue_qr = QueueManager("qr_code")
 queue_es = QueueManager("error_status")
+
+
 def attStatusMontagem(id_m, result):
     montagem = Montagem.query.filter_by(id=id_m).first()
     montagem.status = result
@@ -50,7 +54,7 @@ class WsIntegracaoController:
             }
         # Desempacota a tupla retornada
         montagem, lista, lote = result
-        if percentage == 0:
+        if percentage == 0.125:
             if montagem:
                 # Pega o objeto Paciente
                 paciente = Paciente.query.filter_by(id=lista.id_paciente).first()
@@ -84,7 +88,7 @@ class WsIntegracaoController:
                     'message': "Montagem inexistente",
                     'code': 404
                 }
-        elif percentage == 100:
+        elif percentage == 1.00:
             attStatusMontagem(id_montagem, 2)
             # Obtém o id_fita da lista associada para agrupar as montagens
             id_fita = lista.id_fita
