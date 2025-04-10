@@ -29,7 +29,7 @@ export default function useWebSocketRoboStatus(url) {
       console.log('WebSocket conectado');
     });
 
-    // Função unificada para processar o payload recebido
+    // Função unificada para processar os dados recebidos
     function processReceivedData(data) {
       console.log("Processando payload:", data);
       if (!data || !data.Topico) {
@@ -37,10 +37,10 @@ export default function useWebSocketRoboStatus(url) {
         return;
       }
 
-      // Variável para log de depuração (apenas para ver o merge dos dados)
+      // Variável auxiliar para log de depuração
       let estadoMensagem = {};
 
-      switch (data.Topico) {
+      switch(data.Topico) {
         case 'Start': {
           // Verifica se os dados completos foram enviados
           if (!data.PacienteId || !data.Paciente || !data.Medicamentos || data.StatusMontagem === undefined) {
@@ -53,18 +53,19 @@ export default function useWebSocketRoboStatus(url) {
             assemblyStatus: data.StatusMontagem === 1,
             readyToAssemble: data.StatusMontagem !== 1,
           });
-          // Atualiza os dados completos
+          // Atualiza os dados do paciente e medicamentos
           setPaciente({
             nome: data.Paciente.nome,
             hc: data.Paciente.hc,
             leito: data.Paciente.leito,
           });
           setMedicamentos(data.Medicamentos);
-          // Atualiza logs, se enviados (caso venha)
+          // Se houver logs (por exemplo, de reinicialização de uma montagem em progresso), atualiza o estado
           if (data.Logs && Array.isArray(data.Logs)) {
             const logs = data.Logs.map((log) => ({
-              id_montagem: log.IdMontagem, // Se houver, deve vir no payload
+              id_montagem: log.IdMontagem,
               medicineName: log.NomeRemedio,
+              // Aqui, o progresso pode vir já como um indicador textual
               progress: log.Porcentagem,
             }));
             setLogProgresso(logs);
@@ -77,8 +78,9 @@ export default function useWebSocketRoboStatus(url) {
           };
           break;
         }
+
         case 'Ongoing': {
-          // Para Ongoing, exige NomeRemedio, Porcentagem e IdMontagem
+          // Para Ongoing, exige NomeRemedio, Porcentagem (agora indicador como "Montando") e IdMontagem
           if (!data.NomeRemedio || data.Porcentagem === undefined || !data.IdMontagem) {
             console.warn("Tópico Ongoing - Dados incompletos:", data);
             return;
@@ -86,34 +88,38 @@ export default function useWebSocketRoboStatus(url) {
           setStatus(old => ({
             ...old,
             robotStatus: true,
-            assemblyStatus: true, // Já que a montagem está em andamento
+            assemblyStatus: true, // A montagem está em andamento
             readyToAssemble: false,
           }));
           setNomeRemedio(data.NomeRemedio);
-        
-          // Atualiza o log com base no IdMontagem
+          // Atualiza ou adiciona o log de progresso com o novo indicador
           setLogProgresso(oldLogs => {
             const index = oldLogs.findIndex(log => log.id_montagem === data.IdMontagem);
             if (index >= 0) {
-              // Se já existe, atualiza a porcentagem
               const updatedLogs = [...oldLogs];
               updatedLogs[index] = { ...updatedLogs[index], progress: data.Porcentagem };
               return updatedLogs;
             }
-            // Se não existe, adiciona novo log
-            return [...oldLogs, { id_montagem: data.IdMontagem, medicineName: data.NomeRemedio, progress: data.Porcentagem }];
+            return [
+              ...oldLogs,
+              {
+                id_montagem: data.IdMontagem,
+                medicineName: data.NomeRemedio,
+                progress: data.Porcentagem,
+              }
+            ];
           });
-        
           estadoMensagem = {
             nome_paciente: data.NomeRemedio,
-            porcentagem: data.Porcentagem,
+            progresso: data.Porcentagem,
             id_montagem: data.IdMontagem,
             topic: data.Topico,
           };
           break;
         }
+
         case 'Finish': {
-          // Para Finish, exige NomeRemedio, Porcentagem e StatusMontagem, e idealmente IdMontagem
+          // Para Finish, exige NomeRemedio, Porcentagem (indicador "Finalizada"), StatusMontagem e IdMontagem
           if (!data.NomeRemedio || data.Porcentagem === undefined || data.StatusMontagem === undefined || !data.IdMontagem) {
             console.warn("Tópico Finish - Dados incompletos:", data);
             return;
@@ -126,30 +132,36 @@ export default function useWebSocketRoboStatus(url) {
           }));
           setNomeRemedio(data.NomeRemedio);
           setLogProgresso(oldLogs => {
-            const id = data.IdMontagem;
-            const progress = data.Porcentagem;
-            const index = oldLogs.findIndex(log => log.id_montagem === id);
+            const index = oldLogs.findIndex(log => log.id_montagem === data.IdMontagem);
             if (index >= 0) {
-              const newLogs = [...oldLogs];
-              newLogs[index] = { ...newLogs[index], progress };
-              return newLogs;
+              const updatedLogs = [...oldLogs];
+              updatedLogs[index] = { ...updatedLogs[index], progress: data.Porcentagem };
+              return updatedLogs;
             }
-            return [...oldLogs, { id_montagem: id, medicineName: data.NomeRemedio, progress }];
+            return [
+              ...oldLogs,
+              {
+                id_montagem: data.IdMontagem,
+                medicineName: data.NomeRemedio,
+                progress: data.Porcentagem,
+              }
+            ];
           });
           estadoMensagem = {
             nome_paciente: data.NomeRemedio,
-            porcentagem: data.Porcentagem,
+            progresso: data.Porcentagem,
             status_montagem: data.StatusMontagem,
             topic: data.Topico,
           };
           break;
         }
+
         default:
           console.warn("Tópico desconhecido:", data.Topico);
           return;
       }
 
-      // Atualiza paciente e medicamentos apenas se enviados no payload
+      // Atualiza os estados de paciente e medicamentos se eles estiverem presentes no payload
       if (data.Paciente) {
         setPaciente({
           nome: data.Paciente.nome,
@@ -167,7 +179,7 @@ export default function useWebSocketRoboStatus(url) {
       console.log("Estados da mensagem:", estadoMensagem);
     }
 
-    // Função para processar mensagem de erro
+    // Função para tratar mensagens de erro
     function processErrorMessage(data) {
       console.log("Processando mensagem de erro:", data);
       if (data && data.message) {
@@ -177,7 +189,7 @@ export default function useWebSocketRoboStatus(url) {
       }
     }
 
-    // Escuta os eventos e chama as funções de processamento
+    // Escutando os eventos do websocket
     socketInstance.on('robo_status_fe', (data) => {
       console.log('Evento robo_status_fe recebido:', data);
       processReceivedData(data);
@@ -192,7 +204,7 @@ export default function useWebSocketRoboStatus(url) {
     });
     socketInstance.on('alive_fe', (data) => {
       console.log('Evento alive_fe recebido:', data);
-      // Se o evento vier com a propriedade "message", atualizamos o status do robô para ativo.
+      // Se o evento incluir a propriedade "message", atualizamos o status do robô para ativo
       if (data && data.message) {
         setStatus(old => ({ ...old, robotStatus: true }));
         console.log('Status do robô atualizado para ativo. Mensagem:', data.message);
@@ -204,7 +216,10 @@ export default function useWebSocketRoboStatus(url) {
 
     setSocket(socketInstance);
 
-    return () => socketInstance.disconnect();
+    // Cleanup: desconecta o socket ao desmontar o componente
+    return () => {
+      socketInstance.disconnect();
+    };
   }, [url]);
 
   return {

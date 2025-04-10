@@ -109,7 +109,7 @@ class WsIntegracaoController:
                     # Retorna payload indicando que a fita foi finalizada (status 1)
                     return {
                         "NomeRemedio": lote.remedio,
-                        "Porcentagem": percentage,
+                        "Porcentagem": 'Finalizada',
                         "IdMontagem": id_montagem,
                         "StatusMontagem": 1,
                         "Topico": "Finish"
@@ -124,7 +124,7 @@ class WsIntegracaoController:
                 # Caso contrário, retorna os dados individuais com status 2
                 return {
                     "NomeRemedio": lote.remedio,
-                    "Porcentagem": percentage,
+                    "Porcentagem": 'Finalizada',
                     "IdMontagem": id_montagem,
                     "StatusMontagem": 2,
                     "Topico": "Finish"
@@ -142,7 +142,7 @@ class WsIntegracaoController:
                 lista_obj, lote_obj = MedicamentoResult
                 return {
                     "NomeRemedio": lote_obj.remedio,
-                    "Porcentagem": percentage,
+                    "Porcentagem": "Montando",
                     "IdMontagem": id_montagem,
                     "Topico": "Ongoing"
                 }

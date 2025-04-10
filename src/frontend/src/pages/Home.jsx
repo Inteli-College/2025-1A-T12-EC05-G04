@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import SideBar from "./components/Sidebar";
-import ProgressBar from "./components/ProgressBar";
 import useWebSocketRoboStatus from "../hooks/useWebSocketRoboStatus";
 import ErrorMessage from "./components/ErrorMessage"; // Certifique-se de que esse componente está implementado
 
@@ -28,7 +27,7 @@ const HomePage = () => {
 
   const { robotStatus, assemblyStatus } = status;
 
-  // Componente para exibir botões de status com indicador visual
+  // Exibe os botões de status com um indicador visual simples
   const StatusButton = ({ label, status }) => (
     <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", cursor: "default" }}>
       <span style={{ fontWeight: 600, fontSize: "1.1rem" }}>{label}:</span>
@@ -68,7 +67,7 @@ const HomePage = () => {
     );
   };
 
-  // Componente que renderiza a mensagem de status da montagem conforme o tópico
+  // Renderiza a mensagem de status da montagem conforme o tópico
   const AssemblyStatusMessage = () => {
     if (!topic) return null;
     switch (topic) {
@@ -95,8 +94,8 @@ const HomePage = () => {
     }
   };
 
-  // Componente que renderiza a lista de medicamentos com barra de progresso para cada item.
-  const MedicationProgressTracker = () => {
+  // Componente que renderiza a lista de medicamentos com o status textual ("Montando" ou "Finalizada")
+  const MedicationStatusTracker = () => {
     if (!medicamentos.length) {
       return (
         <div
@@ -127,24 +126,25 @@ const HomePage = () => {
     return (
       <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
         {medicamentos.map((med, index) => {
-          // Se o objeto med tiver id_montagem, buscamos log pela comparação com id_montagem;
-          // se não, buscamos pelo nome (medicineName).
+          // Se o objeto med tiver id_montagem, busca log pela comparação com id_montagem
+          // Caso contrário, busca pelo nome (medicineName)
           const log = med.id_montagem
             ? logProgresso.find((l) => l.id_montagem === med.id_montagem)
             : logProgresso.find((l) => l.medicineName === med.nome);
-          const progress = log ? log.progress : 0;
+          const statusText = log ? log.progress : "Aguardando";
           return (
             <div key={index} style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
               <span style={{ minWidth: "180px", fontWeight: 600, fontSize: "0.95rem" }}>
                 {med.nome}
               </span>
-              <ProgressBar name={med.nome} progress={progress} />
+              <span style={{ fontSize: "1rem", fontWeight: "bold" }}>
+                {statusText}
+              </span>
             </div>
           );
         })}
       </div>
     );
-    
   };
 
   // Componente principal que define o conteúdo da tela com base no status do robô e montagem
@@ -161,27 +161,13 @@ const HomePage = () => {
 
     switch (topic) {
       case "Start":
-        return (
-          <div style={{ padding: "2rem" }}>
-            <AssemblyStatusMessage />
-            <PatientInfoCard />
-            <MedicationProgressTracker />
-          </div>
-        );
       case "Ongoing":
-        return (
-          <div style={{ padding: "2rem" }}>
-            <AssemblyStatusMessage />
-            <PatientInfoCard />
-            <MedicationProgressTracker />
-          </div>
-        );
       case "Finish":
         return (
           <div style={{ padding: "2rem" }}>
             <AssemblyStatusMessage />
             <PatientInfoCard />
-            <MedicationProgressTracker />
+            <MedicationStatusTracker />
           </div>
         );
       default:
