@@ -24,7 +24,7 @@ sidebar_position: 1
 | VSCode | Ferramenta | IDE para desenvolvimento de código | - | - | 0,00 |
 | Dbeaver | Ferramenta | Software para gestão e interação com SGBDs | - | - | 0,00 |
 | Render | Ferramenta | Site para deploy temporário do banco de dados | - | - | 0,00 |
-| **Total** | | | | | **x,xx** |
+| **Total** | | | | | **7.187,00** |
 
 &emsp;Para esse protótipo foram considerados somente gastos em recursos como equipamentos e mão de obra. No entanto, ele não reflete as exigências e condições reais de um ambiente industrial. Para viabilizar a escalabilidade e a implementação nesse contexto, é necessário o desenvolvimento de um novo protótipo industrial, com componentes robustos e mais adequados.
 
@@ -111,13 +111,107 @@ sidebar_position: 1
 | Deploy do banco de dados | Assinatura | Serviço em nuvem (anual) | 1 | 150,00 | 150,00 |
 | Energia Elétrica | Despesa fixa | Consumo de 1 mês considerando manipuladores robóticos de 0,2kW a 0,5kW | - | 60,00 a 100,00 | 90,00 |
 | Treinamento para equipe operacional | Despesa variável | Treinamento de 1 dia para 5 pessoas | 1  | 1.000,00 | 1.000,00 |
-| **Total** | | | | | **xx,xx** |
+| **Total** | | | | | **924.600,00** |
 
 &emsp;Esse novo protótipo servirá como uma prova de conceito mais fiel à realidade operacional do ambiente industrial, permitindo a validação da solução em condições reais. A partir dele, será possível elaborar estratégias de transição mais eficazes e identificar oportunidades de escalabilidade viável, com base no contexto específico de aplicação. 
 
 ### Oportunidades de Escala:
 
+&emsp;Ao pensar na implementação de mais de um sistema de automação, pode-se enxergar oportunidades de melhorar a escalabilidade do projeto e reduzir o custo total a partir da redução de custos unitários. Para isso, foram elicitadas 4 alternativas que podem auxiliar na criação de escala dentro do projeto.
+
+#### 1. Compra em Lotes
+&emsp;A aquisição de componentes em maiores quantidades possibilita uma redução mínima de 10% no preço unitário, viabilizando:
+- Redução de custos por sistema
+- Montagem simultânea de múltiplas unidades
+- Distribuição para outras unidades hospitalares além da Unicamp
+
+&emsp;Componentes beneficiados e que terão menor custo unitário:
+- Manipulador robótico
+- Controlador Lógico Programável (CLP)
+- Sensores infravermelho e de QR Code
+- Fios de cobre
+
+#### 2. Centralização de Deploys
+&emsp;Evitar múltiplas assinaturas e infraestruturas de hospedagem ao:
+- Utilizar uma única instância de banco de dados compartilhada por vários sistemas e centralizar os deploys e licenças
+- Reduzir gastos recorrentes com nuvem, domínios e manutenção de diferentes plataformas
+
+#### 3. Diversificação da Equipe
+&emsp;A manutenção de uma equipe composta exclusivamente por engenheiros pode gerar um custo elevado. Para reduzir custos sem comprometer a qualidade:
+- Compor o time com técnicos, estagiários e profissionais júnior
+- Focar engenheiros em decisões técnicas, validações e integrações críticas
+
+4. Eficiência energética
+Criar um dispositivo industrial com peças mais eficientes energeticamente pode aumentar custos de produção, mas reduzir os custos de operação a longo prazo, especialmente em sistemas com uso contínuo, como manipuladores robóticos em farmácias hospitalares. Em especial, enxerga-se:
+- Redução de despesas fixas mensais com energia elétrica
+
+&emsp;Dessa forma, espera-se que as possibilidades de escala dentro do projeto permitam uma replicação facilitada do mesmo, levando a maiores vendas com menores custos de produção e maiores lucros.
+
 ### Divisão em fases:
+
+&emsp;Para implementação do projeto no tempo de 12 meses, foram definidas 5 fases que separam as fases de discory, development, production e testes do projeto, além de um período mínimo de assistência à empresa contratante. Abaixo encontram-se as descrições de cada fase:
+
+#### Fase 1: Pesquisa e Planejamento (2 meses)
+- UX Research
+    - Entrevistas com usuários
+    - Observação in loco
+    - Documentação
+        - Criação de personas
+        - Mapa da empatia
+        - Jornada do usuário
+        - Problem Statement
+
+- Business Research
+    - Entendimento das regras de negócio
+    - Levantamento de legislações e restrições contextuais
+    - Estudo da empresa parceira
+    - Documentação
+        - Matriz de risco
+        - Value Proposition Canvas
+
+- Elicitação de Requisitos
+    - Requisitos funcionais
+    - Requisitos não funcionais
+- Arquitetura Inicial
+    - Visão arquitetural agnóstica à tecnologia
+
+#### Fase 2: Desenvolvimento (4 meses)
+- UX
+    - Wireframes, userflows e wireflows
+    - Identidade visual e gerenciamento de marca
+    - Protótipo de alta fidelidade
+
+- Protótipo Inicial
+    - Validação de fluxo
+- Delimitação dos componentes industriais
+- Arquitetura da solução
+
+- Desenvolvimento da Solução Industrial
+- Criação do site
+- Modelagem do banco de dados
+- Integração de sistemas
+
+#### Fase 3: Testes (2 meses)
+- Tipos de Testes
+    - Testes de funcionalidades
+    - Testes de integração
+    - Testes unitários
+    - Testes de usabilidade
+
+#### Fase 4: Implementação (2 meses)
+- Atividades
+    - Implementação do sistema de automação na farmácia
+    - Integração com o ERP hospitalar
+    - Criação de documentação e manuais
+    - Treinamento da equipe da farmácia
+
+#### Fase 5: Assistência (2 meses)
+- Suporte Operacional
+    - Observação do sistema em funcionamento
+    - Manutenção e correção de erros de implementação
+
+&emsp;Com esse plano de 12 meses, espera-se que o projeto parta do 0 e seja implementado até 10 meses depois, permitindo a observação de possíveis erros e manutenções durante os 2 meses restantes. Dessa forma, há tempo hábil para pesquisas e testes com usuários em todas as etapas, promovendo reflexões para uma boa UX; para o entendimento do problema e da empresa parceira/contratante, permitindo que as regras de negócios sejam bem entendidas e estejam refletidas nos requisitos elicitados; para o desenvolvimento correto do sistema de automação industrial e sua integração com os sistemas hospitalares, além da execução de testes de diferentes naturezas.
+
 
 ### Viabilidade em 12 meses:
 
