@@ -97,7 +97,6 @@ export default function Login() {
 
                     {erro && <p style={{ color: 'red' }}>{erro}</p>}
                     
-                    <a href="#" className={styles.esqueceuSenha}>Esqueceu sua senha?</a>
                     <button type='button' className={styles.button} onClick={handleLogin}>
                         Login
                     </button>
