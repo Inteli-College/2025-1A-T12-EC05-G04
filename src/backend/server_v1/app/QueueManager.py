@@ -28,7 +28,6 @@ class QueueManager:
         with self.lock:
             self.queue.append(message)
             print(f"Fila [{self.queue_name}]:", self.queue)
-            print(f"Mensagem: {message} adicionada à fila {self.queue_name}")
 
     def get_all_messages(self):
         """Retorna todas as mensagens da fila."""

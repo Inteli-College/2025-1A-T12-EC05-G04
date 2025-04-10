@@ -30,9 +30,14 @@ class RoboController:
         
         montagem = Montagem.query.filter_by(id=id_montagem).first()
 
+        if montagem.status == 2:
+            return jsonify({
+                "message": f'Essa montagem já foi finalizada.... IdMontagem: {id_montagem}',
+                "code": 409
+            })
+
         id_lista = montagem.id_lista
         lista = Lista.query.filter_by(id=id_lista).first()
-
  
         query_louca = (db.session.query(Lista.id_remedio).join(Montagem, Lista.id == Montagem.id_lista).filter(Montagem.id == id_montagem).first())
         
@@ -70,7 +75,26 @@ class RoboController:
 
         if instrucoes:
 
+            for lista in listas_mesma_fita:
+                # Pega a montagem relacionada à lista
+                montagem = Montagem.query.filter_by(id_lista=lista.id).first()
+                if not montagem:
+                    continue  # pula se não houver montagem relacionada
+                if montagem.id == id_montagem:
+                    continue
 
+                # Pega a instrução relacionada ao id_remedio
+                instrucao = InstrucaoRobo.query.filter_by(id_remedio=lista.id_remedio).first()
+                if not instrucao:
+                    continue  # pula se não houver instrução
+
+                # Cria o pacote de dados e envia para a fila
+                data = {
+                    "instrucao": instrucao.instrucao,
+                    "id_montagem": montagem.id  # id_montagem de cada remédio
+                }
+                queue_inst.add_message(data)
+                print("AQUIIII ESTÁ AS PRÓXIMAS INSTRUÇÕESSS", data)
 
             instrucao_ws = send_message("instrucao", {"instrucao":first_instrucao.instrucao, "id_montagem": id_montagem})
 

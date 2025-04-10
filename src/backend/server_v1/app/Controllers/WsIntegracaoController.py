@@ -33,7 +33,7 @@ class WsIntegracaoController:
         pass
     def montagemRemedio(self):
         data = queue_rs.get_message()
-        print("Esse é o dado bacana",data)
+
         if type(data) == str:
             data = json.loads(data)
         acao = data['acao']
@@ -54,19 +54,26 @@ class WsIntegracaoController:
             }
         # Desempacota a tupla retornada
         montagem, lista, lote = result
+
         if percentage == 0.125:
+            print("INICIOU A MONTAGEM PAPAIIIIIII")
             if montagem:
                 # Pega o objeto Paciente
                 paciente = Paciente.query.filter_by(id=lista.id_paciente).first()
                 # Pega o id da Fita
                 id_fita = lista.id_fita
+
+                # Pega todas as listas 
                 listas = (
                         db.session.query(Lista, Lote)
                         .join(Lote, Lista.id_remedio == Lote.id)
                         .filter(Lista.id_fita == id_fita)
                         .all()
                     )
+                
                 attStatusMontagem(id_montagem, 1)
+
+
                 return {
                     "PacienteId": paciente.id,
                     "Paciente": {
