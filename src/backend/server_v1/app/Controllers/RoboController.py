@@ -25,6 +25,9 @@ class RoboController:
 
         id_montagem = data['id']
         # Pega o objeto montagem
+        
+        print("Montagem iniciada: ", id_montagem)
+        
         montagem = Montagem.query.filter_by(id=id_montagem).first()
 
         id_lista = montagem.id_lista

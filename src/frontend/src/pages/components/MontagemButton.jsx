@@ -1,18 +1,21 @@
 import axios from "axios";
 
 export default function MontagemButton({ idMontagem }) {
-  const iniciarMontagem = async () => {
-    console.log("Clique detectado!");
-    console.log("ID da montagem:", idMontagem);
+  const iniciarMontagem = () => {
+    console.log("Clique detectado! ID da montagem:", idMontagem);
 
-    try {
-      const res = await axios.post("http://localhost:5000/robo/", {
-        id: idMontagem,
+      
+    // Dispara a requisição de forma assíncrona
+    axios.post("http://localhost:5000/robo/", { id: idMontagem })
+      .then(res => {
+        console.log("Resposta do robô:", res.data);
+      })
+      .catch(error => {
+        console.error("Erro ao iniciar montagem:", error);
       });
-      console.log("Resposta do robô:", res.data);
-    } catch (error) {
-      console.error("Erro ao iniciar montagem:", error);
-    }
+
+    // Redireciona imediatamente sem aguardar a resposta da requisição
+    window.location.href = "/home";
   };
 
   return (
