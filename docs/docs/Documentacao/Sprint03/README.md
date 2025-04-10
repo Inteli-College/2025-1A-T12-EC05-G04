@@ -1,5 +1,5 @@
 ---
 title: Sprint 03
 slug: Sprint03
-sidebar_position: 3
+sidebar_position: 4
 ---

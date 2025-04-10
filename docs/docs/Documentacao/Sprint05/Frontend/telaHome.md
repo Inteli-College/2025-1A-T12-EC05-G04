@@ -28,3 +28,13 @@ sidebar_position: 2
 ![Andamento](../../../../../media/docsInterfaceFinal/home/Home.png)
 <sub>Fonte: Material produzido pelos autores (2025).</sub>
 </div>
+
+## Integração
+
+&emsp;A integração da tela da Home é realizada por meio de comunicação em tempo real utilizando WebSockets. Implementamos um hook personalizado que se conecta ao backend Flask, possibilitando o recebimento contínuo de dados sobre o status do robô, montagem em andamento e progresso de separação de medicamentos.
+
+&emsp;Ao estabelecer a conexão, recebemos informações do paciente, a lista de medicamentos sendo montados e o progresso de cada item, que é exibido dinamicamente com barras de progresso.
+
+&emsp;O status do robô e da montagem também são atualizados em tempo real e indicados visualmente por meio de ícones e mensagens. Caso o robô esteja desligado, exibimos orientações para o operador iniciá-lo corretamente.
+
+&emsp;Toda a lógica de renderização da interface é baseada nas mensagens recebidas via WebSocket, o que garante atualizações instantâneas sem a necessidade de recarregar a página ou realizar novas requisições HTTP.
