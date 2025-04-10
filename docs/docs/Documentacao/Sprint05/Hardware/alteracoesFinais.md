@@ -4,7 +4,7 @@ slug: s5/hardware/alteracoes
 sidebar_position: 1
 ---
 
-# O que ocorreu com o hardware esta sprint?
+# O que ocorreu com o hardware/firmware esta sprint?
 
 ## Correções
 
