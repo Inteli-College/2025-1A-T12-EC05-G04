@@ -211,3 +211,10 @@ Payback = 40,8
 
 ### Conclusão:
 
+
+&emsp;Este projeto foi desenvolvido em um contexto educacional com o objetivo de criar um protótipo capaz de automatizar os processos de montagem e separação de fitas de medicamentos dos pacientes do HC Unicamp. No entanto, ao projetar a transição para um cenário industrial, tornou-se necessário considerar uma estrutura mais robusta e adequada à realidade industrial, com a inclusão de equipamentos profissionais como manipuladores robóticos mais eficientes, CLPs e sensores de alta precisão.
+
+&emsp;A realização da análise financeira teve como foco estimar os investimentos necessários tanto para a criação de um protótipo industrial, quanto para a implementação e escalabilidade desse projeto em um contexto real. Portanto, foram considerados elementos como CAPEX, OPEX, tributos, ROI e payback. Apesar dos dados utilizados serem baseados em cotações de mercado, vale destacar que se trata de uma simulação e, portanto, está sujeita a variações como mudanças de preço, impostos e particularidades adicionais.
+
+&emsp;Todavia, os resultados apresentados anteriormente mostram um panorama relativamente confiável da viabilidade econômica do projeto, podendo servir como base para decisões futuras. A estimativa demonstra que, apesar do retorno financeiro não ocorrer no curto prazo, o valor investido é recuperado em, aproximadamente, 3 anos e 5 meses, com possibilidade de haver lucro no futuro. Além disso, ao considerar a possibilidade de escalabilidade e aplicação da solução em outras unidades hospitalares, os ganhos operacionais podem se tornar ainda mais atrativos, aumentando o impacto positivo da automação na eficiência e no controle hospitalar.
+
