@@ -41,3 +41,12 @@ sidebar_position: 4
 <sub>Fonte: Material produzido pelos autores (2025).</sub>
 </div>
 
+## Integração
+
+&emsp;Para possibilitar o funcionamento da tela de Estoque, integramos a aplicação com o backend utilizando uma requisição `GET` para a rota `/lotes/`, implementada em Flask. Essa rota acessa diretamente os dados armazenados em um banco de dados PostgreSQL e retorna as informações dos medicamentos em estoque.
+
+&emsp;Os dados recebidos incluem o nome do remédio, dose, validade, quantidade disponível e código identificador, sendo utilizados para a renderização dinâmica da listagem na interface.
+
+&emsp;Toda a lógica de busca, filtragem e ordenação é executada no frontend com base nos dados retornados inicialmente. Dessa forma, evitamos múltiplas requisições ao backend durante a navegação, garantindo fluidez e performance na exibição dos resultados.
+
+&emsp;Essa comunicação garante que sempre trabalhemos com dados atualizados diretamente do banco, sem armazenamento local persistente no navegador.

@@ -21,3 +21,15 @@ sidebar_position: 6
 ![Remedio](../../../../../media/docsInterfaceFinal/emergencia/Remedio.png)
 <sub>Fonte: Material produzido pelos autores (2025).</sub>
 </div>
+
+## Integração
+
+&emsp;Para viabilizar o funcionamento da tela de emergência, realizamos a integração com a API desenvolvida em Flask, que acessa um banco de dados PostgreSQL para fornecer e registrar as informações necessárias.
+
+&emsp;No carregamento da tela, buscamos os remédios disponíveis por meio da rota `GET /lista/emergencia`, que consulta diretamente os dados do estoque no banco. Esses dados alimentam a interface para seleção e quantificação dos medicamentos a serem retirados.
+
+&emsp;Ao digitar o HC do paciente, uma chamada à rota `GET /pacientes/validar/:hc` é feita automaticamente, permitindo que os dados do paciente (nome e leito) sejam preenchidos com base nas informações reais armazenadas no banco de dados.
+
+&emsp;Por fim, ao confirmar o pedido, enviamos os dados do formulário para a rota `POST /lista/emergencia/forms`. Essa requisição registra no banco o histórico da retirada de medicamentos em situação de emergência, associando o pedido ao enfermeiro responsável.
+
+&emsp;Toda a comunicação com o backend utiliza o padrão `application/json` e é realizada com a biblioteca Axios, garantindo que os dados sejam sempre atualizados diretamente do servidor, sem armazenamento local no navegador.
