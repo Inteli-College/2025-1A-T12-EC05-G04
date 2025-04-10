@@ -64,9 +64,7 @@ Para simplificar a visualização da verificação, siga a seguinte tabela de re
 
 </div>
 
-# Provas de Atendimento
 
-Para comprovar que os requisitos marcados como atendidos foram de fato implementados, gravamos um vídeo demonstrando o funcionamento do sistema. Nele, é possível visualizar o sistema em ação, evidenciando o cumprimento de cada um dos requisitos validados.
 
 
 
