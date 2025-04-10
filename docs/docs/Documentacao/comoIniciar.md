@@ -45,7 +45,10 @@ sidebar_position: 1
    ```
 
 6. **Com o Dobot em mãos**, conecte um computador ao Dobot e instale o *Dobot Studio*.  
-   O software pode ser baixado do site oficial da fabricante.  
+   O software pode ser baixado do site oficial da fabricante.
+   Ou pelo seguinte link de Google Drive: 
+   - https://drive.google.com/file/d/1-_yOVLWJvR4Jj-MiRBpl-TO9SttbEtLD/view?usp=sharing
+   
    Após a instalação, conecte o Dobot via USB e inicie o software.
 
 7. **No Dobot Studio:**
