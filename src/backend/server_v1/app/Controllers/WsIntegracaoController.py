@@ -102,7 +102,7 @@ class WsIntegracaoController:
             # Se todas as montagens do grupo estiverem finalizadas (status == 2), atualiza para 1
             if all(montagem.status == 2 for montagem in group_results):
                 for m in group_results:
-                    m.status = 1
+                    print("m status 1")
                 try:
                     db.session.commit()
                     print("Todas as montagens da fita foram finalizadas e o status atualizado para 1.")
