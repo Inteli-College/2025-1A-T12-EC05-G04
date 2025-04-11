@@ -25,6 +25,7 @@ class RoboController:
 
         id_montagem = data['id']
         # Pega o objeto montagem
+        id_montagem = int(id_montagem)
         
         print("Montagem iniciada: ", id_montagem)
         
@@ -78,9 +79,16 @@ class RoboController:
             for lista in listas_mesma_fita:
                 # Pega a montagem relacionada à lista
                 montagem = Montagem.query.filter_by(id_lista=lista.id).first()
-                if not montagem:
+
+                i = int(montagem.id)
+                print("TIPO DE MONTAGEM STATUS", type(montagem.status))
+            
+
+                if not montagem or montagem.status == 2:
+                    print(f"A MONTAGEM {montagem.id} JÁ FOI FINALIZADA")
                     continue  # pula se não houver montagem relacionada
-                if montagem.id == id_montagem:
+
+                if i == id_montagem:
                     continue
 
                 # Pega a instrução relacionada ao id_remedio
@@ -94,7 +102,7 @@ class RoboController:
                     "id_montagem": montagem.id  # id_montagem de cada remédio
                 }
                 queue_inst.add_message(data)
-                print("AQUIIII ESTÁ AS PRÓXIMAS INSTRUÇÕESSS", data)
+                print("PROXIMA INSTRUÇÃO :", data)
 
             instrucao_ws = send_message("instrucao", {"instrucao":first_instrucao.instrucao, "id_montagem": id_montagem})
 

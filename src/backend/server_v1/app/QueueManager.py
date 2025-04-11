@@ -27,7 +27,6 @@ class QueueManager:
         """Adiciona uma mensagem na fila correspondente."""
         with self.lock:
             self.queue.append(message)
-            print(f"Fila [{self.queue_name}]:", self.queue)
 
     def get_all_messages(self):
         """Retorna todas as mensagens da fila."""

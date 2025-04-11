@@ -6,9 +6,8 @@ from app.Models.ErroMontagemModel import ErroMontagem
 from app.Models.LogsModel import Logs
 from flask import jsonify
 from app.QueueManager import QueueManager
-import json
+import json, time
 from app.datetime import datetime_sp_string as dt
-import re
 
 
 queue_rs = QueueManager("robo_status")
@@ -36,9 +35,12 @@ class WsIntegracaoController:
 
         if type(data) == str:
             data = json.loads(data)
+
         acao = data['acao']
         percentage = data['percentage']
         id_montagem = data['id_montagem']
+        id_montagem = int(id_montagem)
+
         # Primeira consulta: monta (Montagem, Lista, Lote) para um id_montagem específico
         result = (
             db.session.query(Montagem, Lista, Lote)
@@ -55,9 +57,12 @@ class WsIntegracaoController:
         # Desempacota a tupla retornada
         montagem, lista, lote = result
 
-        if percentage == 0.125:
-            print("INICIOU A MONTAGEM PAPAIIIIIII")
-            if montagem:
+        if percentage == 0.1111111111111111 or percentage == 0.125:
+            print("Montagem Status agora:", montagem.status)
+            montagem_status = int(montagem.status)
+
+            if montagem and montagem_status != 2:
+                    
                 # Pega o objeto Paciente
                 paciente = Paciente.query.filter_by(id=lista.id_paciente).first()
                 # Pega o id da Fita
@@ -73,6 +78,7 @@ class WsIntegracaoController:
                 
                 attStatusMontagem(id_montagem, 1)
 
+                time.sleep(1)
 
                 return {
                     "PacienteId": paciente.id,
@@ -88,13 +94,18 @@ class WsIntegracaoController:
                         } for lista, lote in listas
                     ],
                     "StatusMontagem": 1,
-                    "Topico": "Start"
+                    "Topico": "Start",
+                    "message": ""
                 }
             else:
-                return "montagem_remedio", {
-                    'message': "Montagem inexistente",
-                    'code': 404
+
+                return {
+                    'message': "Montagem inexistente ou Inválida",
+                    'code': 404,
+                    'Topico': "Erro"
                 }
+            
+
         elif percentage == 1.00:
             attStatusMontagem(id_montagem, 2)
             # Obtém o id_fita da lista associada para agrupar as montagens
@@ -108,18 +119,16 @@ class WsIntegracaoController:
             )
             # Se todas as montagens do grupo estiverem finalizadas (status == 2), atualiza para 1
             if all(montagem.status == 2 for montagem in group_results):
-                for m in group_results:
-                    print("m status 1")
                 try:
                     db.session.commit()
-                    print("Todas as montagens da fita foram finalizadas e o status atualizado para 1.")
                     # Retorna payload indicando que a fita foi finalizada (status 1)
                     return {
                         "NomeRemedio": lote.remedio,
-                        "Porcentagem": 'Finalizada',
+                        "Porcentagem": percentage,
                         "IdMontagem": id_montagem,
                         "StatusMontagem": 1,
-                        "Topico": "Finish"
+                        "Topico": "Finish",
+                        "message": ""
                     }
                 except Exception as e:
                     db.session.rollback()
@@ -131,10 +140,11 @@ class WsIntegracaoController:
                 # Caso contrário, retorna os dados individuais com status 2
                 return {
                     "NomeRemedio": lote.remedio,
-                    "Porcentagem": 'Finalizada',
+                    "Porcentagem": percentage,
                     "IdMontagem": id_montagem,
                     "StatusMontagem": 2,
-                    "Topico": "Finish"
+                    "Topico": "Finish",
+                    "message": ""
                 }
         else:
             # Para casos intermediários (Ongoing)
@@ -149,15 +159,18 @@ class WsIntegracaoController:
                 lista_obj, lote_obj = MedicamentoResult
                 return {
                     "NomeRemedio": lote_obj.remedio,
-                    "Porcentagem": "Montando",
+                    "Porcentagem": percentage,
                     "IdMontagem": id_montagem,
-                    "Topico": "Ongoing"
+                    "Topico": "Ongoing",
+                    "message": ""
                 }
             else:
                 return {
                     "message": "Dados incompletos para atualização de Ongoing",
                     "code": 404
                 }
+            
+
     def qrCode(self):
         data = queue_qr.get_message()
         if type(data) == str:
@@ -171,7 +184,7 @@ class WsIntegracaoController:
         lista = Lista.query.filter_by(id=id_lista).first()
         id_remedio = lista.id_remedio
         lote = Lote.query.filter_by(id=id_remedio).first()
-        print("Codigo QR PAPAI:", qr_codigo)
+
         if montagem:
             real_qr = lote.codigo
             print("REAL QR PAPAI:", real_qr)

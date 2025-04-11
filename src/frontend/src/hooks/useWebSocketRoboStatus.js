@@ -66,7 +66,7 @@ export default function useWebSocketRoboStatus(url) {
               id_montagem: log.IdMontagem,
               medicineName: log.NomeRemedio,
               // Aqui, o progresso pode vir já como um indicador textual
-              progress: log.Porcentagem,
+              progress: parseInt(log.Porcentagem * 100),
             }));
             setLogProgresso(logs);
           }

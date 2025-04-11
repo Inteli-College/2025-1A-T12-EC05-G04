@@ -43,6 +43,10 @@ def handle_message(data):
     if fe_friend["Topico"] == "Finish" or fe_friend["Topico"] == "Ongoing":
         socketio.emit("robo_status_fe", fe_friend)
         print("Opa papai")
+
+    if fe_friend["Topico"] == "Erro":
+        print("Instrução já ta feita papai")
+    
     else:
         socketio.emit("montagem_remedio", fe_friend)
         print("Ai papai")
